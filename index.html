@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SCS Concordia</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --color-bg: #090909;
+      --color-text: #ffffff;
+      --font-primary: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    }
+
+    body {
+      background-color: var(--color-bg);
+      color: var(--color-text);
+      font-family: var(--font-primary);
+      font-weight: 400;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body.intro-loading {
+      overflow: hidden;
+    }
+
+    /* ── Intro Overlay ── */
+    .intro-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background-color: #1d1d1d;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+
+    .intro-overlay.outro {
+      opacity: 0;
+    }
+
+    /* Logo inside overlay — same size & centered position as the hero logo */
+    .intro-logo-wrap {
+      position: relative;
+      width: clamp(200px, 28vw, 400px);
+      aspect-ratio: 1204.29 / 735.5;
+      margin-top: -80px;
+      transform: scale(0.5);
+      animation: logo-grow 3s cubic-bezier(0.76, 0, 0.24, 1) 0.5s forwards;
+    }
+
+    @keyframes logo-grow {
+      from {
+        transform: scale(0.5);
+      }
+
+      to {
+        transform: scale(1);
+      }
+    }
+
+    .intro-logo-wrap img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .intro-logo-full {
+      clip-path: inset(100% 0 0 0);
+      animation: logo-fill 3s cubic-bezier(0.76, 0, 0.24, 1) 0.5s forwards;
+    }
+
+    @keyframes logo-fill {
+      from {
+        clip-path: inset(100% 0 0 0);
+      }
+
+      to {
+        clip-path: inset(0% 0 0 0);
+      }
+    }
+
+    /* ── Nav ── */
+    nav {
+      position: fixed;
+      top: 22px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.10);
+      border-radius: 999px;
+      padding: 14px 44px;
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 52px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 15px;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.9);
+      text-decoration: none;
+      letter-spacing: 0.01em;
+      transition: opacity 0.2s;
+    }
+
+    .nav-links a:hover {
+      opacity: 0.5;
+    }
+
+    /* ── Hero ── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    /* Purple radial glow */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top,
+          rgba(100, 0, 220, 0.55) 0%,
+          rgba(60, 0, 140, 0.20) 45%,
+          transparent 75%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Hands — flush to edges ── */
+    .hand {
+      position: absolute;
+      top: 50%;
+      width: clamp(220px, 32vw, 460px);
+      height: auto;
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(-50%);
+    }
+
+    .hand-left  { left: 0;  transform: translateY(-50%) translateX(-40px); }
+    .hand-right { right: 0; transform: translateY(-50%) translateX(40px); }
+
+    .hand.hand-in {
+      animation: hand-left-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+    .hand-right.hand-in {
+      animation: hand-right-in 1.4s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes hand-left-in {
+      from { opacity: 0; transform: translateY(-50%) translateX(-40px); }
+      to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+    }
+
+    @keyframes hand-right-in {
+      from { opacity: 0; transform: translateY(-50%) translateX(40px); }
+      to   { opacity: 1; transform: translateY(-50%) translateX(0); }
+    }
+
+    /* ── Hero Logo — static, same size as overlay logo ── */
+    .hero-logo-wrap {
+      position: relative;
+      width: clamp(200px, 28vw, 400px);
+      aspect-ratio: 1204.29 / 735.5;
+      z-index: 2;
+      margin-top: -80px;
+    }
+
+    .hero-logo-full {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* ── Body Text ── */
+    .body-text {
+      opacity: 0;
+    }
+
+    .body-text.text-in {
+      animation: text-fade-in 1s ease forwards;
+      animation-delay: 0.4s;
+    }
+
+    @keyframes text-fade-in {
+      from { opacity: 0; transform: translateX(-50%) translateY(8px); }
+      to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
+
+    /* ── Body Text ── */
+    /* Sits just below the logo. Logo half-height ≈ clamp(61px, 8.55vw, 122px).
+       Logo shifted up 80px → center at 50% - 80px. Gap of 64px below logo. */
+    .body-text {
+      position: absolute;
+      top: calc(50% - 80px + clamp(61px, 8.55vw, 122px) + 64px);
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      max-width: 860px;
+      width: 100%;
+      padding: 0 30px;
+      text-align: center;
+    }
+
+    .body-text p {
+      font-size: clamp(11px, 0.95vw, 12.5px);
+      line-height: 1.9;
+      letter-spacing: 0.04em;
+      color: rgba(255, 255, 255, 0.70);
+    }
+
+    .body-text p strong {
+      color: rgba(255, 255, 255, 0.92);
+      font-weight: 500;
+    }
+
+    /* ── Cursor Invert Circle ── */
+    #cursor-invert {
+      position: fixed;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      mix-blend-mode: difference;
+      pointer-events: none;
+      z-index: 99999;
+      transform: translate(-50%, -50%);
+      transition: transform 0.08s ease, width 0.2s ease, height 0.2s ease;
+      will-change: left, top;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 680px) {
+      nav {
+        padding: 11px 22px;
+        top: 14px;
+      }
+
+      .nav-links {
+        gap: 22px;
+      }
+
+      .nav-links a {
+        font-size: 13px;
+      }
+
+      .hand {
+        width: clamp(100px, 30vw, 180px);
+      }
+    }
+  </style>
+</head>
+
+<body class="intro-loading">
+
+  <!-- Intro Overlay — logo fills here, matching the hero logo's size & position -->
+  <div class="intro-overlay" id="introOverlay">
+    <div class="intro-logo-wrap">
+      <img class="intro-logo-hollow" src="logo_hollow.svg" alt="">
+      <img class="intro-logo-full" src="logo_full.svg" alt="">
+    </div>
+  </div>
+
+  <!-- Nav -->
+  <nav aria-label="Main navigation">
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li><a href="#">What we do</a></li>
+      <li><a href="#">Who we are</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hand hand-left" src="SVG/right_hand.svg" alt="">
+
+    <!-- Static hero logo — same size as overlay logo so the transition is seamless -->
+    <div class="hero-logo-wrap">
+      <img class="hero-logo-full" src="logo_full.svg" alt="SCS Concordia">
+    </div>
+
+    <div class="body-text">
+      <p>
+        <strong>SCS (Software Engineering and Computer Science Society)</strong>
+        is the flagship academic society for software engineering and computer science students at Concordia University.
+        We bridge the gap between theory and industry practice, giving members technical skills, professional networks,
+        and hands-on experience, empowering them to excel in the field.
+      </p>
+    </div>
+
+    <img class="hand hand-right" src="SVG/left_hand.svg" alt="">
+  </section>
+
+  <!-- Cursor invert circle -->
+  <div id="cursor-invert"></div>
+
+  <script>
+    // Cursor invert circle
+    (function () {
+      const circle = document.getElementById('cursor-invert');
+      let cx = -200, cy = -200;
+
+      document.addEventListener('mousemove', function (e) {
+        cx = e.clientX;
+        cy = e.clientY;
+        circle.style.left = cx + 'px';
+        circle.style.top = cy + 'px';
+      });
+
+      document.addEventListener('mouseleave', function () {
+        circle.style.left = '-200px';
+        circle.style.top = '-200px';
+      });
+    })();
+
+    // Logo fills inside the overlay (same size + centered = matches hero logo position).
+    // When fill finishes, curtain lifts — hero logo is already there underneath.
+    (function () {
+      const overlay = document.getElementById('introOverlay');
+      const logoFull = overlay.querySelector('.intro-logo-full');
+
+      logoFull.addEventListener('animationend', function () {
+        setTimeout(function () {
+          overlay.classList.add('outro');
+          overlay.addEventListener('transitionend', function () {
+            overlay.remove();
+            document.body.classList.remove('intro-loading');
+            document.querySelectorAll('.hand').forEach(function (h) {
+              h.classList.add('hand-in');
+            });
+            document.querySelector('.body-text').classList.add('text-in');
+          }, { once: true });
+        }, 350);
+      }, { once: true });
+    })();
+  </script>
+
+</body>
+
+</html>
