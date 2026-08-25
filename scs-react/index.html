@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo_full.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SCS Concordia</title>
+
+    <!--
+      Runs BEFORE React loads — reads localStorage and sets data-theme
+      immediately so there's no flash of the wrong theme on page load.
+      This must live here in the HTML, not inside any React component.
+    -->
+    <script>
+      ;(function () {
+        var t = localStorage.getItem('scs-theme')
+        if (t) document.documentElement.setAttribute('data-theme', t)
+      })()
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- React mounts your entire app inside this single div -->
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
