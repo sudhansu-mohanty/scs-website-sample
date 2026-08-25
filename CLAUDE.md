@@ -9,6 +9,13 @@ Whenever the user says **"session terminated"**, append a new entry to `SESSION_
 
 If `SESSION_LOG.md` does not exist, create it first with a header, then append the entry.
 
+After writing the log, stage all changes and push to the repo:
+```
+git add -A
+git commit -m "session log YYYY-MM-DD"
+git push origin main
+```
+
 Format:
 
 ```
