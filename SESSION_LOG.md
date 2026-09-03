@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-09-03 — 19:33
+
+- Changed text selection highlight colour from default blue to green (`--green-mid: #7bc880`) with black text via `::selection` CSS
+- Added purple underline (`--purple-mid`) under the "About Us" heading using `::after` pseudo-element; animates naturally with the existing GSAP slide-in
+- Located Skiper UI animated theme toggle components in `scs-website/components/ui/skiper-ui/skiper4.tsx`
+- Installed `framer-motion` in `scs-react`
+- Replaced the static sun/moon icon in the Navbar with the Skiper Button 3 animation (sun ↔ moon), driven by the `theme` prop from App.jsx
+- Fixed broken animation: replaced `<clipPath>` + `motion.path` approach (CSS transforms inside clipPath are ignored by browsers) with a background-coloured cutout circle that slides in/out via CSS `translateX` to carve a crescent; added `transformBox`/`transformOrigin` to sun rays for correct centre-anchored scale
+
+---
+
 ## 2026-08-24 — 22:45
 
 - Removed purple radial gradient from hero — pure black background
