@@ -27,7 +27,8 @@ export default function Hero({ handsIn, textIn }) {
 
         <div className={`body-text${textIn ? ' text-in' : ''}`}>
           <p>
-            <strong>Welcome to SCS Concordia </strong>
+            <strong>Welcome to SCS Concordia</strong>
+            <br />
             <strong>Software Engineering and Computer Science Society</strong>
           </p>
         </div>

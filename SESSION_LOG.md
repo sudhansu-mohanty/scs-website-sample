@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-09-03 — 23:28
+
+- Integrated `background-paths` shadcn component into hero: set up Tailwind CSS v4 (`@tailwindcss/vite`), installed `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`
+- Configured `@` path alias in `vite.config.js` and `@custom-variant dark` for `data-theme` in `index.css`
+- Created `src/lib/utils.js`, `src/components/ui/button.jsx`, `src/components/ui/background-paths.jsx`
+- Added `data-theme="dark"` default to `index.html` so Tailwind dark variants work on first visit
+- Debugged and removed `background-paths` animation — flickering caused by `pathOffset` and `Math.random()` in render body creating a framer-motion restart loop
+- Built interactive `DotGrid` canvas component: faded white dots across hero, brand purple glow on mouse proximity
+- Explored making dots form hand SVG silhouettes (pixel-sampling offscreen canvas approach), then reverted to static hand images on user request
+- Final state: hero has static hand images restored, `DotGrid` removed from hero
+
+---
+
 ## 2026-09-03 — 19:33
 
 - Changed text selection highlight colour from default blue to green (`--green-mid: #7bc880`) with black text via `::selection` CSS

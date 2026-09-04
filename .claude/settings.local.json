@@ -6,7 +6,13 @@
       "Bash(mkdir \"C:\\\\Users\\\\sudha\\\\coding\\\\scs-website-sample\\\\scs-react\")",
       "Bash(npm init:*)",
       "Bash(npm install:*)",
-      "Bash(npx vite:*)"
+      "Bash(npx vite:*)",
+      "Bash(pnpm dlx:*)",
+      "Bash(npx shadcn:*)",
+      "Bash(printf 'y\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n')",
+      "Bash(find C:Userssudhacodingscs-website-samplescs-reactsrc -name *skiper* -o -name *ui*)",
+      "Bash(date /t)",
+      "Bash(time /t)"
     ]
   }
 }

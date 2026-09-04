@@ -1,3 +1,8 @@
+@import "tailwindcss";
+
+/* Configure dark: to use data-theme attribute (covers both explicit dark and unset default) */
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
 /* ─────────────────────────────────────────
    Global styles — imported once in main.jsx
    and applied to the whole app.
@@ -69,6 +74,7 @@ body {
   font-family: var(--font-primary);
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
+  transition: background-color 0.4s ease, color 0.4s ease;
 }
 
 /* Locks scroll while the intro overlay is playing */
@@ -214,6 +220,33 @@ nav {
   height: 22px;
 }
 
+/* Skiper-UI toggle — crescent cutout starts off-screen right (sun state) */
+.skiper-svg .crescent {
+  transform: translateX(22px);
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Slide crescent in to carve a moon shape */
+[data-theme='dark'] .skiper-svg .crescent {
+  transform: translateX(0);
+}
+
+/* Sun rays — visible and full-size by default */
+.skiper-svg .rays {
+  transform-box: fill-box;
+  transform-origin: center;
+  transition:
+    transform 0.35s cubic-bezier(0.76, 0, 0.24, 1),
+    opacity  0.35s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+/* Rotate, shrink, and fade rays out in dark (moon) mode */
+[data-theme='dark'] .skiper-svg .rays {
+  transform: rotate(-100deg) scale(0.5);
+  opacity: 0;
+}
+
+
 /* ── Hero ── */
 .hero {
   position: relative;
@@ -339,7 +372,7 @@ nav {
 }
 
 /* ── Cursor Invert Circle ── */
-#cursor-invert {
+/* #cursor-invert {
   position: fixed;
   width: 40px;
   height: 40px;
@@ -353,7 +386,7 @@ nav {
     width 0.2s ease,
     height 0.2s ease;
   will-change: left, top;
-}
+} */
 
 /* ── View Transition — circular wipe ── */
 ::view-transition-old(root),
