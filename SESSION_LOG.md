@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-09-05 — 21:15
+
+- Converted navbar links to inline expanding dropdowns: "Who we are" (About Us, Meet the Team), "What we do" (Weekly Events, Academic Events, Social Events, Wine & Cheese), "Contact" (Instagram, LinkedIn, Discord, Facebook, Newsletter, Email)
+- Dropdown panel lives inside the nav pill itself — pill expands downward on hover, no floating boxes; smooth `max-height` + opacity transition
+- Chevron rotates 180° on active trigger; active label turns accent colour; panel items are pill-shaped with purple tint on hover
+- Added "Links" nav item linking to `https://linktr.ee/scsconcordia` (opens in new tab), positioned at the end of the navbar
+- Applied Monad typography system: JetBrains Mono (substitute for ABC Diatype Mono) for all UI/body text; Georgia (substitute for Untitled Serif) for display/heading text
+- Hero LINE1 "Welcome to SCS Concordia" switched to serif, `clamp(24px, 3vw, 32px)`, weight 400, tight letter-spacing
+- Hero LINE2 cycling text uses mono at `body-sm` (14px), muted colour
+- About heading switched from Bricolage Grotesque 700 → serif 400, display scale (80px), `-1.6px` letter-spacing
+- About body text switched to mono at `body-lg` (20px)
+- Added full CSS type scale tokens (`--text-*`, `--leading-*`, `--tracking-*`) to `:root`
+- Added Web Audio API sound effects (`src/utils/sfx.js`): soft high-pitched hover tick and deeper click tone, synthesized programmatically — no audio files; wired to all navbar interactive elements (links, triggers, dropdown items, theme toggle)
+
+---
+
 ## 2026-09-05 — 19:30
 
 - Restored `DotGrid` interactive dot canvas to the hero by importing and rendering it in `Hero.jsx` (it had been removed previously)
