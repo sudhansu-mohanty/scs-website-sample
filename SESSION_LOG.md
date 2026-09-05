@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-09-05 — 23:45
+
+- Set up GitHub Pages deployment via GitHub Actions (`.github/workflows/deploy.yml`) — triggers on every push to main, builds from `scs-react/` subdirectory, deploys `dist/` to Pages
+- Set `base: '/scs-website-sample/'` in `vite.config.js` for correct asset routing on GitHub Pages
+- Fixed all hardcoded absolute asset paths (`/logo_full.svg`, `/logo_hollow.svg`, `/SVG/left_hand.svg`, `/SVG/right_hand.svg`) across Hero, IntroOverlay, Navbar, and DotGrid to use `import.meta.env.BASE_URL` — required for assets to load correctly under the `/scs-website-sample/` subpath
+- Diagnosed and resolved deploy failure (GitHub Pages source not set to GitHub Actions in repo settings)
+- Site successfully deployed and live at https://sudhansu-mohanty.github.io/scs-website-sample/
+
+---
+
 ## 2026-09-05 — 23:10
 
 - Fixed JSX parse error in Navbar.jsx — missing `</div>` closing tag for `.nav-bar` wrapper
