@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-09-05 — 23:10
+
+- Fixed JSX parse error in Navbar.jsx — missing `</div>` closing tag for `.nav-bar` wrapper
+- Added mute/unmute button to navbar beside the theme toggle: speaker-on/off SVG icons, persisted to localStorage (`scs-sfx-muted`), plays a confirmation click on unmute
+- Added `.nav-controls` flex wrapper to hold both the theme toggle and mute button side by side
+- Converted nav dropdowns from inline expanding pill to classic floating column panels (position: absolute below each trigger item)
+- Each dropdown renders its items in a vertical list with frosted glass panel (matching nav bg/border), fade + slide-up animation, `::before` bridge to prevent hover flicker
+- Increased dropdown offset from navbar (22px gap) and added more padding between dropdown items (10px 18px)
+
+---
+
 ## 2026-09-05 — 21:15
 
 - Converted navbar links to inline expanding dropdowns: "Who we are" (About Us, Meet the Team), "What we do" (Weekly Events, Academic Events, Social Events, Wine & Cheese), "Contact" (Instagram, LinkedIn, Discord, Facebook, Newsletter, Email)

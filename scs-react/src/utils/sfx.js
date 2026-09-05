@@ -2,6 +2,14 @@
 // AudioContext is created lazily on first call (satisfies browser autoplay policy).
 
 let ctx = null
+let muted = localStorage.getItem('scs-sfx-muted') === 'true'
+
+export function isMuted() { return muted }
+
+export function setMuted(val) {
+  muted = val
+  localStorage.setItem('scs-sfx-muted', val)
+}
 
 function ac() {
   if (!ctx) ctx = new AudioContext()
@@ -12,6 +20,7 @@ function ac() {
 
 // Soft high-pitched tick — for hover
 export function playHover() {
+  if (muted) return
   try {
     const c = ac()
     const osc = c.createOscillator()
@@ -30,6 +39,7 @@ export function playHover() {
 
 // Slightly deeper, snappier click — for press
 export function playClick() {
+  if (muted) return
   try {
     const c = ac()
     const osc = c.createOscillator()

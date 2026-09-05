@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { playHover, playClick } from '../utils/sfx'
+import { playHover, playClick, isMuted, setMuted } from '../utils/sfx'
 
 const NAV_ITEMS = [
   { label: 'Home', href: '#' },
@@ -47,43 +47,57 @@ function Chevron({ open }) {
 export default function Navbar({ theme, onToggle }) {
   const isDark = theme === 'dark'
   const [openMenu, setOpenMenu] = useState(null)
+  const [muted, setMutedState] = useState(isMuted())
 
-  const activeChildren = NAV_ITEMS.find((i) => i.label === openMenu)?.children ?? []
+  const toggleMute = () => {
+    const next = !muted
+    setMuted(next)
+    setMutedState(next)
+    if (!next) playClick() // confirm unmute with a sound
+  }
 
   return (
     <nav
-      className={openMenu ? 'nav-open' : ''}
       aria-label="Main navigation"
       onMouseLeave={() => setOpenMenu(null)}
     >
-      <div className="nav-bar">
-        <div className="nav-logo">
-          <img src="/logo_full.svg" alt="SCS Concordia" />
-        </div>
+      <div className="nav-logo">
+        <img src="/logo_full.svg" alt="SCS Concordia" />
+      </div>
 
-        <ul className="nav-links">
-          {NAV_ITEMS.map((item) =>
-            item.children ? (
-              <li
-                key={item.label}
-                className={`nav-item${openMenu === item.label ? ' active' : ''}`}
-                onMouseEnter={() => { playHover(); setOpenMenu(item.label) }}
-              >
-                <button className="nav-trigger" onClick={playClick}>
-                  {item.label}
-                  <Chevron open={openMenu === item.label} />
-                </button>
-              </li>
-            ) : (
-              <li key={item.label} className="nav-item" onMouseEnter={() => { playHover(); setOpenMenu(null) }}>
-                <a href={item.href} onClick={playClick} {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
-                  {item.label}
-                </a>
-              </li>
-            )
-          )}
-        </ul>
+      <ul className="nav-links">
+        {NAV_ITEMS.map((item) =>
+          item.children ? (
+            <li
+              key={item.label}
+              className={`nav-item${openMenu === item.label ? ' active' : ''}`}
+              onMouseEnter={() => { playHover(); setOpenMenu(item.label) }}
+            >
+              <button className="nav-trigger" onClick={playClick}>
+                {item.label}
+                <Chevron open={openMenu === item.label} />
+              </button>
+              <div className="nav-dropdown">
+                <div className="nav-dropdown-panel">
+                  {item.children.map((child) => (
+                    <a key={child.label} href={child.href} onMouseEnter={playHover} onClick={playClick}>
+                      {child.label}
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </li>
+          ) : (
+            <li key={item.label} className="nav-item" onMouseEnter={() => { playHover(); setOpenMenu(null) }}>
+              <a href={item.href} onClick={playClick} {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}>
+                {item.label}
+              </a>
+            </li>
+          )
+        )}
+      </ul>
 
+      <div className="nav-controls">
         <button
           className="theme-toggle"
           onClick={() => { playClick(); onToggle() }}
@@ -113,17 +127,27 @@ export default function Navbar({ theme, onToggle }) {
             </g>
           </svg>
         </button>
-      </div>
 
-      {/* Expanding panel — lives inside the nav pill */}
-      <div className="nav-panel">
-        <div className="nav-panel-inner">
-          {activeChildren.map((child) => (
-            <a key={child.label} href={child.href} onMouseEnter={playHover} onClick={playClick}>
-              {child.label}
-            </a>
-          ))}
-        </div>
+        <button
+          className="theme-toggle"
+          onClick={toggleMute}
+          onMouseEnter={playHover}
+          aria-label={muted ? 'Unmute sound effects' : 'Mute sound effects'}
+        >
+          {muted ? (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" fill="currentColor" stroke="none" />
+              <line x1="16" y1="9" x2="22" y2="15" />
+              <line x1="22" y1="9" x2="16" y2="15" />
+            </svg>
+          ) : (
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+              <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" fill="currentColor" stroke="none" />
+              <path d="M15.5 8.5 a6 6 0 0 1 0 7" />
+              <path d="M18.5 5.5 a10 10 0 0 1 0 13" />
+            </svg>
+          )}
+        </button>
       </div>
     </nav>
   )
