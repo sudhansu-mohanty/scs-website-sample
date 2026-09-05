@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-09-05 — 19:30
+
+- Restored `DotGrid` interactive dot canvas to the hero by importing and rendering it in `Hero.jsx` (it had been removed previously)
+- Rewrote hero text section with a typewriter effect: LINE1 ("Welcome to SCS Concordia") types out once, then LINE2 cycles through multiple lines — typing, holding, deleting, and moving to the next
+- Increased hero text font size from `clamp(11px, 0.95vw, 12.5px)` to `clamp(15px, 1.6vw, 21px)` with brand accent colour
+- Added blinking cursor (`tw-cursor`) that follows the active typewriter line
+- Replaced static Lorem ipsum LINE2 with a cycling array of placeholder lines as stand-ins until real content is ready
+
+---
+
 ## 2026-09-03 — 23:28
 
 - Integrated `background-paths` shadcn component into hero: set up Tailwind CSS v4 (`@tailwindcss/vite`), installed `@radix-ui/react-slot`, `class-variance-authority`, `clsx`, `tailwind-merge`

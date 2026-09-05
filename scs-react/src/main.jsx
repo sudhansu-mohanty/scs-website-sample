@@ -11,4 +11,8 @@ import App from './App.jsx'
   animation (it would play twice). We'll add it back once we've refactored
   the animation to handle that gracefully.
 */
+// Prevent the browser from restoring the previous scroll position on reload
+history.scrollRestoration = 'manual'
+window.scrollTo(0, 0)
+
 createRoot(document.getElementById('root')).render(<App />)

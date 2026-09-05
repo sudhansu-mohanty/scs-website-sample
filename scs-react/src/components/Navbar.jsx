@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion'
-
 /*
   Props — data passed INTO a component from its parent, like function arguments.
   This component receives:
@@ -39,7 +37,19 @@ export default function Navbar({ theme, onToggle }) {
         onClick={onToggle}
         aria-label="Toggle colour mode"
       >
+        {/*
+          Skiper-UI Button 3 animation — pure CSS transitions driven by
+          [data-theme] on <html>. framer-motion SVG animations are unreliable
+          (transform-origin conflicts, clipPath restrictions), so CSS transitions
+          are used instead for guaranteed cross-browser behaviour.
+
+          Two moving parts:
+            1. .crescent — a nav-bg–coloured circle that slides in from the right
+               to carve a crescent out of the main body circle.
+            2. .rays — the sun ray dots that shrink and fade out in dark mode.
+        */}
         <svg
+          className="skiper-svg"
           xmlns="http://www.w3.org/2000/svg"
           aria-hidden="true"
           fill="currentColor"
@@ -47,31 +57,23 @@ export default function Navbar({ theme, onToggle }) {
           viewBox="0 0 32 32"
           overflow="visible"
         >
-          {/* Main body — sun is a smaller circle, moon is larger */}
+          {/* Main body — snaps between sun size (r=8) and moon size (r=10) */}
           <circle cx="16" cy="16" r={isDark ? 10 : 8} />
 
-          {/* Crescent cutout — bg-coloured circle slides in from the right
-              to partially cover the main circle, creating a crescent shape.
-              CSS transform (x) works reliably on SVG elements in all browsers. */}
-          <motion.circle
-            cx="20" cy="12" r="9"
-            fill="var(--color-nav-bg)"
-            initial={false}
-            animate={{ x: isDark ? 0 : 22 }}
-            transition={{ ease: 'easeInOut', duration: 0.35 }}
-          />
+          {/* Crescent cutout */}
+          <circle className="crescent" cx="20" cy="12" r="9" fill="var(--color-nav-bg)" />
 
-          {/* Sun rays — shrink and fade out when switching to moon */}
-          <motion.g
-            initial={false}
-            animate={{ scale: isDark ? 0.4 : 1, opacity: isDark ? 0 : 1 }}
-            transition={{ ease: 'easeInOut', duration: 0.35 }}
-            stroke="currentColor"
-            strokeWidth="1.5"
-            style={{ transformBox: 'fill-box', transformOrigin: 'center' }}
-          >
-            <path d="M18.3 3.2c0 1.3-1 2.3-2.3 2.3s-2.3-1-2.3-2.3S14.7.9 16 .9s2.3 1 2.3 2.3zm-4.6 25.6c0-1.3 1-2.3 2.3-2.3s2.3 1 2.3 2.3-1 2.3-2.3 2.3-2.3-1-2.3-2.3zm15.1-10.5c-1.3 0-2.3-1-2.3-2.3s1-2.3 2.3-2.3 2.3 1 2.3 2.3-1 2.3-2.3 2.3zM3.2 13.7c1.3 0 2.3 1 2.3 2.3s-1 2.3-2.3 2.3S.9 17.3.9 16s1-2.3 2.3-2.3zm5.8-7C9 7.9 7.9 9 6.7 9S4.4 8 4.4 6.7s1-2.3 2.3-2.3S9 5.4 9 6.7zm16.3 21c-1.3 0-2.3-1-2.3-2.3s1-2.3 2.3-2.3 2.3 1 2.3 2.3-1 2.3-2.3 2.3zm2.4-21c0 1.3-1 2.3-2.3 2.3S23 7.9 23 6.7s1-2.3 2.3-2.3 2.4 1 2.4 2.3zM6.7 23C8 23 9 24 9 25.3s-1 2.3-2.3 2.3-2.3-1-2.3-2.3 1-2.3 2.3-2.3z" />
-          </motion.g>
+          {/* Sun rays */}
+          <g className="rays" stroke="currentColor" strokeWidth="1.5" fill="none">
+            <path d="M16 5.5v-4" />
+            <path d="M16 30.5v-4" />
+            <path d="M1.5 16h4" />
+            <path d="M26.5 16h4" />
+            <path d="m23.4 8.6 2.8-2.8" />
+            <path d="m5.7 26.3 2.9-2.9" />
+            <path d="m5.8 5.8 2.8 2.8" />
+            <path d="m23.4 23.4 2.9 2.9" />
+          </g>
         </svg>
       </button>
     </nav>

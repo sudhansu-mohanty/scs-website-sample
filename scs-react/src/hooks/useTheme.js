@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import { flushSync } from 'react-dom'
 
 /*
   Custom hook — a function that starts with "use" and packages up
@@ -28,36 +27,9 @@ export function useTheme() {
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
-
-    if (document.startViewTransition) {
-      /*
-        View Transitions API needs the DOM to update synchronously inside
-        its callback so it can diff old vs new. React normally batches and
-        delays state updates — flushSync forces it to update immediately.
-      */
-      const t = document.startViewTransition(() => {
-        flushSync(() => setTheme(next))
-        document.documentElement.setAttribute('data-theme', next)
-        localStorage.setItem('scs-theme', next)
-      })
-
-      // Animate the circular wipe once the transition is ready
-      t.ready.then(() => {
-        document.documentElement.animate(
-          { clipPath: ['circle(0% at 50% 0%)', 'circle(150% at 50% 0%)'] },
-          {
-            duration: 700,
-            easing: 'cubic-bezier(0.76, 0, 0.24, 1)',
-            pseudoElement: '::view-transition-new(root)',
-          }
-        )
-      })
-    } else {
-      // Fallback for browsers that don't support View Transitions
-      setTheme(next)
-      document.documentElement.setAttribute('data-theme', next)
-      localStorage.setItem('scs-theme', next)
-    }
+    setTheme(next)
+    document.documentElement.setAttribute('data-theme', next)
+    localStorage.setItem('scs-theme', next)
   }
 
   return { theme, toggleTheme }

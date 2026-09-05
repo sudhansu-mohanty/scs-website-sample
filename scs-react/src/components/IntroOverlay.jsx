@@ -33,14 +33,19 @@ export default function IntroOverlay({ onComplete }) {
     const logoFull = logoFullRef.current
     const introLogo = introLogoRef.current
 
-    // Measure both logos and align intro logo to hero logo pixel-perfectly
+    // Position the intro logo to match the hero logo pixel-perfectly.
+    // We switch the intro logo to position:absolute inside the fixed overlay
+    // and set top/left directly from the hero logo's measured rect.
+    // This avoids flex margin-halving math and is zoom-independent.
     requestAnimationFrame(() => {
       const heroLogo = document.querySelector('.hero-logo-wrap')
       if (!heroLogo || !introLogo) return
-      const diff =
-        heroLogo.getBoundingClientRect().top -
-        introLogo.getBoundingClientRect().top
-      if (Math.abs(diff) > 0.5) introLogo.style.marginTop = diff + 'px'
+      const heroRect = heroLogo.getBoundingClientRect()
+      introLogo.style.position = 'absolute'
+      introLogo.style.top = heroRect.top + 'px'
+      introLogo.style.left = heroRect.left + 'px'
+      introLogo.style.width = heroRect.width + 'px'
+      introLogo.style.margin = '0'
     })
 
     // When the fill animation ends, fade the overlay out then signal completion

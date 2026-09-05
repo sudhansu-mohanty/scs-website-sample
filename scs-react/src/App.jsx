@@ -3,9 +3,8 @@ import { useTheme } from './hooks/useTheme'
 import Navbar from './components/Navbar'
 import IntroOverlay from './components/IntroOverlay'
 import Hero from './components/Hero'
-import CursorCircle from './components/CursorCircle'
-
-const FIVE_MINUTES = 5 * 60 * 1000
+// import CursorCircle from './components/CursorCircle'
+import AboutUs from './components/AboutUs'
 
 /*
   App is the root component — it owns the state that multiple
@@ -22,24 +21,13 @@ const FIVE_MINUTES = 5 * 60 * 1000
 export default function App() {
   const { theme, toggleTheme } = useTheme()
 
-  /*
-    Lazy initial state — the function inside useState() runs once on mount.
-    We check localStorage here to decide whether to show the intro.
-    This avoids re-running the check on every render.
-  */
-  const skipIntro = (() => {
-    const last = localStorage.getItem('scs-intro-last')
-    return last && Date.now() - parseInt(last, 10) < FIVE_MINUTES
-  })()
-
-  const [showIntro, setShowIntro] = useState(!skipIntro)
+  const [showIntro, setShowIntro] = useState(true)
 
   /*
-    If we're skipping the intro, hands and text should be visible immediately.
-    If we're showing the intro, they start hidden and animate in after it ends.
+    Hands and text start hidden and animate in after the intro ends.
   */
-  const [handsIn, setHandsIn] = useState(!!skipIntro)
-  const [textIn, setTextIn] = useState(!!skipIntro)
+  const [handsIn, setHandsIn] = useState(false)
+  const [textIn, setTextIn] = useState(false)
 
   /*
     useEffect to lock/unlock scroll.
@@ -58,7 +46,6 @@ export default function App() {
     We update state here — React re-renders automatically.
   */
   const handleIntroComplete = () => {
-    localStorage.setItem('scs-intro-last', Date.now().toString())
     setShowIntro(false)
     setHandsIn(true)
     setTextIn(true)
@@ -77,7 +64,9 @@ export default function App() {
 
       <Hero handsIn={handsIn} textIn={textIn} />
 
-      <CursorCircle />
+      <AboutUs />
+
+      {/* <CursorCircle /> */}
     </>
   )
 }

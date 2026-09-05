@@ -337,38 +337,35 @@ nav {
 
 /* ── Body Text ── */
 .body-text {
-  opacity: 0;
-  max-width: 640px;
+  max-width: 720px;
   width: 100%;
   padding: 0 30px;
   text-align: center;
 }
 
-.body-text.text-in {
-  animation: text-fade-in 1s ease 0.4s forwards;
-}
-
-@keyframes text-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.body-text p {
-  font-size: clamp(11px, 0.95vw, 12.5px);
-  line-height: 1.5;
-  letter-spacing: 0.04em;
-  color: var(--color-text-muted);
-}
-
-.body-text p strong {
+.typewriter-line {
+  font-size: clamp(15px, 1.6vw, 21px);
+  line-height: 1.6;
+  letter-spacing: 0.03em;
   color: var(--color-accent-2);
   font-weight: 500;
+  min-height: 1.6em;
+}
+
+.tw-cursor {
+  display: inline-block;
+  width: 2px;
+  height: 1.1em;
+  background: var(--color-accent-2);
+  vertical-align: text-bottom;
+  margin-left: 2px;
+  border-radius: 1px;
+  animation: tw-blink 0.75s step-start infinite;
+}
+
+@keyframes tw-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
 }
 
 /* ── Cursor Invert Circle ── */
