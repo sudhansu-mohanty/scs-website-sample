@@ -67,10 +67,10 @@ export default function IntroOverlay({ onComplete }) {
   return (
     <div className="intro-overlay" ref={overlayRef}>
       <div className="intro-logo-wrap" ref={introLogoRef}>
-        <img className="intro-logo-hollow" src="/logo_hollow.svg" alt="" />
+        <img className="intro-logo-hollow" src={`${import.meta.env.BASE_URL}logo_hollow.svg`} alt="" />
         <img
           className="intro-logo-full"
-          src="/logo_full.svg"
+          src={`${import.meta.env.BASE_URL}logo_full.svg`}
           alt=""
           ref={logoFullRef}
         />

@@ -107,8 +107,8 @@ export default function DotGrid({ handsIn }) {
       })
 
     Promise.all([
-      loadImg('/SVG/right_hand.svg'),
-      loadImg('/SVG/left_hand.svg'),
+      loadImg(`${import.meta.env.BASE_URL}SVG/right_hand.svg`),
+      loadImg(`${import.meta.env.BASE_URL}SVG/left_hand.svg`),
     ]).then(([rightHand, leftHand]) => {
       imgsRef.current = { right: rightHand, left: leftHand }
       recomputeMasks()

@@ -62,7 +62,7 @@ export default function Navbar({ theme, onToggle }) {
       onMouseLeave={() => setOpenMenu(null)}
     >
       <div className="nav-logo">
-        <img src="/logo_full.svg" alt="SCS Concordia" />
+        <img src={`${import.meta.env.BASE_URL}logo_full.svg`} alt="SCS Concordia" />
       </div>
 
       <ul className="nav-links">

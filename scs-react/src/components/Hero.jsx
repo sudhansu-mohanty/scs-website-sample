@@ -70,7 +70,7 @@ export default function Hero({ handsIn, textIn }) {
 
       <img
         className={`hand hand-left${handsIn ? ' hand-in' : ''}`}
-        src="/SVG/right_hand.svg"
+        src={`${import.meta.env.BASE_URL}SVG/right_hand.svg`}
         alt=""
       />
 
@@ -78,7 +78,7 @@ export default function Hero({ handsIn, textIn }) {
         <div className="hero-logo-wrap">
           <img
             className="hero-logo-full"
-            src="/logo_full.svg"
+            src={`${import.meta.env.BASE_URL}logo_full.svg`}
             alt="SCS Concordia"
           />
         </div>
@@ -97,7 +97,7 @@ export default function Hero({ handsIn, textIn }) {
 
       <img
         className={`hand hand-right${handsIn ? ' hand-in' : ''}`}
-        src="/SVG/left_hand.svg"
+        src={`${import.meta.env.BASE_URL}SVG/left_hand.svg`}
         alt=""
       />
     </section>

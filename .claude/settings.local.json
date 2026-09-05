@@ -12,7 +12,8 @@
       "Bash(printf 'y\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n\\\\n')",
       "Bash(find C:Userssudhacodingscs-website-samplescs-reactsrc -name *skiper* -o -name *ui*)",
       "Bash(date /t)",
-      "Bash(time /t)"
+      "Bash(time /t)",
+      "Bash(gh run:*)"
     ]
   }
 }
