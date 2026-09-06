@@ -50,9 +50,71 @@ function Check() {
 
 export default function WeeklyEvents() {
   const sectionRef = useRef(null)
+  const canvasRef = useRef(null)
   const headingRef = useRef(null)
   const subRef = useRef(null)
   const rowRefs = useRef([])
+
+  // Canvas dot-grid effect
+  useEffect(() => {
+    const canvas = canvasRef.current
+    const section = sectionRef.current
+    if (!canvas || !section) return
+
+    const ctx = canvas.getContext('2d')
+    const GRID = 60
+    const BASE_R = 2.5
+    const GLOW_R = 130
+    let mouseX = -9999
+    let mouseY = -9999
+    let raf
+
+    const resize = () => {
+      canvas.width = section.offsetWidth
+      canvas.height = section.offsetHeight
+    }
+
+    const draw = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+      const isLight = document.documentElement.getAttribute('data-theme') === 'light'
+      const restColor = isLight ? 'rgba(0,0,0,0.07)' : 'rgba(255,255,255,0.06)'
+      const glowColor = isLight
+        ? (p) => `rgba(110,80,200,${0.2 + p * 0.7})`
+        : (p) => `rgba(182,165,235,${0.18 + p * 0.75})`
+
+      for (let x = 0; x <= canvas.width; x += GRID) {
+        for (let y = 0; y <= canvas.height; y += GRID) {
+          const dist = Math.hypot(x - mouseX, y - mouseY)
+          const p = Math.max(0, 1 - dist / GLOW_R)
+          ctx.beginPath()
+          ctx.arc(x, y, BASE_R + p * 2.5, 0, Math.PI * 2)
+          ctx.fillStyle = p > 0 ? glowColor(p) : restColor
+          ctx.fill()
+        }
+      }
+      raf = requestAnimationFrame(draw)
+    }
+
+    const onMouseMove = (e) => {
+      const rect = section.getBoundingClientRect()
+      mouseX = e.clientX - rect.left
+      mouseY = e.clientY - rect.top
+    }
+    const onMouseLeave = () => { mouseX = -9999; mouseY = -9999 }
+
+    resize()
+    draw()
+    section.addEventListener('mousemove', onMouseMove)
+    section.addEventListener('mouseleave', onMouseLeave)
+    window.addEventListener('resize', resize)
+
+    return () => {
+      cancelAnimationFrame(raf)
+      section.removeEventListener('mousemove', onMouseMove)
+      section.removeEventListener('mouseleave', onMouseLeave)
+      window.removeEventListener('resize', resize)
+    }
+  }, [])
 
   useEffect(() => {
     const rows = rowRefs.current.filter(Boolean)
@@ -102,6 +164,7 @@ export default function WeeklyEvents() {
 
   return (
     <section className="weekly" id="weekly" ref={sectionRef}>
+      <canvas ref={canvasRef} className="weekly-grid-canvas" aria-hidden="true" />
       <div className="weekly-inner">
         <div className="weekly-intro">
           <h2 className="weekly-heading" ref={headingRef}>

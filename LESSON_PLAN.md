@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-06 (session 4)
+
+### Canvas and `requestAnimationFrame` for interactive graphics
+The HTML `<canvas>` element is a blank drawing surface you control entirely with JavaScript. You get a 2D context (`canvas.getContext('2d')`) and draw shapes by calling methods like `ctx.arc()` for circles and `ctx.fillStyle` for colour. `requestAnimationFrame` tells the browser to call your draw function before the next screen repaint — this gives you smooth 60fps animation without blocking the page. We used this today to draw dots at grid intersections and redraw them every frame as the mouse moves.
+
+**Try it yourself:** In `WeeklyEvents.jsx`, change `BASE_R = 2.5` to `BASE_R = 6`. Save and hover over the section — the dots will be noticeably larger at rest. Change it back when done.
+
+---
+
+### Proximity-based interactivity with `Math.hypot`
+`Math.hypot(dx, dy)` calculates the straight-line distance between two points using the Pythagorean theorem — same as `Math.sqrt(dx*dx + dy*dy)` but cleaner. We used it to measure how far each dot is from the mouse cursor, then computed a `proximity` value between 0 and 1 (`1 - dist / GLOW_R`). That single number drives both the dot's colour opacity and its size — the closer the cursor, the brighter and bigger the dot.
+
+**Try it yourself:** Change `GLOW_R = 130` to `GLOW_R = 250` in `WeeklyEvents.jsx`. Move your mouse over the section and notice how many more dots glow at once. Then try `GLOW_R = 50` for a tight, focused effect.
+
+---
+
+### Layering with z-index — CSS, canvas, and content
+Today we had three layers inside `.weekly`: the CSS `::before` grid lines, the canvas dots, and the actual section content. Each layer needs its own `z-index` to stack correctly — `0` for lines, `1` for canvas, `2` for content. If the canvas had a higher z-index than the content, it would block all clicks and hover interactions. `pointer-events: none` on the canvas is also essential — it makes the canvas invisible to the mouse so events pass through to the real content underneath.
+
+**Try it yourself:** Temporarily remove `pointer-events: none` from `.weekly-grid-canvas` in `index.css`. Try hovering over the "Join on Discord" button — it won't respond because the canvas is intercepting the event. Put it back.
+
+---
+
 ## 2026-09-06 (session 3)
 
 ### CSS `clamp()` — fluid sizing between a min and max

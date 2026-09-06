@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-09-06 — 17:45
+
+- Added interactive dot-grid to the Weekly Events section: faded CSS grid lines as a static background + a canvas layer drawing dots at every 60×60px intersection
+- Dots are always visible at rest and glow purple when the cursor is nearby (proximity-based, using `Math.hypot` for distance)
+- Iterated on opacity of lines and dots multiple times to find a subtle balance — final values: lines `0.03` (dark) / `0.04` (light), dots `0.06` (dark) / `0.07` (light)
+- Dot radius set to `2.5px` at rest, grows up to `5px` at closest proximity
+- Canvas z-index sits between the CSS grid lines and the section content so it never blocks interaction
+
+---
+
 ## 2026-09-06 — 16:45
 
 - Made nav logo visible and larger (40px) in full-width transparent state at top, smoothly shrinking to 28px when the pill appears — uses the same `cubic-bezier` transition as the nav shape

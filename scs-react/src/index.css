@@ -688,20 +688,48 @@ nav.scrolled .nav-controls {
 :root {
   --weekly-media-frame: rgba(182, 165, 235, 0.14);
   --weekly-badge-border: rgba(255, 255, 255, 0.16);
+  --weekly-grid-line: rgba(255, 255, 255, 0.03);
 }
 
 [data-theme='light'] {
   --weekly-media-frame: rgba(67, 48, 121, 0.1);
   --weekly-badge-border: rgba(0, 0, 0, 0.14);
+  --weekly-grid-line: rgba(0, 0, 0, 0.04);
 }
 
 .weekly {
+  position: relative;
   background: var(--color-bg);
   padding: clamp(48px, 8vw, 90px) clamp(20px, 3vw, 48px);
   overflow: hidden;
 }
 
+/* Static faded grid lines */
+.weekly::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--weekly-grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--weekly-grid-line) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Canvas sits on top of lines — only draws the interactive dots */
+.weekly-grid-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
 .weekly-inner {
+  position: relative;
+  z-index: 2;
   max-width: 1180px;
   margin: 0 auto;
 }
