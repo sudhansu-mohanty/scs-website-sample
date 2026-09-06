@@ -48,11 +48,25 @@ function Check() {
 
 export default function WeeklyEvents() {
   const sectionRef = useRef(null)
+  const headingRef = useRef(null)
   const rowRefs = useRef([])
 
   useEffect(() => {
     const rows = rowRefs.current.filter(Boolean)
     if (!rows.length) return
+
+    const headingAnim = gsap.from(headingRef.current, {
+      x: -100,
+      opacity: 0,
+      duration: 1,
+      ease: 'power2.out',
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: 'top 90%',
+        end: 'top -50%',
+        scrub: true,
+      },
+    })
 
     const anims = rows.map((row, i) => {
       const media = row.querySelector('.weekly-media')
@@ -73,6 +87,8 @@ export default function WeeklyEvents() {
     })
 
     return () => {
+      headingAnim.scrollTrigger?.kill()
+      headingAnim.kill()
       anims.forEach((tl) => {
         tl.scrollTrigger?.kill()
         tl.kill()
@@ -85,7 +101,7 @@ export default function WeeklyEvents() {
       <div className="weekly-inner">
         <div className="weekly-intro">
           <span className="weekly-label">Weekly Events</span>
-          <h2 className="weekly-heading">
+          <h2 className="weekly-heading" ref={headingRef}>
             Show up every week,<br />leave a little sharper.
           </h2>
           <p className="weekly-sub">

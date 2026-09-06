@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-09-06 — 14:53
+
+- Slowed down About Us word reveal animation by increasing pin duration from `window.innerHeight * 1` to `window.innerHeight * 2`
+- Slowed down About Us heading slide-in by pushing `end` from `'top 20%'` to `'top -50%'` (more scroll travel = slower feel)
+- Added slide-in animation to Weekly Events heading — same GSAP `gsap.from()` with `x: -100, opacity: 0, scrub` as About Us heading; added `headingRef` and wired it to the `<h2>`
+- Attempted to restyle `.weekly-heading` to match `.about-heading` (font size, underline) and changed row animations to all slide from right — reverted both on user request
+- Updated `CLAUDE.md` to include a lesson plan step on `session terminated` — each session now also writes a `LESSON_PLAN.md` entry covering concepts encountered during that session
+- Discussed what GSAP is: animation library, `gsap.from()`, `ScrollTrigger`, `scrub` explained in context of the codebase
+
+---
+
 ## 2026-09-06 — 13:36
 
 - Reverted accidental `AboutUs.jsx` changes from previous session (heading trigger was incorrectly set to `start: 'top top'` instead of `start: 'top 90%'`, and pin end was shortened)

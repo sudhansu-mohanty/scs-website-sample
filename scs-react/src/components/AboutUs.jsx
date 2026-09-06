@@ -26,11 +26,11 @@ export default function AboutUs() {
 
     const allWords = textEl.querySelectorAll('.about-word')
 
-    // Scroll-pinned word reveal
+    // Scroll-pinned word reveal - About us
     const wordTrigger = ScrollTrigger.create({
       trigger: section,
       start: 'top top',
-      end: '+=' + window.innerHeight,
+      end: '+=' + window.innerHeight * 2,
       pin: true,
       scrub: true,
       onUpdate: (self) => {
@@ -41,7 +41,7 @@ export default function AboutUs() {
       },
     })
 
-    // Heading slide-in on scroll
+    // Heading slide-in on scroll - About us
     const headingAnim = gsap.from(heading, {
       x: -100,
       opacity: 0,
@@ -50,7 +50,8 @@ export default function AboutUs() {
       scrollTrigger: {
         trigger: section,
         start: 'top 90%',
-        end: 'top 20%',
+        // end: 'top 20%',
+        end: 'top -50%',
         scrub: true,
       },
     })
