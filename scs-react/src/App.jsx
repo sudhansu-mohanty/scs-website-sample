@@ -5,6 +5,7 @@ import IntroOverlay from './components/IntroOverlay'
 import Hero from './components/Hero'
 // import CursorCircle from './components/CursorCircle'
 import AboutUs from './components/AboutUs'
+import WeeklyEvents from './components/WeeklyEvents'
 
 /*
   App is the root component — it owns the state that multiple
@@ -65,6 +66,8 @@ export default function App() {
       <Hero handsIn={handsIn} textIn={textIn} />
 
       <AboutUs />
+
+      <WeeklyEvents />
 
       {/* <CursorCircle /> */}
     </>

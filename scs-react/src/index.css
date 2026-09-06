@@ -44,6 +44,7 @@ html {
   --color-accent-2: #7bc880;
   --color-nav-bg: #151515;
   --color-nav-border: rgba(255, 255, 255, 0.1);
+  --color-nav-pill: rgba(255, 255, 255, 0.06);
   --color-nav-shadow: none;
   --color-img-filter: none;
 
@@ -73,6 +74,7 @@ html {
   --color-accent-2: #3a8f40;
   --color-nav-bg: #ffffff;
   --color-nav-border: rgba(0, 0, 0, 0.1);
+  --color-nav-pill: rgba(0, 0, 0, 0.05);
   --color-nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   --color-img-filter: invert(1);
 }
@@ -166,7 +168,7 @@ nav {
   background: var(--color-nav-bg);
   border: 1px solid var(--color-nav-border);
   box-shadow: var(--color-nav-shadow);
-  border-radius: 16px;
+  border-radius: 999px;
   padding: 0 28px;
   height: 52px;
   display: grid;
@@ -208,8 +210,8 @@ nav {
   transition: color 0.2s;
 }
 
-/* Left-to-right purple underline on hover */
-.nav-links a::after,
+/* Left-to-right purple underline on hover — top-level nav headers only */
+.nav-item > a::after,
 .nav-trigger::after {
   content: '';
   position: absolute;
@@ -223,7 +225,7 @@ nav {
   transition: transform 0.45s ease;
 }
 
-.nav-links a:hover::after,
+.nav-item > a:hover::after,
 .nav-trigger:hover::after,
 .nav-item.active .nav-trigger::after {
   transform: scaleX(1);
@@ -327,8 +329,13 @@ nav {
 .nav-controls {
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 2px;
   justify-self: end;
+  background: var(--color-nav-pill);
+  border: 1px solid var(--color-nav-border);
+  border-radius: 999px;
+  padding: 3px 6px;
+  margin-right: -16px;
 }
 
 .theme-toggle {
@@ -645,6 +652,159 @@ nav {
   color: var(--about-text-light);
 }
 
+/* ── Weekly Events ── */
+:root {
+  --weekly-media-frame: rgba(182, 165, 235, 0.14);
+  --weekly-badge-border: rgba(255, 255, 255, 0.16);
+}
+
+[data-theme='light'] {
+  --weekly-media-frame: rgba(67, 48, 121, 0.1);
+  --weekly-badge-border: rgba(0, 0, 0, 0.14);
+}
+
+.weekly {
+  background: var(--color-bg);
+  padding: clamp(64px, 12vw, 140px) clamp(20px, 3vw, 48px);
+  overflow: hidden;
+}
+
+.weekly-inner {
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+.weekly-label {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 20px;
+}
+
+.weekly-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(32px, 5vw, 56px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.weekly-sub {
+  margin-top: 18px;
+  max-width: 460px;
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+/* Full-width alternating event row */
+.weekly-event {
+  margin-top: clamp(56px, 9vw, 110px);
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  align-items: center;
+  gap: clamp(32px, 6vw, 80px);
+}
+
+.weekly-event.reverse .weekly-media {
+  order: 2;
+}
+
+.weekly-media {
+  background: var(--weekly-media-frame);
+  padding: clamp(10px, 1.6vw, 20px);
+  border-radius: 28px;
+}
+
+.weekly-media img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 18px;
+}
+
+.weekly-badge {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.06em;
+  color: var(--color-accent);
+  border: 1px solid var(--weekly-badge-border);
+  border-radius: 999px;
+  padding: 6px 14px;
+}
+
+.weekly-event-title {
+  margin-top: 20px;
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(30px, 4.4vw, 48px);
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+.weekly-event-blurb {
+  margin-top: 16px;
+  max-width: 46ch;
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  line-height: var(--leading-body);
+  color: var(--color-text-muted);
+}
+
+.weekly-checklist {
+  margin-top: 26px;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.weekly-checklist li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  color: var(--color-text);
+}
+
+.weekly-check {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  color: var(--color-accent);
+  background: rgba(182, 165, 235, 0.16);
+}
+
+.weekly-cta {
+  margin-top: 30px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.weekly-cta:hover {
+  color: var(--color-accent);
+  gap: 12px;
+}
+
 /* ── Responsive ── */
 @media (max-width: 680px) {
   nav {
@@ -652,7 +812,7 @@ nav {
     height: 46px;
     width: calc(100% - 24px);
     top: 12px;
-    border-radius: 12px;
+    border-radius: 999px;
   }
 
   .nav-logo img {
@@ -673,5 +833,18 @@ nav {
 
   .about-inner {
     grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 860px) {
+  .weekly-event,
+  .weekly-event.reverse {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+
+  .weekly-event .weekly-media,
+  .weekly-event.reverse .weekly-media {
+    order: 0;
   }
 }

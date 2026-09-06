@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-09-06 — 00:26
+
+- Nav hover underline: added a purple left-to-right wipe (`::after` scaleX) on hover; slowed from 0.25s to 0.45s; rescoped to `.nav-item > a` / `.nav-trigger` so dropdown-panel options are excluded
+- Navbar shape: `border-radius` 16px → 999px (full pill), including mobile breakpoint
+- Nav controls: theme + mute icons moved into their own rounded pill (`--color-nav-pill` token), nudged ~16px past the nav's inner edge; briefly tried `filter: invert(1)` on the pill then reverted
+- Mirrored underline / radius / pill changes into the root `index.html`
+- Built new Weekly Events section (`WeeklyEvents.jsx` + `#weekly`, rendered after About Us):
+  - First pass: two side-by-side cards
+  - Reworked to two full-width alternating rows — AlgoTime (image left / info right), Tech Hour (image right / info left)
+  - Framed placeholder images (picsum), pill schedule badge, serif title, blurb, checkmark list, "Join on Discord" ghost CTA
+  - Slide-in on scroll like About Us — GSAP ScrollTrigger with scrub, media + info entering from opposite sides
+  - Stacks to one column under 860px; content from `SCS_Concordia.md`
+- All changes logged in `CHANGELOG.md`
+
+---
+
 ## 2026-09-05 — 23:33
 
 - Added a purple (`--color-accent`) hover underline to nav options that wipes in from left to right
