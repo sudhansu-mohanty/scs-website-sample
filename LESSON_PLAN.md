@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-06 (session 3)
+
+### CSS `clamp()` — fluid sizing between a min and max
+`clamp(min, preferred, max)` lets a value grow and shrink with the viewport without jumping between fixed breakpoints. The middle value is usually a `vw` (viewport-width) unit — so the size scales proportionally as the window resizes, but never goes below `min` or above `max`. We used it today for section padding (`clamp(48px, 8vw, 90px)`) and event row spacing (`clamp(32px, 4vw, 56px)`) so everything scales smoothly on any screen size.
+
+**Try it yourself:** Change the padding on `.weekly` to `clamp(20px, 5vw, 200px)`, resize the browser window slowly, and watch the padding grow and shrink. Then put it back.
+
+---
+
+### CSS transitions on layout properties
+CSS can animate many properties — not just colours and opacity, but also `height`, `border-radius`, `padding`, and `max-width`. We used this today so the navbar logo smoothly shrinks from 40px to 28px as the nav collapses into its pill shape. The key is listing the property name in `transition` with a duration and easing curve. If you forget to add a property to the `transition` list, it will snap instead of animate.
+
+**Try it yourself:** In `index.css`, remove `height 0.45s cubic-bezier(...)` from `.nav-logo img`'s transition. Scroll up and down and notice the logo size jumps instantly instead of transitioning. Put it back.
+
+---
+
+### Inline SVG icons in JSX
+Instead of importing icon libraries, you can paste SVG code directly inside JSX. Each SVG is just an `<svg>` tag with `viewBox`, `width`, `height`, and path data inside. We used this for the pin (location) and clock (time) icons in the weekly event cards — small, self-contained, no dependencies. Using `aria-hidden="true"` hides the icon from screen readers since the text beside it already describes what it is.
+
+**Try it yourself:** Find the clock SVG in `WeeklyEvents.jsx` and change `strokeWidth="1.4"` to `strokeWidth="3"`. Save and look at how much bolder the icon becomes. Change it back.
+
+---
+
 ## 2026-09-06 (session 2)
 
 ### CSS `::after` pseudo-element for decorative underlines

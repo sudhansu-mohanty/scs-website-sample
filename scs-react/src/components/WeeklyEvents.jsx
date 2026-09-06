@@ -12,7 +12,8 @@ gsap.registerPlugin(ScrollTrigger)
 const EVENTS = [
   {
     name: 'AlgoTime',
-    when: 'Every Monday · 6–8 PM',
+    location: 'H-430',
+    time: 'Mondays · 6:00 – 8:00 PM',
     image: 'https://picsum.photos/seed/algotime-scs/1000/760',
     blurb:
       'Weekly LeetCode practice sessions where we work through coding challenges together, break down patterns, and get faster at the kind of problems that show up in technical interviews.',
@@ -24,7 +25,8 @@ const EVENTS = [
   },
   {
     name: 'Tech Hour',
-    when: 'Every Wednesday · 6–8 PM',
+    location: 'H-430',
+    time: 'Wednesdays · 6:00 – 8:00 PM',
     image: 'https://picsum.photos/seed/techhour-scs/1000/760',
     blurb:
       'Hands-on build sessions where you ship a small software project in under two hours. Bring an idea or borrow one of ours, then try out the newest APIs and AI tools while you build.',
@@ -122,8 +124,23 @@ export default function WeeklyEvents() {
             </div>
 
             <div className="weekly-info">
-              <span className="weekly-badge">{event.when}</span>
               <h3 className="weekly-event-title">{event.name}</h3>
+              <div className="weekly-meta">
+                <span className="weekly-meta-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <path d="M7 1C4.79 1 3 2.79 3 5c0 3.25 4 8 4 8s4-4.75 4-8c0-2.21-1.79-4-4-4Z" stroke="currentColor" strokeWidth="1.4" strokeLinejoin="round"/>
+                    <circle cx="7" cy="5" r="1.5" stroke="currentColor" strokeWidth="1.4"/>
+                  </svg>
+                  {event.location}
+                </span>
+                <span className="weekly-meta-item">
+                  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                    <circle cx="7" cy="7" r="5.5" stroke="currentColor" strokeWidth="1.4"/>
+                    <path d="M7 4v3.5l2 1.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  {event.time}
+                </span>
+              </div>
               <p className="weekly-event-blurb">{event.blurb}</p>
 
               <ul className="weekly-checklist">

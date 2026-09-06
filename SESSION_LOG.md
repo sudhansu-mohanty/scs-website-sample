@@ -2,6 +2,17 @@
 
 ---
 
+## 2026-09-06 — 16:45
+
+- Made nav logo visible and larger (40px) in full-width transparent state at top, smoothly shrinking to 28px when the pill appears — uses the same `cubic-bezier` transition as the nav shape
+- Decreased spacing between weekly event rows: `margin-top` reduced from `clamp(56px, 9vw, 110px)` to `clamp(32px, 4vw, 56px)`
+- Reduced `.weekly` section top/bottom padding max from 140px to 90px
+- Matched `.weekly-heading` font size to `.about-heading`: both now use `clamp(48px, 6vw, var(--text-display))`
+- Replaced the single pill badge (day + time) on each event card with two separate meta items — location (H-430) with a pin icon, and time with a clock icon
+- Moved the meta items below the card title instead of above it, with 20px top margin for breathing room
+
+---
+
 ## 2026-09-06 — 15:30
 
 - Removed the `Weekly Events` label span and replaced the `h2` "Show up every week, leave a little sharper." with just "Weekly Events"
