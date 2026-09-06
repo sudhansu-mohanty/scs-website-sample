@@ -198,6 +198,7 @@ nav {
 }
 
 .nav-links a {
+  position: relative;
   font-size: var(--text-body-sm);
   line-height: var(--leading-body-sm);
   letter-spacing: var(--tracking-body-sm);
@@ -205,6 +206,27 @@ nav {
   color: var(--color-text);
   text-decoration: none;
   transition: color 0.2s;
+}
+
+/* Left-to-right purple underline on hover */
+.nav-links a::after,
+.nav-trigger::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 100%;
+  height: 2px;
+  background: var(--color-accent);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s ease;
+}
+
+.nav-links a:hover::after,
+.nav-trigger:hover::after,
+.nav-item.active .nav-trigger::after {
+  transform: scaleX(1);
 }
 
 .nav-links a:hover {
@@ -217,6 +239,7 @@ nav {
 }
 
 .nav-trigger {
+  position: relative;
   background: none;
   border: none;
   cursor: pointer;

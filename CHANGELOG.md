@@ -2,6 +2,13 @@
 
 ---
 
+## 2026-09-05
+
+### Nav Hover Underline
+- Nav links / dropdown triggers now show a purple (`--color-accent`) underline that animates in from left to right on hover (also stays lit while a dropdown is open)
+- Implemented via an `::after` bar with `transform: scaleX(0 → 1)` and `transform-origin: left`, 0.45s ease
+- Applied in both `index.html` and `scs-react/src/index.css`
+
 ## 2026-08-24
 
 ### Theming & Visual Overhaul

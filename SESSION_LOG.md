@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-09-05 — 23:33
+
+- Added a purple (`--color-accent`) hover underline to nav options that wipes in from left to right
+- Implemented as an `::after` bar using `transform: scaleX(0 → 1)` with `transform-origin: left`
+- Applied to top-level nav links and dropdown triggers (`Who we are`, `What we do`, `Contact`); underline also stays lit while a dropdown is open
+- Tuned timing from `0.25s` to `0.45s ease` per feedback
+- Mirrored the change in both `index.html` and `scs-react/src/index.css`; logged in `CHANGELOG.md`
+
+---
+
 ## 2026-09-05 — 23:45
 
 - Set up GitHub Pages deployment via GitHub Actions (`.github/workflows/deploy.yml`) — triggers on every push to main, builds from `scs-react/` subdirectory, deploys `dist/` to Pages
