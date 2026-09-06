@@ -592,6 +592,9 @@ nav {
 .about {
   background: var(--about-bg);
   padding: clamp(48px, 8vw, 80px) clamp(20px, 3vw, 48px);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
   position: relative;
   overflow: hidden;
 }

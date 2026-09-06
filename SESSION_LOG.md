@@ -2,6 +2,15 @@
 
 ---
 
+## 2026-09-06 — 13:36
+
+- Reverted accidental `AboutUs.jsx` changes from previous session (heading trigger was incorrectly set to `start: 'top top'` instead of `start: 'top 90%'`, and pin end was shortened)
+- Diagnosed root cause of scroll animation ending too early: `.about` section had no minimum height, so when GSAP pinned it at the top, the events section was already visible in the bottom half of the viewport the entire time point 2 was never truly hidden
+- Fixed by adding `min-height: 100vh`, `display: flex`, and `align-items: center` to `.about` in `index.css` — section now fills the full viewport when pinned, keeping the events section fully hidden behind it
+- Simplified pin duration to exactly `window.innerHeight` (one full viewport scroll) — words reveal from 0→100% during that scroll, pin releases, events section scrolls up naturally from below
+
+---
+
 ## 2026-09-06 — 00:26
 
 - Nav hover underline: added a purple left-to-right wipe (`::after` scaleX) on hover; slowed from 0.25s to 0.45s; rescoped to `.nav-item > a` / `.nav-trigger` so dropdown-panel options are excluded

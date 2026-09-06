@@ -30,7 +30,7 @@ export default function AboutUs() {
     const wordTrigger = ScrollTrigger.create({
       trigger: section,
       start: 'top top',
-      end: '+=' + window.innerHeight * 1.5,
+      end: '+=' + window.innerHeight,
       pin: true,
       scrub: true,
       onUpdate: (self) => {
