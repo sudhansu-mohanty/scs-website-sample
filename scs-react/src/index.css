@@ -159,24 +159,43 @@ body.intro-loading {
 /* ── Nav ── */
 nav {
   position: fixed;
-  top: 10px;
+  top: 0;
   left: 50%;
   transform: translateX(-50%);
-  width: calc(100% - 48px);
-  max-width: 1200px;
+  width: 100%;
+  max-width: 100%;
   z-index: 100;
-  background: var(--color-nav-bg);
-  border: 1px solid var(--color-nav-border);
-  box-shadow: var(--color-nav-shadow);
-  border-radius: 999px;
-  padding: 0 28px;
-  height: 52px;
+  background: transparent;
+  border: 1px solid transparent;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0 40px;
+  height: 64px;
   display: grid;
   grid-template-columns: 1fr auto 1fr;
   align-items: center;
   transition:
-    background 0.3s ease,
-    border-color 0.3s ease;
+    top 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    max-width 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    border-radius 0.45s cubic-bezier(0.4, 0, 0.2, 1),
+    background 0.45s ease,
+    border-color 0.45s ease,
+    box-shadow 0.45s ease,
+    padding 0.45s ease,
+    height 0.45s ease;
+}
+
+nav.scrolled {
+  top: 10px;
+  width: calc(100% - 48px);
+  max-width: 1200px;
+  background: var(--color-nav-bg);
+  border-color: var(--color-nav-border);
+  box-shadow: var(--color-nav-shadow);
+  border-radius: 999px;
+  padding: 0 28px;
+  height: 52px;
 }
 
 .nav-logo {
@@ -331,11 +350,17 @@ nav {
   align-items: center;
   gap: 2px;
   justify-self: end;
-  background: var(--color-nav-pill);
-  border: 1px solid var(--color-nav-border);
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: 999px;
   padding: 3px 6px;
   margin-right: -16px;
+  transition: background 0.45s ease, border-color 0.45s ease;
+}
+
+nav.scrolled .nav-controls {
+  background: var(--color-nav-pill);
+  border-color: var(--color-nav-border);
 }
 
 .theme-toggle {
@@ -694,6 +719,17 @@ nav {
   line-height: 1.1;
   letter-spacing: -0.02em;
   color: var(--color-text);
+  display: inline-block;
+}
+
+.weekly-heading::after {
+  content: '';
+  display: block;
+  margin-top: 10px;
+  height: 4px;
+  width: 100%;
+  background-color: var(--purple-mid);
+  border-radius: 2px;
 }
 
 .weekly-sub {

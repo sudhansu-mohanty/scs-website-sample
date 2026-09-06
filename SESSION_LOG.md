@@ -2,6 +2,16 @@
 
 ---
 
+## 2026-09-06 — 15:30
+
+- Removed the `Weekly Events` label span and replaced the `h2` "Show up every week, leave a little sharper." with just "Weekly Events"
+- Added the subtitle ("Two standing sessions...") to slide in together with the heading using GSAP stagger — added `subRef` and passed both refs as an array to `gsap.from()`
+- Added purple underline to `Weekly Events` heading matching the About Us style — `::after` pseudo-element with `height: 4px`, `background-color: var(--purple-mid)`, and `display: inline-block` on the heading
+- Rebuilt navbar scroll behaviour to match bklit.com: starts full-width and transparent flush to the top; transitions into the floating pill when scrolled past 60px using a `scrolled` CSS class toggled by a `useEffect` scroll listener
+- `.nav-controls` pill background also fades in only when scrolled — transparent at top, visible in pill state
+
+---
+
 ## 2026-09-06 — 14:53
 
 - Slowed down About Us word reveal animation by increasing pin duration from `window.innerHeight * 1` to `window.innerHeight * 2`

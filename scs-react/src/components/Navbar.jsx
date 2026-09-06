@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { playHover, playClick, isMuted, setMuted } from '../utils/sfx'
 
 const NAV_ITEMS = [
@@ -48,6 +48,14 @@ export default function Navbar({ theme, onToggle }) {
   const isDark = theme === 'dark'
   const [openMenu, setOpenMenu] = useState(null)
   const [muted, setMutedState] = useState(isMuted())
+  const [scrolled, setScrolled] = useState(false)
+  const navRef = useRef(null)
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 60)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   const toggleMute = () => {
     const next = !muted
@@ -58,7 +66,9 @@ export default function Navbar({ theme, onToggle }) {
 
   return (
     <nav
+      ref={navRef}
       aria-label="Main navigation"
+      className={scrolled ? 'scrolled' : ''}
       onMouseLeave={() => setOpenMenu(null)}
     >
       <div className="nav-logo">

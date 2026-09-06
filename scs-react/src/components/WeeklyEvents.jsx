@@ -49,17 +49,19 @@ function Check() {
 export default function WeeklyEvents() {
   const sectionRef = useRef(null)
   const headingRef = useRef(null)
+  const subRef = useRef(null)
   const rowRefs = useRef([])
 
   useEffect(() => {
     const rows = rowRefs.current.filter(Boolean)
     if (!rows.length) return
 
-    const headingAnim = gsap.from(headingRef.current, {
+    const headingAnim = gsap.from([headingRef.current, subRef.current], {
       x: -100,
       opacity: 0,
       duration: 1,
       ease: 'power2.out',
+      stagger: 0.08,
       scrollTrigger: {
         trigger: sectionRef.current,
         start: 'top 90%',
@@ -100,11 +102,10 @@ export default function WeeklyEvents() {
     <section className="weekly" id="weekly" ref={sectionRef}>
       <div className="weekly-inner">
         <div className="weekly-intro">
-          <span className="weekly-label">Weekly Events</span>
           <h2 className="weekly-heading" ref={headingRef}>
-            Show up every week,<br />leave a little sharper.
+            Weekly Events
           </h2>
-          <p className="weekly-sub">
+          <p className="weekly-sub" ref={subRef}>
             Two standing sessions run every week during the semester — drop in
             whenever, no signup required.
           </p>

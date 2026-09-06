@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-06 (session 2)
+
+### CSS `::after` pseudo-element for decorative underlines
+A pseudo-element like `::after` lets you attach a purely visual element to any tag without adding extra HTML. It doesn't exist in the DOM — CSS creates it. We used it today to add a purple bar beneath the "Weekly Events" heading: `content: ''` creates the element, `display: block` puts it on its own line below the text, and `background-color` gives it its colour. The heading needed `display: inline-block` so the underline only spans the width of the text rather than the full container.
+
+**Try it yourself:** Add `::after` to `.weekly-sub` in `index.css` with `content: ''`, `display: block`, `height: 2px`, and `background: red`. Save and look at the page — then remove it.
+
+---
+
+### Passing multiple targets to GSAP
+`gsap.from()` doesn't just accept a single element — you can pass an array like `gsap.from([headingRef.current, subRef.current], { ... })`. GSAP will animate all of them with the same settings. Adding `stagger: 0.08` makes each element start slightly after the previous one, creating a cascading feel. We used this so the heading and subtitle both slide in from the left together but with a tiny delay between them.
+
+**Try it yourself:** In `WeeklyEvents.jsx`, change `stagger: 0.08` to `stagger: 0.3` and scroll to that section — you'll see the gap between the heading and subtitle grow noticeably.
+
+---
+
+### Scroll-driven class toggling with `useEffect`
+A common pattern in React is to listen for browser events (like `scroll`) inside a `useEffect` and update state based on them. We used `window.addEventListener('scroll', ...)` to check `window.scrollY > 60` and toggle a `scrolled` boolean. That boolean becomes a CSS class on the `<nav>`, which lets CSS do all the visual work via the `nav.scrolled` selector. The cleanup function (`return () => removeEventListener(...)`) is important — it prevents memory leaks by removing the listener when the component unmounts.
+
+**Try it yourself:** Change the threshold `60` to `300` in `Navbar.jsx`. Scroll slowly and notice how much further down you have to go before the pill appears. Try `10` and see how instantly it triggers.
+
+---
+
 ## 2026-09-06
 
 ### ScrollTrigger `start` and `end` — controlling animation speed
