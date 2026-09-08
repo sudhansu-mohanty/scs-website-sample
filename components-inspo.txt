@@ -1,0 +1,3 @@
+https://chanhdai.com/components/glow-card-grid <- for meet the team or collection of people
+https://chanhdai.com/components/logos-carousel <- for sponsors section
+https://skiper-ui.com/v1/skiper6 <- meet the team reveal section>

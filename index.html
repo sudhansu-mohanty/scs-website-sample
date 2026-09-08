@@ -424,6 +424,149 @@
       z-index: 2;
     }
 
+    /* ── What We Do — revealing cards ── */
+    .reveal-section {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(90px, 16vh, 180px) 24px clamp(110px, 18vh, 200px);
+    }
+
+    .reveal-head {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: clamp(44px, 6vw, 76px);
+    }
+
+    .reveal-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .reveal-title {
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      max-width: 20ch;
+    }
+
+    .reveal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(16px, 2vw, 28px);
+    }
+
+    .reveal-card {
+      position: relative;
+      overflow: hidden;
+      isolation: isolate;
+      min-height: clamp(320px, 44vh, 460px);
+      border-radius: 22px;
+      border: 1px solid var(--color-nav-border);
+      background: var(--color-nav-bg);
+      backdrop-filter: blur(20px) saturate(160%);
+      -webkit-backdrop-filter: blur(20px) saturate(160%);
+      transition: border-color 0.3s ease, transform 0.4s ease;
+    }
+
+    /* Per-card curtain colours */
+    .reveal-card.card-academic { --card-a: var(--purple-mid);   --card-b: var(--purple-deep); }
+    .reveal-card.card-social   { --card-a: var(--green-mid);     --card-b: #2f6f45; }
+    .reveal-card.card-wine     { --card-a: var(--purple-light);  --card-b: var(--green-mid); }
+
+    /* The curtain that wipes upward to reveal the card */
+    .reveal-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background: linear-gradient(135deg, var(--card-a), var(--card-b));
+      transform: translateY(0);
+      transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+    }
+
+    .reveal-card.revealed::after {
+      transform: translateY(-101%);
+    }
+
+    .reveal-card:nth-child(2)::after { transition-delay: 0.12s; }
+    .reveal-card:nth-child(3)::after { transition-delay: 0.24s; }
+
+    .reveal-card-inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: clamp(24px, 2.4vw, 34px);
+      opacity: 0;
+      transform: translateY(24px);
+      transition: opacity 0.7s ease 0.4s, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.4s;
+    }
+
+    .reveal-card:nth-child(2) .reveal-card-inner { transition-delay: 0.52s; }
+    .reveal-card:nth-child(3) .reveal-card-inner { transition-delay: 0.64s; }
+
+    .reveal-card.revealed .reveal-card-inner {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .reveal-card .card-top {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+    }
+
+    .reveal-card .card-icon {
+      width: 40px;
+      height: 40px;
+      color: var(--color-accent);
+    }
+
+    .reveal-card .card-index {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      color: var(--color-text-muted);
+    }
+
+    .reveal-card h3 {
+      margin-top: 18px;
+      font-size: clamp(19px, 1.6vw, 24px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .reveal-card p {
+      margin-top: 10px;
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+    }
+
+    @media (hover: hover) {
+      .reveal-card.revealed:hover {
+        transform: translateY(-6px);
+        border-color: var(--color-accent);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .reveal-card::after { display: none; }
+      .reveal-card-inner { opacity: 1; transform: none; transition: none; }
+    }
+
+    @media (max-width: 860px) {
+      .reveal-grid { grid-template-columns: 1fr; }
+      .reveal-card { min-height: 260px; }
+    }
+
     /* ── Responsive ── */
     @media (max-width: 680px) {
       nav {
@@ -470,7 +613,7 @@
     </div>
     <ul class="nav-links">
       <li><a href="#">Home</a></li>
-      <li><a href="#">What we do</a></li>
+      <li><a href="#what-we-do">What we do</a></li>
       <li><a href="#">Who we are</a></li>
       <li><a href="#">Contact</a></li>
     </ul>
@@ -514,6 +657,75 @@
     </div>
 
     <img class="hand hand-right" src="SVG/left_hand.svg" alt="">
+  </section>
+
+  <!-- What We Do — revealing cards -->
+  <section class="reveal-section" id="what-we-do" aria-labelledby="what-we-do-title">
+    <div class="reveal-head">
+      <span class="reveal-label">What we do</span>
+      <h2 class="reveal-title" id="what-we-do-title">Events that bring the SCS community together</h2>
+    </div>
+
+    <div class="reveal-grid">
+      <article class="reveal-card card-academic">
+        <div class="reveal-card-inner">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M22 10 12 5 2 10l10 5 10-5Z" />
+              <path d="M6 12v5c0 1 2.7 3 6 3s6-2 6-3v-5" />
+              <path d="M22 10v6" />
+            </svg>
+            <span class="card-index">01</span>
+          </div>
+          <div>
+            <h3>Academic</h3>
+            <p>Workshops, tutoring nights, and exam jams that help you get through the hard
+              courses alongside people who have already been there.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="reveal-card card-social">
+        <div class="reveal-card-inner">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+              <circle cx="9" cy="7" r="4" />
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+              <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+            </svg>
+            <span class="card-index">02</span>
+          </div>
+          <div>
+            <h3>Social Events</h3>
+            <p>Game nights, mixers, and end-of-term parties — the easiest way to meet the
+              rest of your cohort outside of a lecture hall.</p>
+          </div>
+        </div>
+      </article>
+
+      <article class="reveal-card card-wine">
+        <div class="reveal-card-inner">
+          <div class="card-top">
+            <svg class="card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"
+              stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M8 22h8" />
+              <path d="M12 15v7" />
+              <path d="M7 3h10l-1 7a4 4 0 0 1-8 0L7 3Z" />
+              <path d="M6.6 8h10.8" />
+            </svg>
+            <span class="card-index">03</span>
+          </div>
+          <div>
+            <h3>Wine &amp; Cheese</h3>
+            <p>Our flagship evening: students, faculty, and alumni over a glass and a
+              board. Dress up, make connections, and unwind before finals.</p>
+          </div>
+        </div>
+      </article>
+    </div>
   </section>
 
   <!-- Cursor invert circle -->
@@ -611,6 +823,28 @@
           overlay.addEventListener('transitionend', afterIntro, { once: true });
         }, 350);
       }, { once: true });
+    })();
+
+    // Revealing cards — wipe the curtain away once each card scrolls into view
+    (function () {
+      const cards = document.querySelectorAll('.reveal-card');
+      if (!cards.length) return;
+
+      if (!('IntersectionObserver' in window)) {
+        cards.forEach(function (c) { c.classList.add('revealed'); });
+        return;
+      }
+
+      const io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('revealed');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.35 });
+
+      cards.forEach(function (c) { io.observe(c); });
     })();
   </script>
 

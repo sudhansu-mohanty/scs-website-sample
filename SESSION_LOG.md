@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-09-08 — 12:45
+
+- Added a new "What We Do" section to `index.html`, placed directly after the hero
+- Three-card grid — **Academic**, **Social Events**, **Wine & Cheese** — 3-up, collapsing to one column under 860px
+- Built a "revealing card" animation: each card sits under a brand-gradient curtain (`::after`) that wipes upward (`translateY(-101%)`) to expose the content beneath
+- Card content (icon, index number, title, blurb) fades and slides up after the curtain clears
+- Staggered the reveal across the three cards using `:nth-child` + `transition-delay` on both the curtain and the inner content
+- Triggered each card's reveal with an `IntersectionObserver` (threshold 0.35, `unobserve` after firing); fallback shows all cards when the API is unavailable
+- Per-card curtain colours drawn from `brand-palette.md` via class-scoped CSS custom properties (`--card-a` / `--card-b`); icons and hover border use the theme-aware `--color-accent`
+- Added `prefers-reduced-motion` handling (curtain removed, content shown immediately) and gated the hover lift behind `@media (hover: hover)`
+- Inline SVG icons for each card (graduation cap, people, wine glass)
+- Pointed the nav "What we do" link at the new `#what-we-do` anchor
+- Logged the work in `CHANGELOG.md`
+
+---
+
 ## 2026-09-06 — 17:45
 
 - Added interactive dot-grid to the Weekly Events section: faded CSS grid lines as a static background + a canvas layer drawing dots at every 60×60px intersection

@@ -2,6 +2,19 @@
 
 ---
 
+## 2026-09-08
+
+### "What We Do" — Revealing Card Animation (`index.html`)
+- New `#what-we-do` section after the hero with a "What we do" label and section heading
+- Three cards — **Academic**, **Social Events**, **Wine & Cheese** — in a 3-up grid that stacks to one column under 860px
+- Each card sits under a gradient "curtain" (`::after`) that wipes upward (`translateY(-101%)`) to reveal the content beneath
+- Card content (icon, index, title, blurb) fades and slides up after the curtain clears; cards are staggered via `nth-child` transition delays
+- Reveal triggered per-card by an `IntersectionObserver` (threshold 0.35, unobserved after firing); falls back to showing all cards when unsupported
+- Per-card curtain colours from the brand palette (purple / green / blend); icons and hover border use the theme-aware `--color-accent`
+- Respects `prefers-reduced-motion` (curtain hidden, content shown immediately) and only lifts on hover for `hover: hover` devices
+
+---
+
 ## 2026-09-05
 
 ### Weekly Events Section (React app)
