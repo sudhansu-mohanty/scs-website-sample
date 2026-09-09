@@ -17,13 +17,19 @@
 
 ---
 
-## 2026-09-07 — (session)
+## 2026-09-08 — 12:45
 
-- Explored adding a Skiper UI component (`@skiper-ui/skiper39`) to the `scs-react` project
-- Confirmed `scs-react` already has all shadcn prerequisites: Radix UI, clsx, tailwind-merge, cva, framer-motion
-- Identified that `components.json` was missing — the shadcn CLI requires this to know project structure
-- Created `scs-react/components.json` configured for: JSX (not TSX), Tailwind v4 (no config file), `src/index.css`, and `@/` path aliases
-- Provided instructions to run `pnpm dlx shadcn@latest add "@skiper-ui/skiper39"` from inside `scs-react/`
+- Added a new "What We Do" section to `index.html`, placed directly after the hero
+- Three-card grid — **Academic**, **Social Events**, **Wine & Cheese** — 3-up, collapsing to one column under 860px
+- Built a "revealing card" animation: each card sits under a brand-gradient curtain (`::after`) that wipes upward (`translateY(-101%)`) to expose the content beneath
+- Card content (icon, index number, title, blurb) fades and slides up after the curtain clears
+- Staggered the reveal across the three cards using `:nth-child` + `transition-delay` on both the curtain and the inner content
+- Triggered each card's reveal with an `IntersectionObserver` (threshold 0.35, `unobserve` after firing); fallback shows all cards when the API is unavailable
+- Per-card curtain colours drawn from `brand-palette.md` via class-scoped CSS custom properties (`--card-a` / `--card-b`); icons and hover border use the theme-aware `--color-accent`
+- Added `prefers-reduced-motion` handling (curtain removed, content shown immediately) and gated the hover lift behind `@media (hover: hover)`
+- Inline SVG icons for each card (graduation cap, people, wine glass)
+- Pointed the nav "What we do" link at the new `#what-we-do` anchor
+- Logged the work in `CHANGELOG.md`
 
 ---
 

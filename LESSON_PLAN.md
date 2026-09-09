@@ -25,6 +25,28 @@ The letter-slide animation only works because each letter lives inside a contain
 
 ---
 
+### `IntersectionObserver` — reacting when an element enters the screen
+`IntersectionObserver` is a browser API that tells you, efficiently, when an element scrolls into or out of view. Before it existed, people listened to the `scroll` event and did math on `getBoundingClientRect()` on every frame, which was easy to get wrong and slow. You create one with `new IntersectionObserver(callback, options)`, then call `observe(element)` for each thing you care about; the browser calls your callback with a list of "entries," each carrying an `isIntersecting` boolean. In today's section we made one observer with `threshold: 0.35` (fire when 35% of the card is visible), added a `.revealed` class to trigger the CSS animation, then called `io.unobserve(entry.target)` so each card only animates once. We also added a fallback: if `'IntersectionObserver' in window` is false, we just reveal every card immediately.
+
+**Try it yourself:** Add a fourth card to the section and confirm it reveals on scroll without any extra JS. Then change the `threshold` to `1.0` and notice how you now have to scroll the whole card into view before it animates.
+
+### Staggering animations with `:nth-child` and `transition-delay`
+When several elements animate at once it often looks better if they start a beat apart rather than all together — that's called a stagger. You don't need JavaScript for it: `transition-delay` says "wait this long before starting the transition," and `:nth-child(n)` lets you target the 2nd, 3rd, etc. element in a group. In our card grid the curtains all get `.revealed` at nearly the same moment, but `.reveal-card:nth-child(2)::after { transition-delay: 0.12s }` and `:nth-child(3)` at `0.24s` make them peel away in sequence. We applied the same idea to the inner content so text slides up shortly after its curtain clears. The tradeoff: `:nth-child` delays are hard-coded, so if you expect a variable number of items you'd set the delay from JavaScript instead.
+
+**Try it yourself:** Change the delays so the cards reveal right-to-left instead of left-to-right, then try making the middle card reveal first.
+
+### Capability and preference media queries — `prefers-reduced-motion` and `hover`
+Media queries aren't only about screen width. `@media (prefers-reduced-motion: reduce)` matches when the visitor has asked their operating system to minimise animation (often for vestibular or attention reasons) — we use it to drop the curtain wipe entirely and just show the cards. `@media (hover: hover)` matches only devices whose primary pointer can truly hover, like a mouse; on a touchscreen it's false, so we put the "lift up 6px on hover" effect inside it to avoid a sticky hover state after a tap. These queries let you treat motion and hover as enhancements layered on top of a design that already works without them.
+
+**Try it yourself:** Turn on "Reduce motion" in your OS accessibility settings (or emulate it in your browser devtools) and reload the page — the cards should appear with no curtain animation. Then turn it back off and watch the full reveal.
+
+### Scoping CSS custom properties to a class
+A CSS custom property (`--card-a`) is inherited by descendants, and you can *redefine* it at any level of the tree. That means you can declare a variable once in a component's shared rules and give each instance its own value by putting the definition on a modifier class. We wrote `.reveal-card::after { background: linear-gradient(135deg, var(--card-a), var(--card-b)); }` once, then set `.card-academic { --card-a: var(--purple-mid); --card-b: var(--purple-deep); }`, `.card-social { ... }`, and so on. Each card renders a different gradient from the *same* rule. This is the CSS-only version of passing props to a component, and it keeps the per-card colours in one readable place instead of scattered across three near-identical blocks.
+
+**Try it yourself:** Add a `.card-alumni` modifier with its own `--card-a` / `--card-b` values and a matching card in the HTML — you should get a new gradient without touching the `::after` rule.
+
+---
+
 ## 2026-09-06 (session 4)
 
 ### Canvas and `requestAnimationFrame` for interactive graphics

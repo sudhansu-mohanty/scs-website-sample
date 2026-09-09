@@ -13,7 +13,11 @@
       "Bash(find C:Userssudhacodingscs-website-samplescs-reactsrc -name *skiper* -o -name *ui*)",
       "Bash(date /t)",
       "Bash(time /t)",
-      "Bash(gh run:*)"
+      "Bash(gh run:*)",
+      "Bash(powershell -Command \"Get-Date -Format 'yyyy-MM-dd HH:mm'\")",
+      "Bash(npx shadcn@4.20.0 add @skiper-ui/skiper6)",
+      "Bash(curl -s \"https://skiper-ui.com/registry/index.json\")",
+      "Bash(curl -s \"https://skiper-ui.com/r/skiper6.json\")"
     ]
   }
 }
