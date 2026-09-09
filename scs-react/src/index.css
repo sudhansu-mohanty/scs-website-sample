@@ -883,6 +883,93 @@ nav.scrolled .nav-controls {
   gap: 12px;
 }
 
+/* ── Inverted Section ── */
+.inv-section {
+  background: #f0eeea;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  padding: 0px 40px 80px;
+  overflow: hidden;
+}
+
+/* Strip */
+.inv-strip {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.inv-thumb {
+  position: relative;
+  width: 62px;
+  height: 62px;
+  border-radius: 14px;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.inv-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 14px;
+  display: block;
+  pointer-events: none;
+}
+
+.inv-thumb.is-active {
+  transform: translateY(-12px) scale(1.14);
+  z-index: 2;
+}
+
+/* Circle CTA button */
+.inv-cta {
+  position: absolute;
+  bottom: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #433079;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  pointer-events: none;
+}
+
+/* Giant text */
+.inv-display {
+  overflow: visible;
+  color: #0a0a0a;
+}
+
+.inv-word {
+  display: flex;
+  font-size: clamp(72px, 17vw, 210px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  user-select: none;
+}
+
+.inv-char-wrap {
+  display: inline-block;
+  overflow: hidden;
+  line-height: 1;
+}
+
+.inv-char {
+  display: inline-block;
+}
+
 /* ── Responsive ── */
 @media (max-width: 680px) {
   nav {

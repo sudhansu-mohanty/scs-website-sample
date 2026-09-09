@@ -424,6 +424,46 @@
       z-index: 2;
     }
 
+    /* ── Inverted Section ── */
+    .section-inverted {
+      background-color: #f5f5f5;
+      color: #0a0a0a;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-inverted-content {
+      max-width: 640px;
+      padding: 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .section-inverted-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #433079;
+    }
+
+    .section-inverted-heading {
+      font-size: clamp(28px, 4vw, 48px);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: #0a0a0a;
+    }
+
+    .section-inverted-body {
+      font-size: clamp(14px, 1.1vw, 16px);
+      line-height: 1.75;
+      color: rgba(10, 10, 10, 0.60);
+    }
+
     /* ── Responsive ── */
     @media (max-width: 680px) {
       nav {
@@ -514,6 +554,15 @@
     </div>
 
     <img class="hand hand-right" src="SVG/left_hand.svg" alt="">
+  </section>
+
+  <!-- Inverted Section -->
+  <section class="section-inverted">
+    <div class="section-inverted-content">
+      <p class="section-inverted-label">What we do</p>
+      <h2 class="section-inverted-heading">Building the CS community at Concordia.</h2>
+      <p class="section-inverted-body">We organize events, workshops, and networking opportunities for software engineering and computer science students. Whether you're looking for your first internship or want to connect with peers, SCS has you covered.</p>
+    </div>
   </section>
 
   <!-- Cursor invert circle -->

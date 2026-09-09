@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-08
+
+### `AnimatePresence` and `mode="wait"` — animating components in and out
+`AnimatePresence` is a Framer Motion wrapper that lets components play an exit animation before they're removed from the DOM — normally React just deletes them instantly. You give each child a unique `key`, and when that key changes, the old child exits and the new one enters. `mode="wait"` means the new child waits for the old one to fully exit before entering — useful when you don't want two things occupying the same space at once. We used this today so the giant text word fully slides out before the new word slides in.
+
+**Try it yourself:** In `InvertedSection.jsx`, change `mode="wait"` to `mode="popLayout"` and hover between thumbnails quickly. Notice both words briefly overlap. Change it back to see the clean wait behaviour.
+
+---
+
+### Framer Motion `variants` and `staggerChildren` — orchestrating groups of animations
+Instead of writing `animate`, `initial`, and `exit` props on every element, Framer Motion lets you define named states in a `variants` object and propagate them automatically to children. A parent with `variants` and `staggerChildren` in its transition will fire each child's animation slightly after the previous one — creating a cascade. We used this today so the letters of each word slide in one after another instead of all at once, giving the text reveal its signature staggered feel.
+
+**Try it yourself:** In `InvertedSection.jsx`, change `staggerChildren: 0.05` to `staggerChildren: 0.15` and hover a thumbnail. The letters will appear very slowly one by one. Try `0.01` for an almost-simultaneous burst.
+
+---
+
+### Overflow hidden on letter wrappers — the sliding text trick
+The letter-slide animation only works because each letter lives inside a container with `overflow: hidden`. The letter itself animates from `y: '110%'` (below the container, invisible) to `y: '0%'` (in place). Without `overflow: hidden`, you'd see the letter approaching from below the line — with it, the clip creates a clean reveal as if the letter is pushing up through a slot. This is one of the most common typographic animation patterns on the web.
+
+**Try it yourself:** In `index.css`, temporarily remove `overflow: hidden` from `.inv-char-wrap`. Hover a thumbnail and watch the letters slide in from visibly below the text line instead of appearing to push up through it. Put it back.
+
+---
+
 ## 2026-09-06 (session 4)
 
 ### Canvas and `requestAnimationFrame` for interactive graphics

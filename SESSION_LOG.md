@@ -2,6 +2,31 @@
 
 ---
 
+## 2026-09-08 — (session)
+
+- Added a new inverted section to the React app (`InvertedSection.jsx`) after the Weekly Events section — white/light background (`#f0eeea`) to contrast the dark hero
+- Built a skiper6-inspired interactive gallery component from scratch (skiper6 is a Pro component requiring a paid license key — recreated the effect independently):
+  - Horizontal strip of 9 small image thumbnails at the top
+  - Giant display text filling the screen (`clamp(72px, 17vw, 210px)`, `font-weight: 800`)
+  - Default state shows "SCS" in dark text
+  - On thumbnail hover: image lifts and scales up (`translateY(-12px) scale(1.14)`), purple circle arrow button animates in below it
+  - Giant text transitions to the hovered item's label — letters slide out upward (staggered right-to-left) and new letters slide in from below (staggered left-to-right) using Framer Motion `AnimatePresence mode="wait"` with `variants` propagation
+  - Text color transitions from dark → brand purple (`#433079`) on hover via `motion.div animate`
+- Diagnosed and resolved `npx shadcn add @skiper-ui/skiper6` failing: missing `jsconfig.json` (created it), then confirmed skiper6 requires a Pro license key
+- Iterated on spacing: reduced gap and top padding on `.inv-section` to shift content up
+
+---
+
+## 2026-09-07 — (session)
+
+- Explored adding a Skiper UI component (`@skiper-ui/skiper39`) to the `scs-react` project
+- Confirmed `scs-react` already has all shadcn prerequisites: Radix UI, clsx, tailwind-merge, cva, framer-motion
+- Identified that `components.json` was missing — the shadcn CLI requires this to know project structure
+- Created `scs-react/components.json` configured for: JSX (not TSX), Tailwind v4 (no config file), `src/index.css`, and `@/` path aliases
+- Provided instructions to run `pnpm dlx shadcn@latest add "@skiper-ui/skiper39"` from inside `scs-react/`
+
+---
+
 ## 2026-09-06 — 17:45
 
 - Added interactive dot-grid to the Weekly Events section: faded CSS grid lines as a static background + a canvas layer drawing dots at every 60×60px intersection

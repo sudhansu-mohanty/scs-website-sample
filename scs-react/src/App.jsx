@@ -6,6 +6,7 @@ import Hero from './components/Hero'
 // import CursorCircle from './components/CursorCircle'
 import AboutUs from './components/AboutUs'
 import WeeklyEvents from './components/WeeklyEvents'
+import InvertedSection from './components/InvertedSection'
 
 /*
   App is the root component — it owns the state that multiple
@@ -68,6 +69,8 @@ export default function App() {
       <AboutUs />
 
       <WeeklyEvents />
+
+      <InvertedSection />
 
       {/* <CursorCircle /> */}
     </>
