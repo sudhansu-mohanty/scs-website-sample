@@ -48,6 +48,11 @@ html {
   --color-nav-shadow: none;
   --color-img-filter: none;
 
+  /* Inverted section (opposite of page bg) — dark mode: section is light */
+  --inv-bg: #f0eeea;
+  --inv-text: #0a0a0a;
+  --inv-text-muted: #888;
+
   /* Font families */
   --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
   --font-serif: 'Untitled Serif', ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -77,6 +82,11 @@ html {
   --color-nav-pill: rgba(0, 0, 0, 0.05);
   --color-nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   --color-img-filter: invert(1);
+
+  /* Inverted section — light mode: section is dark */
+  --inv-bg: #0a0a0a;
+  --inv-text: #f0eeea;
+  --inv-text-muted: #aaa;
 }
 
 ::selection {
@@ -885,15 +895,29 @@ nav.scrolled .nav-controls {
 
 /* ── Inverted Section ── */
 .inv-section {
-  background: #f0eeea;
+  background: var(--inv-bg);
+  transition: background 0.3s ease, color 0.3s ease;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 32px;
-  padding: 0px 40px 80px;
+  padding: 60px 40px 80px;
   overflow: hidden;
+}
+
+/* Scroll-in label */
+.inv-label {
+  font-family: 'Inter', sans-serif;
+  font-size: clamp(1.275rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--inv-text-muted);
+  text-transform: lowercase;
+  margin: 0;
+  align-self: center;
+  text-align: center;
 }
 
 /* Strip */
@@ -948,12 +972,13 @@ nav.scrolled .nav-controls {
 /* Giant text */
 .inv-display {
   overflow: visible;
-  color: #0a0a0a;
+  color: var(--inv-text);
+  transition: color 0.3s ease;
 }
 
 .inv-word {
   display: flex;
-  font-size: clamp(72px, 17vw, 210px);
+  font-size: clamp(54px, 12vw, 160px);
   font-weight: 800;
   letter-spacing: -0.04em;
   line-height: 0.85;

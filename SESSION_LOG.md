@@ -2,6 +2,20 @@
 
 ---
 
+## 2026-09-12 — (session)
+
+- Updated `InvertedSection.jsx` to be fully theme-aware (dark/light mode):
+  - Added `useEffect` + `MutationObserver` watching `data-theme` on `<html>` to detect theme switches at runtime
+  - Computed `colorRest` and `colorActive` from theme state, passed as `animate` prop to the giant text `motion.div`
+- Added `--inv-bg`, `--inv-text`, `--inv-text-muted` CSS variables to both `:root` (dark) and `[data-theme='light']` blocks in `index.css`; `.inv-section` and `.inv-display` now use these tokens with `transition` for smooth theme-switch
+- Replaced placeholder item labels (SCS, EVENTS, HACKS…) with real event categories: WEEKLY, ACADEMIC, SOCIAL, COMPETITIONS, WINE & CHEESE
+- Added `href` field to items + click handler on the arrow button so items can navigate to page anchors
+- Added a scroll-in label ("learn more about our events…") above the strip using Framer Motion `whileInView` + `viewport: { once: true }` — animates from `y: -30, opacity: 0` on scroll into view
+- Tuned display text animation duration (visible: 0.5s → 0.35s) and reduced giant font size (`clamp(72px,17vw,210px)` → `clamp(54px,12vw,160px)`)
+- Changed section layout from `justify-content: center` to `flex-start` with `padding-top: 60px` so label + strip + text stack naturally from the top
+
+---
+
 ## 2026-09-08 — (session)
 
 - Added a new inverted section to the React app (`InvertedSection.jsx`) after the Weekly Events section — white/light background (`#f0eeea`) to contrast the dark hero

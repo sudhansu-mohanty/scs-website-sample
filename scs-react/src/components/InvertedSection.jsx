@@ -1,16 +1,19 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const ITEMS = [
-  { label: 'SCS',       image: 'https://picsum.photos/seed/scs-aa/300/300' },
-  { label: 'EVENTS',    image: 'https://picsum.photos/seed/scs-bb/300/300' },
-  { label: 'HACKS',     image: 'https://picsum.photos/seed/scs-cc/300/300' },
-  { label: 'WORKSHOPS', image: 'https://picsum.photos/seed/scs-dd/300/300' },
-  { label: 'NETWORK',   image: 'https://picsum.photos/seed/scs-ee/300/300' },
-  { label: 'COMMUNITY', image: 'https://picsum.photos/seed/scs-ff/300/300' },
-  { label: 'CODE',      image: 'https://picsum.photos/seed/scs-gg/300/300' },
-  { label: 'BUILD',     image: 'https://picsum.photos/seed/scs-hh/300/300' },
-  { label: 'CONNECT',   image: 'https://picsum.photos/seed/scs-ii/300/300' },
+  {
+    label: 'WEEKLY',
+    image: 'https://picsum.photos/seed/scs-aa/300/300',
+    href: '#weekly',
+  },
+  { label: 'ACADEMIC', image: 'https://picsum.photos/seed/scs-bb/300/300' },
+  { label: 'SOCIAL', image: 'https://picsum.photos/seed/scs-cc/300/300' },
+  { label: 'COMPETITIONS', image: 'https://picsum.photos/seed/scs-dd/300/300' },
+  {
+    label: 'WINE & CHEESE',
+    image: 'https://picsum.photos/seed/scs-ee/300/300',
+  },
 ]
 
 const wordVariants = {
@@ -23,18 +26,51 @@ const wordVariants = {
 }
 
 const charVariants = {
-  hidden:  { y: '110%' },
-  visible: { y: '0%',    transition: { duration: 0.5, ease: [0.76, 0, 0.24, 1] } },
-  exit:    { y: '-110%', transition: { duration: 0.28, ease: [0.76, 0, 0.24, 1] } },
+  hidden: { y: '110%' },
+  visible: {
+    y: '0%',
+    transition: { duration: 0.35, ease: [0.76, 0, 0.24, 1] },
+  },
+  exit: {
+    y: '-110%',
+    transition: { duration: 0.28, ease: [0.76, 0, 0.24, 1] },
+  },
 }
 
 export default function InvertedSection() {
   const [hovered, setHovered] = useState(null)
-  const current  = hovered ?? ITEMS[0]
+  const current = hovered ?? ITEMS[0]
   const isActive = hovered !== null
+
+  const getTheme = () =>
+    document.documentElement.getAttribute('data-theme') || 'dark'
+  const [theme, setTheme] = useState(getTheme)
+
+  useEffect(() => {
+    const obs = new MutationObserver(() => setTheme(getTheme()))
+    obs.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['data-theme'],
+    })
+    return () => obs.disconnect()
+  }, [])
+
+  const isDark = theme === 'dark'
+  const colorRest = isDark ? '#0a0a0a' : '#433079'
+  const colorActive = isDark ? '#7bc880' : '#b6a5eb'
 
   return (
     <section className="inv-section">
+      {/* ── Scroll-in label ── */}
+      <motion.p
+        className="inv-label"
+        initial={{ y: -30, opacity: 0 }}
+        whileInView={{ y: 0, opacity: 1 }}
+        transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
+        viewport={{ once: true, amount: 0.5 }}
+      >
+        learn more about our events...
+      </motion.p>
 
       {/* ── Image strip ── */}
       <div className="inv-strip">
@@ -56,10 +92,19 @@ export default function InvertedSection() {
                   exit={{ scale: 0, opacity: 0 }}
                   transition={{ duration: 0.2, ease: 'easeOut' }}
                   aria-label={`Learn more about ${item.label}`}
+                  onClick={() =>
+                    item.href && (window.location.href = item.href)
+                  }
+                  style={{ cursor: item.href ? 'pointer' : 'default' }}
                 >
                   <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                    <path d="M2.5 12.5L12.5 2.5M12.5 2.5H5.5M12.5 2.5V9.5"
-                      stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    <path
+                      d="M2.5 12.5L12.5 2.5M12.5 2.5H5.5M12.5 2.5V9.5"
+                      stroke="white"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
                   </svg>
                 </motion.button>
               )}
@@ -71,7 +116,7 @@ export default function InvertedSection() {
       {/* ── Giant animated text ── */}
       <motion.div
         className="inv-display"
-        animate={{ color: isActive ? '#433079' : '#0a0a0a' }}
+        animate={{ color: isActive ? colorActive : colorRest }}
         transition={{ duration: 0.45 }}
       >
         <AnimatePresence mode="wait">
@@ -93,7 +138,6 @@ export default function InvertedSection() {
           </motion.div>
         </AnimatePresence>
       </motion.div>
-
     </section>
   )
 }

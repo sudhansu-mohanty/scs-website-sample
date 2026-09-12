@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-12
+
+### `MutationObserver` — watching for DOM changes at runtime
+`MutationObserver` is a browser API that lets you run a callback any time something about the DOM changes — like an attribute being added, removed, or updated. You create one with `new MutationObserver(callback)`, then call `observe(element, options)` to start watching; `attributeFilter: ['data-theme']` narrows it down to only fire when that specific attribute changes. We used this in `InvertedSection.jsx` so the component can react immediately when the theme toggle flips `data-theme` on `<html>` — without needing any props or context. The cleanup step (`obs.disconnect()`) in the `useEffect` return is important so the observer stops when the component unmounts.
+
+**Try it yourself:** Open `InvertedSection.jsx` and add `console.log('theme changed to', getTheme())` as the first line inside the `MutationObserver` callback. Open your browser console, then click the theme toggle — you should see the log fire each time.
+
+---
+
+### Framer Motion `whileInView` — scroll-triggered animations without JavaScript
+`whileInView` is a Framer Motion prop that acts like an `initial`/`animate` pair that only activates when the element scrolls into the viewport. You combine it with `viewport={{ once: true }}` so the animation fires only the first time (not every time you scroll past it), and `viewport={{ amount: 0.5 }}` to control how much of the element needs to be visible before it triggers (50% here). This is the declarative alternative to setting up an `IntersectionObserver` manually in a `useEffect` — same idea, much less code. We used it for the "learn more about our events…" label.
+
+**Try it yourself:** On the `motion.p` with `className="inv-label"`, change `amount: 0.5` to `amount: 1`. Now scroll slowly — the label won't animate until the full element is visible. Change it back to `0.5` to restore the earlier trigger point.
+
+---
+
+### CSS variables and `[data-theme]` attribute selectors for theming
+You can use any HTML attribute as a CSS selector target — `[data-theme='light']` matches elements where `data-theme` equals `"light"`. By declaring CSS custom properties in both `:root` (the dark defaults) and `[data-theme='light'] { ... }` (the light overrides), the browser automatically swaps all tokens the moment that attribute changes — no JavaScript needed on the CSS side. We did this for `--inv-bg`, `--inv-text`, and `--inv-text-muted` so the inverted section flips between its dark and light palette just like the rest of the site. Adding `transition: background 0.3s ease` on the element using the variable gives you the smooth cross-fade for free.
+
+**Try it yourself:** In `index.css`, change `--inv-bg` under `[data-theme='light']` to `red`. Toggle the theme — the inverted section background will turn red in light mode. Undo it to see how easy it is to retheme any part of the site with one variable.
+
+---
+
 ## 2026-09-08
 
 ### `AnimatePresence` and `mode="wait"` — animating components in and out
