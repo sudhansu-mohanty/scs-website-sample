@@ -2,17 +2,17 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 const ITEMS = [
+  { label: 'COMPETITIONS', image: 'https://picsum.photos/seed/scs-dd/300/300' },
+  { label: 'ACADEMIC', image: 'https://picsum.photos/seed/scs-bb/300/300' },
+  { label: 'SOCIAL', image: 'https://picsum.photos/seed/scs-cc/300/300' },
+  {
+    label: 'WINE & CHEESE',
+    image: 'https://picsum.photos/seed/scs-ee/300/300',
+  },
   {
     label: 'WEEKLY',
     image: 'https://picsum.photos/seed/scs-aa/300/300',
     href: '#weekly',
-  },
-  { label: 'ACADEMIC', image: 'https://picsum.photos/seed/scs-bb/300/300' },
-  { label: 'SOCIAL', image: 'https://picsum.photos/seed/scs-cc/300/300' },
-  { label: 'COMPETITIONS', image: 'https://picsum.photos/seed/scs-dd/300/300' },
-  {
-    label: 'WINE & CHEESE',
-    image: 'https://picsum.photos/seed/scs-ee/300/300',
   },
 ]
 
@@ -37,7 +37,7 @@ const charVariants = {
   },
 }
 
-export default function InvertedSection() {
+export default function HomeEvents() {
   const [hovered, setHovered] = useState(null)
   const current = hovered ?? ITEMS[0]
   const isActive = hovered !== null
@@ -60,24 +60,24 @@ export default function InvertedSection() {
   const colorActive = isDark ? '#7bc880' : '#b6a5eb'
 
   return (
-    <section className="inv-section">
+    <section className="he-section">
       {/* ── Scroll-in label ── */}
       <motion.p
-        className="inv-label"
+        className="he-label"
         initial={{ y: -30, opacity: 0 }}
         whileInView={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.76, 0, 0.24, 1] }}
         viewport={{ once: true, amount: 0.5 }}
       >
-        learn more about our events...
+        Click to learn more about our events...
       </motion.p>
 
       {/* ── Image strip ── */}
-      <div className="inv-strip">
+      <div className="he-strip">
         {ITEMS.map((item) => (
           <div
             key={item.label}
-            className={`inv-thumb${hovered === item ? ' is-active' : ''}`}
+            className={`he-thumb${hovered === item ? ' is-active' : ''}`}
             onMouseEnter={() => setHovered(item)}
             onMouseLeave={() => setHovered(null)}
           >
@@ -86,7 +86,7 @@ export default function InvertedSection() {
             <AnimatePresence>
               {hovered === item && (
                 <motion.button
-                  className="inv-cta"
+                  className="he-cta"
                   initial={{ scale: 0, opacity: 0 }}
                   animate={{ scale: 1, opacity: 1 }}
                   exit={{ scale: 0, opacity: 0 }}
@@ -115,22 +115,22 @@ export default function InvertedSection() {
 
       {/* ── Giant animated text ── */}
       <motion.div
-        className="inv-display"
+        className="he-display"
         animate={{ color: isActive ? colorActive : colorRest }}
         transition={{ duration: 0.45 }}
       >
         <AnimatePresence mode="wait">
           <motion.div
             key={current.label}
-            className="inv-word"
+            className="he-word"
             variants={wordVariants}
             initial="hidden"
             animate="visible"
             exit="exit"
           >
             {current.label.split('').map((char, i) => (
-              <span key={i} className="inv-char-wrap">
-                <motion.span className="inv-char" variants={charVariants}>
+              <span key={i} className="he-char-wrap">
+                <motion.span className="he-char" variants={charVariants}>
                   {char}
                 </motion.span>
               </span>

@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-12 (session 2)
+
+### Renaming a React component — the full cascade
+When you rename a component in React, the change isn't just the file name. You have to update: the file name itself, the `export default function` name inside it, every `import` statement that references the old name, every place the component is used in JSX, and any CSS class names or custom properties tied to it. We renamed `InvertedSection` → `HomeEvents`, which meant changing the file, the function, `inv-` class names → `he-` in both the JSX and the CSS, `--inv-*` CSS variables → `--he-*` in two `:root` blocks, and the import + usage in `App.jsx`. Missing any one of these breaks the app — the browser either throws a module-not-found error or silently applies no styles.
+
+**Try it yourself:** Pick any component in the project and trace every place it's referenced — the file, the import, the JSX tag, and any CSS classes it uses. Count how many files you'd have to touch to rename it cleanly.
+
+---
+
+### `Math.random()` at module level — stable randomness per session
+When you call `Math.random()` inside a React component or its render function, it runs on every re-render, which means the random values change and cause visual flickering or layout jumps. Moving `Math.random()` to the top of the module — outside the component — means it runs exactly once when the JS file first loads, and never again. The result is stored in a constant that the component reads every time it renders, always getting the same values. We used this in `PixelDivider` to generate a random-looking 2D grid of pixel blocks that stayed stable even as state changed elsewhere.
+
+**Try it yourself:** Move the `GRID` constant inside the `PixelDivider` function body, just above the return. Hover something on the page to trigger a re-render — you'll see the pixel pattern randomly regenerate. Move it back out to the module level and it stabilises.
+
+---
+
+### CSS adjacent sibling combinator (`+`) — styling an element based on what's before it
+The `+` combinator in CSS targets an element that immediately follows another specific element. `A + B { ... }` means "style B only when it comes directly after A in the DOM." We used `.pd-overlay + .weekly` to pull the Weekly section upward with a negative margin whenever a pixel divider in overlay mode sat right before it — without touching the `WeeklyEvents` component or passing any props. It's a clean way to express layout relationships between sibling elements purely in CSS.
+
+**Try it yourself:** In `index.css`, write a rule `h2 + p { color: red; }` and add a `<h2>` followed by a `<p>` somewhere on the page. Only that `<p>` turns red — other paragraphs are unaffected. Remove it when done.
+
+---
+
 ## 2026-09-12
 
 ### `MutationObserver` — watching for DOM changes at runtime

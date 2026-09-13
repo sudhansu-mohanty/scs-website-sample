@@ -48,10 +48,10 @@ html {
   --color-nav-shadow: none;
   --color-img-filter: none;
 
-  /* Inverted section (opposite of page bg) — dark mode: section is light */
-  --inv-bg: #f0eeea;
-  --inv-text: #0a0a0a;
-  --inv-text-muted: #888;
+  /* Home events section (opposite of page bg) — dark mode: section is light */
+  --he-bg: #f0eeea;
+  --he-text: #0a0a0a;
+  --he-text-muted: #888;
 
   /* Font families */
   --font-mono:  'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
@@ -83,10 +83,10 @@ html {
   --color-nav-shadow: 0 4px 24px rgba(0, 0, 0, 0.07);
   --color-img-filter: invert(1);
 
-  /* Inverted section — light mode: section is dark */
-  --inv-bg: #0a0a0a;
-  --inv-text: #f0eeea;
-  --inv-text-muted: #aaa;
+  /* Home events section — light mode: section is dark */
+  --he-bg: #0a0a0a;
+  --he-text: #f0eeea;
+  --he-text-muted: #aaa;
 }
 
 ::selection {
@@ -893,9 +893,9 @@ nav.scrolled .nav-controls {
   gap: 12px;
 }
 
-/* ── Inverted Section ── */
-.inv-section {
-  background: var(--inv-bg);
+/* ── Home Events Section ── */
+.he-section {
+  background: var(--he-bg);
   transition: background 0.3s ease, color 0.3s ease;
   min-height: 100vh;
   display: flex;
@@ -908,12 +908,12 @@ nav.scrolled .nav-controls {
 }
 
 /* Scroll-in label */
-.inv-label {
+.he-label {
   font-family: 'Inter', sans-serif;
   font-size: clamp(1.275rem, 1.8vw, 1.5rem);
   font-weight: 400;
   letter-spacing: 0.08em;
-  color: var(--inv-text-muted);
+  color: var(--he-text-muted);
   text-transform: lowercase;
   margin: 0;
   align-self: center;
@@ -921,13 +921,13 @@ nav.scrolled .nav-controls {
 }
 
 /* Strip */
-.inv-strip {
+.he-strip {
   display: flex;
   gap: 10px;
   align-items: center;
 }
 
-.inv-thumb {
+.he-thumb {
   position: relative;
   width: 62px;
   height: 62px;
@@ -937,7 +937,7 @@ nav.scrolled .nav-controls {
   transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
-.inv-thumb img {
+.he-thumb img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -946,13 +946,13 @@ nav.scrolled .nav-controls {
   pointer-events: none;
 }
 
-.inv-thumb.is-active {
+.he-thumb.is-active {
   transform: translateY(-12px) scale(1.14);
   z-index: 2;
 }
 
 /* Circle CTA button */
-.inv-cta {
+.he-cta {
   position: absolute;
   bottom: -22px;
   left: 50%;
@@ -970,13 +970,13 @@ nav.scrolled .nav-controls {
 }
 
 /* Giant text */
-.inv-display {
+.he-display {
   overflow: visible;
-  color: var(--inv-text);
+  color: var(--he-text);
   transition: color 0.3s ease;
 }
 
-.inv-word {
+.he-word {
   display: flex;
   font-size: clamp(54px, 12vw, 160px);
   font-weight: 800;
@@ -985,15 +985,49 @@ nav.scrolled .nav-controls {
   user-select: none;
 }
 
-.inv-char-wrap {
+.he-char-wrap {
   display: inline-block;
   overflow: hidden;
   line-height: 1;
 }
 
-.inv-char {
+.he-char {
   display: inline-block;
 }
+
+/* ── Meet the Team Section ── */
+.mtt-section {
+  background: var(--he-bg);
+  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  padding: 60px 40px 80px;
+}
+
+.mtt-label {
+  font-family: var(--font-mono);
+  font-size: clamp(1.275rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  color: var(--he-text-muted);
+  text-transform: lowercase;
+  margin: 0;
+}
+
+.mtt-heading {
+  font-family: var(--font-serif);
+  font-size: clamp(54px, 12vw, 160px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  color: var(--he-text);
+  margin: 0;
+}
+
 
 /* ── Responsive ── */
 @media (max-width: 680px) {

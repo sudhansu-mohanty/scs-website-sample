@@ -2,6 +2,15 @@
 
 ---
 
+## 2026-09-12 — (session 2)
+
+- Renamed `InvertedSection` → `HomeEvents` throughout the codebase: file, component function, all `inv-` CSS class names → `he-`, all `--inv-*` CSS variables → `--he-*`, import and usage in `App.jsx`
+- Moved WEEKLY item to the last position in `HomeEvents` ITEMS array
+- Created `MeetTheTeam.jsx` as a placeholder inverted section (reuses `--he-bg`, `--he-text`, `--he-text-muted` tokens); added to `App.jsx` after `HomeEvents`
+- Built `PixelDivider` component — a 2D grid of pixel blocks transitioning between section colors, placed between all section pairs; iterated on height (4→3→2 rows), block size, random 2D density grid (module-level `Math.random()` for stable-per-session pattern), overlay mode (transparent filled cells so Weekly dots show through) — ultimately removed on user feedback as it didn't look right
+
+---
+
 ## 2026-09-12 — (session)
 
 - Updated `InvertedSection.jsx` to be fully theme-aware (dark/light mode):
