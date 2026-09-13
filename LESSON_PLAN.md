@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-09-13
+
+### `useState` as a selection mechanism — tracking which item is active
+A very common React pattern is using `useState` to remember which item in a list is currently "selected." You store the whole item object (not just an index) so you can read its properties directly. Defaulting the state to a real item — `useState(ITEMS[0])` — means something meaningful is shown on first render without the user having to click anything. Then clicking updates the state, React re-renders, and the UI reflects the new selection automatically. We used this to make Competitions the default active category and to swap the detail panel when a different thumbnail is clicked.
+
+**Try it yourself:** Change `useState(ITEMS[0])` to `useState(ITEMS[1])` in `HomeEvents.jsx`. Refresh the page — the second category (ACADEMIC) should now be the default. Change it back to `ITEMS[0]` when done.
+
+---
+
+### `object-fit` — controlling how images fill their container
+`object-fit` tells the browser how to resize an image inside its box. `cover` scales the image up until it fills the box completely, cropping whatever overflows — great for hero images. `contain` scales the image down until the whole image fits inside the box, leaving empty space if the aspect ratios don't match — great when you can't afford to lose any part of the image. Without either, the image stretches to fill the box and distorts. We went through all three options this session before landing on `contain` to show the full competition photos without cropping.
+
+**Try it yourself:** In `index.css`, change `object-fit: contain` on `.he-detail-card-img` to `object-fit: cover`. See how the photos fill the box edge-to-edge but get cropped. Then try removing `object-fit` entirely to see the distorted stretch. Put it back to `contain` when done.
+
+---
+
+### CSS `aspect-ratio` — locking a box to a fixed width-to-height ratio
+The `aspect-ratio` property makes an element maintain a set width-to-height ratio no matter how wide its container is. `aspect-ratio: 3 / 2` means for every 3 units of width the element is 2 units tall — so a 300px-wide card gets a 200px-tall image box automatically. This is how we made all five competition card images exactly the same height without hardcoding a pixel value, and without any JavaScript. It works on any element, not just images.
+
+**Try it yourself:** Change `aspect-ratio: 3 / 2` to `aspect-ratio: 1 / 1` on `.he-detail-card-img` and save. All images become square boxes. Try `16 / 9` for a widescreen look. Put it back to `3 / 2` when done.
+
+---
+
+### `-webkit-line-clamp` — truncating text to a fixed number of lines
+When you want a text block to never exceed a certain number of lines (showing `…` after), CSS gives you the `line-clamp` pattern: set `display: -webkit-box`, `-webkit-box-orient: vertical`, `-webkit-line-clamp: 3`, and `overflow: hidden`. Despite the `-webkit-` prefix suggesting it's experimental, this pattern works in all modern browsers and is the standard way to clamp multiline text. It's useful for card descriptions where you want a consistent grid layout regardless of how long each description is.
+
+**Try it yourself:** Change `-webkit-line-clamp: 3` to `-webkit-line-clamp: 1` on `.he-detail-card-desc`. Save and look at the cards — all descriptions collapse to one line with `…`. Try `5` for more breathing room. Put it back to `3`.
+
+---
+
 ## 2026-09-12 (session 2)
 
 ### Renaming a React component — the full cascade

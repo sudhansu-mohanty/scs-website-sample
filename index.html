@@ -593,6 +593,237 @@
         width: clamp(100px, 30vw, 180px);
       }
     }
+
+    /* ── Events Section ── */
+    .events-section {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: clamp(60px, 10vh, 120px) 24px clamp(110px, 18vh, 200px);
+    }
+
+    .events-head {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-bottom: clamp(44px, 6vw, 76px);
+    }
+
+    .events-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+    .events-title {
+      font-size: clamp(26px, 4vw, 44px);
+      font-weight: 600;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      max-width: 20ch;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: clamp(16px, 2vw, 28px);
+    }
+
+    .event-tile {
+      position: relative;
+      border-radius: 22px;
+      overflow: hidden;
+      cursor: pointer;
+      aspect-ratio: 4 / 3;
+      border: 1px solid var(--color-nav-border);
+      background: var(--color-nav-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 28px 24px 26px;
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+    }
+
+    .event-tile::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: var(--tile-gradient);
+      opacity: 0.18;
+      transition: opacity 0.35s ease;
+    }
+
+    .event-tile:hover::before { opacity: 0.32; }
+
+    @media (hover: hover) {
+      .event-tile:hover {
+        transform: translateY(-6px);
+        border-color: var(--color-accent);
+      }
+    }
+
+    .event-tile-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -62%);
+      width: 52px;
+      height: 52px;
+      color: var(--tile-icon-color, var(--color-accent));
+      opacity: 0.80;
+      transition: opacity 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .event-tile:hover .event-tile-icon {
+      opacity: 1;
+      transform: translate(-50%, -66%);
+    }
+
+    .event-tile-name {
+      position: relative;
+      font-size: 15px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      text-align: center;
+    }
+
+    .event-tile-tag {
+      position: relative;
+      margin-top: 6px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+
+    /* ── Active tile state ── */
+    .event-tile.active {
+      border-color: var(--color-accent);
+      transform: translateY(-6px);
+    }
+
+    .event-tile.active::before { opacity: 0.30; }
+
+    /* ── Event detail panel (inline, below tile grid) ── */
+    .event-detail-panel {
+      margin-top: clamp(44px, 6vw, 72px);
+      display: none;
+    }
+
+    .event-detail-panel.visible {
+      display: block;
+      animation: panel-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    @keyframes panel-in {
+      from { opacity: 0; transform: translateY(16px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .detail-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin-bottom: clamp(36px, 5vw, 52px);
+    }
+
+    .detail-category-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      margin-bottom: 12px;
+    }
+
+    .detail-title {
+      font-size: clamp(26px, 4vw, 40px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 14px;
+    }
+
+    .detail-description {
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--color-text-muted);
+      max-width: 52ch;
+    }
+
+    .detail-events-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(14px, 2vw, 22px);
+    }
+
+    @media (max-width: 600px) {
+      .detail-events-grid { grid-template-columns: 1fr; }
+    }
+
+    .detail-event-card {
+      border-radius: 18px;
+      border: 1px solid var(--color-nav-border);
+      background: var(--color-nav-bg);
+      padding: clamp(20px, 2.4vw, 30px);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: border-color 0.3s ease, transform 0.3s ease;
+    }
+
+    @media (hover: hover) {
+      .detail-event-card:hover {
+        border-color: var(--color-accent);
+        transform: translateY(-4px);
+      }
+    }
+
+    .detail-event-card-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .detail-event-badge {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--color-accent);
+      background: rgba(182, 165, 235, 0.1);
+      border: 1px solid rgba(182, 165, 235, 0.2);
+      border-radius: 999px;
+      padding: 3px 10px;
+    }
+
+    [data-theme="light"] .detail-event-badge {
+      color: var(--purple-deep);
+      background: rgba(67, 48, 121, 0.07);
+      border-color: rgba(67, 48, 121, 0.15);
+    }
+
+    .detail-event-card-icon {
+      width: 32px;
+      height: 32px;
+      color: var(--color-accent);
+      opacity: 0.7;
+    }
+
+    .detail-event-card h4 {
+      font-size: clamp(15px, 1.4vw, 18px);
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+
+    .detail-event-card p {
+      font-size: 13px;
+      line-height: 1.7;
+      color: var(--color-text-muted);
+    }
   </style>
 </head>
 
@@ -728,6 +959,105 @@
     </div>
   </section>
 
+  <!-- Events Section -->
+  <section class="events-section" id="events" aria-labelledby="events-title">
+    <div class="events-head">
+      <span class="events-label">Events</span>
+      <h2 class="events-title" id="events-title">Explore what SCS has to offer</h2>
+    </div>
+
+    <div class="events-grid">
+      <!-- Competitions tile -->
+      <button
+        class="event-tile active"
+        style="--tile-gradient: linear-gradient(135deg, #B6A5EB, #433079); --tile-icon-color: #B6A5EB;"
+        data-detail="detail-competitions"
+        aria-label="Show Competitions events"
+      >
+        <svg class="event-tile-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" />
+          <path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" />
+          <path d="M4 22h16" />
+          <path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" />
+          <path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" />
+          <path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" />
+        </svg>
+        <span class="event-tile-name">Competitions</span>
+        <span class="event-tile-tag">4 events</span>
+      </button>
+    </div>
+
+    <!-- Competitions detail panel (default visible) -->
+    <div class="event-detail-panel visible" id="detail-competitions">
+      <div class="detail-header">
+        <p class="detail-category-label">Events</p>
+        <h3 class="detail-title">Competitions</h3>
+        <p class="detail-description">
+          Test your skills, build under pressure, and go head-to-head with the best.
+          SCS organises and supports competitions that span hackathons, programming contests,
+          and industry challenges — all open to Concordia students.
+        </p>
+      </div>
+
+      <div class="detail-events-grid">
+
+        <div class="detail-event-card">
+          <div class="detail-event-card-top">
+            <span class="detail-event-badge">Annual</span>
+            <svg class="detail-event-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="3" width="20" height="14" rx="2" />
+              <path d="M8 21h8M12 17v4" />
+            </svg>
+          </div>
+          <h4>HackConcordia</h4>
+          <p>Concordia's flagship 24-hour hackathon. Build a project from scratch, pitch to sponsors, and compete for prizes — teams of up to four, all disciplines welcome.</p>
+        </div>
+
+        <div class="detail-event-card">
+          <div class="detail-event-card-top">
+            <span class="detail-event-badge">Annual</span>
+            <svg class="detail-event-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="16 18 22 12 16 6" />
+              <polyline points="8 6 2 12 8 18" />
+            </svg>
+          </div>
+          <h4>ICPC Regional</h4>
+          <p>The ACM International Collegiate Programming Contest North America qualifier. Three-person teams race the clock solving algorithmic problems — a true test of CS fundamentals.</p>
+        </div>
+
+        <div class="detail-event-card">
+          <div class="detail-event-card-top">
+            <span class="detail-event-badge">Sponsored</span>
+            <svg class="detail-event-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
+            </svg>
+          </div>
+          <h4>SCS Case Competition</h4>
+          <p>An industry-sponsored challenge where teams analyse a real-world tech problem and present a solution to a panel of judges. Sharpens communication as much as technical thinking.</p>
+        </div>
+
+        <div class="detail-event-card">
+          <div class="detail-event-card-top">
+            <span class="detail-event-badge">Open Night</span>
+            <svg class="detail-event-card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+              stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+              <line x1="12" y1="17" x2="12.01" y2="17" />
+            </svg>
+          </div>
+          <h4>Code Golf Night</h4>
+          <p>Solve a set of programming puzzles in the fewest characters possible. A light-hearted evening that rewards creativity and tricks with the language — all skill levels welcome.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
   <!-- Cursor invert circle -->
   <div id="cursor-invert"></div>
 
@@ -823,6 +1153,33 @@
           overlay.addEventListener('transitionend', afterIntro, { once: true });
         }, 350);
       }, { once: true });
+    })();
+
+    // Events tile switcher
+    (function () {
+      document.querySelectorAll('[data-detail]').forEach(function (tile) {
+        tile.addEventListener('click', function () {
+          var targetId = tile.getAttribute('data-detail');
+
+          // Update active tile
+          document.querySelectorAll('[data-detail]').forEach(function (t) {
+            t.classList.toggle('active', t === tile);
+          });
+
+          // Show matching panel, hide others
+          document.querySelectorAll('.event-detail-panel').forEach(function (panel) {
+            var isTarget = panel.id === targetId;
+            if (isTarget) {
+              // Re-trigger animation by removing and re-adding the class
+              panel.classList.remove('visible');
+              void panel.offsetWidth; // force reflow
+              panel.classList.add('visible');
+            } else {
+              panel.classList.remove('visible');
+            }
+          });
+        });
+      });
     })();
 
     // Revealing cards — wipe the curtain away once each card scrolls into view

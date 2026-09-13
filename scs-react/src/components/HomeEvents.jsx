@@ -1,6 +1,40 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+const DETAILS = {
+  COMPETITIONS: {
+    description:
+      'Test your skills, build under pressure, and go head-to-head with the best. SCS organises and supports competitions spanning hackathons, programming contests, and industry challenges — all open to Concordia students.',
+    events: [
+      {
+        image: 'https://scsconcordia.com/src/pics/hw.jpg',
+        title: 'Hello World Hackathon',
+        desc: "New to coding? The Hello World Competition is the perfect starting point. Explore programming, showcase your creativity, and build your first project — held mid-September.",
+      },
+      {
+        image: 'https://scsconcordia.com/src/pics/csgames.jpg',
+        title: 'CS Games',
+        desc: 'Face off against the sharpest minds from universities across the country. Tryouts run January–February, with the national competition in March.',
+      },
+      {
+        image: 'https://scsconcordia.com/src/pics/cybersci.jpg',
+        title: 'CyberSci',
+        desc: "Canada's national cybersecurity competition. Regional qualifiers and national finals covering ethical hacking, digital forensics, and more — held mid-November.",
+      },
+      {
+        image: 'https://scsconcordia.com/src/pics/nsec.jpg',
+        title: 'NorthSec',
+        desc: 'One of the largest applied security events in North America, featuring a world-class Capture The Flag competition with international participation every May.',
+      },
+      {
+        image: 'https://scsconcordia.com/src/pics/icc.jpg',
+        title: 'ICPC',
+        desc: 'A global programming competition where teams solve complex algorithmic problems under time pressure. Fall tryouts, worldwide representation.',
+      },
+    ],
+  },
+}
+
 const ITEMS = [
   { label: 'COMPETITIONS', image: 'https://picsum.photos/seed/scs-dd/300/300' },
   { label: 'ACADEMIC', image: 'https://picsum.photos/seed/scs-bb/300/300' },
@@ -39,7 +73,8 @@ const charVariants = {
 
 export default function HomeEvents() {
   const [hovered, setHovered] = useState(null)
-  const current = hovered ?? ITEMS[0]
+  const [selected, setSelected] = useState(ITEMS[0])
+  const current = hovered ?? selected
   const isActive = hovered !== null
 
   const getTheme = () =>
@@ -77,38 +112,15 @@ export default function HomeEvents() {
         {ITEMS.map((item) => (
           <div
             key={item.label}
-            className={`he-thumb${hovered === item ? ' is-active' : ''}`}
+            className={`he-thumb${hovered === item ? ' is-active' : ''}${selected === item ? ' is-selected' : ''}`}
             onMouseEnter={() => setHovered(item)}
             onMouseLeave={() => setHovered(null)}
+            onClick={() => {
+              if (item.href) { window.location.href = item.href; return; }
+              setSelected(item)
+            }}
           >
             <img src={item.image} alt={item.label} draggable={false} />
-
-            <AnimatePresence>
-              {hovered === item && (
-                <motion.button
-                  className="he-cta"
-                  initial={{ scale: 0, opacity: 0 }}
-                  animate={{ scale: 1, opacity: 1 }}
-                  exit={{ scale: 0, opacity: 0 }}
-                  transition={{ duration: 0.2, ease: 'easeOut' }}
-                  aria-label={`Learn more about ${item.label}`}
-                  onClick={() =>
-                    item.href && (window.location.href = item.href)
-                  }
-                  style={{ cursor: item.href ? 'pointer' : 'default' }}
-                >
-                  <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
-                    <path
-                      d="M2.5 12.5L12.5 2.5M12.5 2.5H5.5M12.5 2.5V9.5"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </motion.button>
-              )}
-            </AnimatePresence>
           </div>
         ))}
       </div>
@@ -138,6 +150,37 @@ export default function HomeEvents() {
           </motion.div>
         </AnimatePresence>
       </motion.div>
+
+      {/* ── Detail panel ── */}
+      <AnimatePresence mode="wait">
+        {DETAILS[selected.label] && (
+          <motion.div
+            key={selected.label}
+            className="he-detail"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -12 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <p className="he-detail-desc">{DETAILS[selected.label].description}</p>
+            <div className="he-detail-grid">
+              {DETAILS[selected.label].events.map((ev, i, arr) => (
+                <div
+                  key={ev.title}
+                  className="he-detail-card"
+                  style={arr.length % 2 !== 0 && i === arr.length - 1 ? { gridColumn: '1 / -1' } : undefined}
+                >
+                  <img src={ev.image} alt={ev.title} className="he-detail-card-img" />
+                  <div className="he-detail-card-body">
+                    <h4 className="he-detail-card-title">{ev.title}</h4>
+                    <p className="he-detail-card-desc">{ev.desc}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </section>
   )
 }

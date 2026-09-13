@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-09-13 — (session)
+
+- Clarified that the active codebase is the React site (`scs-react`), not `index.html` — identified via a screenshot of the actual running site
+- Added a `DETAILS` data map to `HomeEvents.jsx` keyed by category label, with description + event array for COMPETITIONS
+- Added `selected` state to `HomeEvents` defaulting to `ITEMS[0]` (Competitions); changed `current` to fall back to `selected` instead of always `ITEMS[0]`
+- Clicking a thumbnail now sets `selected` (WEEKLY still navigates to anchor); removed the arrow CTA button — the tile itself is the click target
+- Added `.is-selected` CSS class (green ring outline) on the active thumbnail
+- Added an `AnimatePresence`-driven `.he-detail` panel below the giant text showing the selected category's description (centered) and a 2×2 event card grid
+- Card design iterated: started with badge + title + desc → changed to image on top, title, description (max 3 lines via `-webkit-line-clamp`)
+- Replaced placeholder picsum images with real SCS Concordia competition data fetched from `scsconcordia.com`: Hello World Hackathon, CS Games, CyberSci, NorthSec, ICPC — using their actual hosted image URLs
+- Added auto-span logic: when the event count is odd, the last card spans both grid columns (`gridColumn: '1 / -1'`)
+- Iterated on image sizing: `object-fit: cover` (crops) → `height: auto` (non-uniform) → `object-fit: contain` with fixed height (letterbox) → `aspect-ratio: 3/2; object-fit: contain` (uniform, no crop, no fill)
+- Widened `.he-detail` max-width from 900px → 1100px for roomier cards
+
+---
+
 ## 2026-09-12 — (session 2)
 
 - Renamed `InvertedSection` → `HomeEvents` throughout the codebase: file, component function, all `inv-` CSS class names → `he-`, all `--inv-*` CSS variables → `--he-*`, import and usage in `App.jsx`
