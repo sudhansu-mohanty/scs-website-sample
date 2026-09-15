@@ -2,6 +2,12 @@
 
 ---
 
+## 2026-09-14 — (session)
+
+- No work done this session.
+
+---
+
 ## 2026-09-13 — (session)
 
 - Clarified that the active codebase is the React site (`scs-react`), not `index.html` — identified via a screenshot of the actual running site
