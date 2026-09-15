@@ -1,3 +1,6 @@
 https://chanhdai.com/components/glow-card-grid <- for meet the team or collection of people
 https://chanhdai.com/components/logos-carousel <- for sponsors section
 https://skiper-ui.com/v1/skiper6 <- meet the team reveal section>
+https://skiper-ui.com/v1/skiper23 <- Acad, social and wine and cheese
+
+for the other events section, it opens to a whole new page - events -> blah blah blah but in the home page use the above component for card reveal animation

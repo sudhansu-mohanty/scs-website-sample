@@ -8,6 +8,19 @@
 
 ---
 
+## 2026-09-14 — 23:25
+
+- Fixed the Competitions details section in `scs-react/src/components/HomeEvents.jsx` and `index.css`:
+  - Removed the hack that stretched the last card full-width when the event count was odd
+  - Widened `.he-detail` to drop its `1100px` max-width cap so the section uses the full available width
+  - Set `.he-detail-grid` to a fixed 2-column layout (`repeat(2, 1fr)`), giving 5 competition cards a clean 2-column × 3-row grid
+  - Made card images "float" inside their cards: added card padding, gave `.he-detail-card-img` its own `border-radius` and `box-shadow` instead of sitting flush against the card edges
+  - Switched `.he-detail-card-img` from `object-fit: contain` to `object-fit: cover` per user request — images now crop to fill their box completely with no letterboxed empty space
+- Verified changes with `vite build` (compiles clean); noted no headless browser tooling (chromium-cli/Playwright/Puppeteer) is installed in this environment, so UI changes couldn't be screenshot-verified — offered to install Playwright for future visual checks
+- User ran `/install-github-app` (GitHub App installed)
+
+---
+
 ## 2026-09-13 — (session)
 
 - Clarified that the active codebase is the React site (`scs-react`), not `index.html` — identified via a screenshot of the actual running site

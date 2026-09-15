@@ -164,12 +164,8 @@ export default function HomeEvents() {
           >
             <p className="he-detail-desc">{DETAILS[selected.label].description}</p>
             <div className="he-detail-grid">
-              {DETAILS[selected.label].events.map((ev, i, arr) => (
-                <div
-                  key={ev.title}
-                  className="he-detail-card"
-                  style={arr.length % 2 !== 0 && i === arr.length - 1 ? { gridColumn: '1 / -1' } : undefined}
-                >
+              {DETAILS[selected.label].events.map((ev) => (
+                <div key={ev.title} className="he-detail-card">
                   <img src={ev.image} alt={ev.title} className="he-detail-card-img" />
                   <div className="he-detail-card-body">
                     <h4 className="he-detail-card-title">{ev.title}</h4>

@@ -1054,7 +1054,6 @@ nav.scrolled .nav-controls {
 /* ── Detail panel ── */
 .he-detail {
   width: 100%;
-  max-width: 1100px;
   padding: 0 clamp(20px, 4vw, 48px) clamp(60px, 10vh, 120px);
   display: flex;
   flex-direction: column;
@@ -1077,12 +1076,6 @@ nav.scrolled .nav-controls {
   width: 100%;
 }
 
-@media (max-width: 600px) {
-  .he-detail-grid {
-    grid-template-columns: 1fr;
-  }
-}
-
 .he-detail-card {
   border-radius: 16px;
   border: 1px solid var(--color-nav-border);
@@ -1090,6 +1083,7 @@ nav.scrolled .nav-controls {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  padding: clamp(12px, 1.6vw, 18px);
   transition:
     border-color 0.25s ease,
     transform 0.25s ease;
@@ -1107,12 +1101,14 @@ nav.scrolled .nav-controls {
 .he-detail-card-img {
   width: 100%;
   aspect-ratio: 3 / 2;
-  object-fit: contain;
+  object-fit: cover;
   display: block;
+  border-radius: 12px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.3);
 }
 
 .he-detail-card-body {
-  padding: clamp(14px, 1.6vw, 20px);
+  padding: clamp(12px, 1.4vw, 18px) 2px 2px;
   display: flex;
   flex-direction: column;
   gap: 6px;

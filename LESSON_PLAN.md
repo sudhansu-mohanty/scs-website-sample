@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-09-14
+
+### CSS Grid `repeat()` — fixed columns vs responsive `auto-fit`
+`grid-template-columns: repeat(2, 1fr)` always makes exactly 2 equal-width columns, no matter how many items you put in the grid or how wide the screen is — 5 items just wrap into 3 rows (2 + 2 + 1). Compare that to `repeat(auto-fit, minmax(240px, 1fr))`, which tells the browser "fit as many 240px-or-wider columns as will fully fit, then stretch them evenly" — the column count itself changes as the screen resizes. Both keep every item the same width as its siblings (that's what `1fr` does — an equal fractional share of the leftover space), but only `repeat(2, 1fr)` guarantees a fixed 2-column shape you can rely on for a specific layout. We started with `auto-fit` for the competitions grid, then switched to a fixed `repeat(2, 1fr)` once you asked for exactly 2 columns and 3 rows.
+
+**Try it yourself:** In `index.css`, change `.he-detail-grid`'s `grid-template-columns: repeat(2, 1fr)` to `repeat(3, 1fr)`. Reload and count the rows — 5 cards should now wrap into 2 rows instead of 3. Change it back to `repeat(2, 1fr)` when done.
+
+---
+
+### `box-shadow` for a "floating" look
+A `box-shadow` draws a soft shadow behind an element, which the eye reads as that element being lifted off the surface behind it — the bigger and blurrier the shadow, the higher it looks like it's floating. The syntax is `box-shadow: <x-offset> <y-offset> <blur> <color>` — `0 12px 28px rgba(0,0,0,0.3)` means no horizontal shift, pushed down 12px, blurred over 28px, using a 30%-opaque black. We added this to `.he-detail-card-img` along with its own `border-radius` and some padding on the card around it, so each competition photo reads as its own rounded tile sitting above the card's background rather than being flush with the card's edges.
+
+**Try it yourself:** In `index.css`, change the `.he-detail-card-img` box-shadow's blur value from `28px` to `4px`. Reload — the images should look like they're sitting much closer to the card surface. Put it back to `28px` to restore the floating effect.
+
+---
+
+### Deleting a conditional-styling hack instead of patching it
+The competitions grid used to have a JSX ternary inside `.map()` — `arr.length % 2 !== 0 && i === arr.length - 1 ? { gridColumn: '1 / -1' } : undefined` — that special-cased the *last* card to span two grid columns whenever the total count was odd. It worked, but it meant "same size cards" was never actually true; one card was always secretly different. Sometimes the right fix for a "make X consistent" bug isn't more conditional logic — it's finding the one-off special case that's *causing* the inconsistency and deleting it. Once we moved to a grid that doesn't need an odd-item special case, the whole ternary could go, and the code got simpler *and* more correct at the same time.
+
+**Try it yourself:** Open `HomeEvents.jsx` and look at the `.map((ev) => ...)` that renders `he-detail-card` — notice there's no per-item conditional logic left. Try adding a 6th competition object to the `events` array in the `DETAILS.COMPETITIONS` block and reload — it should just take its place in the grid at the same size as the rest, no special-casing needed.
+
+---
+
 ## 2026-09-13
 
 ### `useState` as a selection mechanism — tracking which item is active
