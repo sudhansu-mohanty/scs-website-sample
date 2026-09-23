@@ -33,15 +33,99 @@ const DETAILS = {
       },
     ],
   },
+  ACADEMIC: {
+    description:
+      'Sharpen your skills and grow your career. SCS runs workshops, panels, and prep sessions designed to help Concordia CS students thrive — in class, in interviews, and beyond.',
+    events: [
+      {
+        image: 'https://picsum.photos/seed/acad-1/400/260',
+        title: 'Technical Interview Prep',
+        desc: "Mock interviews, LeetCode walkthroughs, and whiteboard practice led by students who've landed top internships. Runs every fall and winter.",
+      },
+      {
+        image: 'https://picsum.photos/seed/acad-2/400/260',
+        title: 'Resume Workshop',
+        desc: "Get your resume reviewed by peers and industry mentors. Learn how to frame your projects, highlight your skills, and pass the recruiter's first scan.",
+      },
+      {
+        image: 'https://picsum.photos/seed/acad-3/400/260',
+        title: 'Industry Panel',
+        desc: 'Hear directly from engineers, PMs, and founders at top tech companies. Ask real questions, make real connections — held each semester.',
+      },
+      {
+        image: 'https://picsum.photos/seed/acad-4/400/260',
+        title: 'Coding Workshops',
+        desc: 'Hands-on sessions covering web dev, data structures, machine learning, and more. Open to all skill levels, run by fellow students.',
+      },
+      {
+        image: 'https://picsum.photos/seed/acad-5/400/260',
+        title: 'Study Hall',
+        desc: 'Structured peer study sessions before midterms and finals. Bring your notes, find your group, and tackle the hardest courses together.',
+      },
+      {
+        image: 'https://picsum.photos/seed/acad-6/400/260',
+        title: 'Grad School Info Night',
+        desc: "Thinking about a master's or PhD? Current grad students and professors break down the application process, research opportunities, and funding.",
+      },
+    ],
+  },
+  SOCIAL: {
+    description:
+      'CS is better with company. SCS brings the Concordia computing community together through events that are fun, welcoming, and genuinely worth showing up for.',
+    events: [
+      {
+        image: 'https://picsum.photos/seed/soc-1/400/260',
+        title: 'Welcome Back BBQ',
+        desc: 'Kick off the fall semester with free food, good vibes, and a chance to meet your future teammates and friends. Held on the first week of school.',
+      },
+      {
+        image: 'https://picsum.photos/seed/soc-2/400/260',
+        title: 'Halloween Bash',
+        desc: 'Costumes encouraged, candy guaranteed. Our annual Halloween event is one of the most anticipated nights of the fall semester.',
+      },
+      {
+        image: 'https://picsum.photos/seed/soc-3/400/260',
+        title: 'End-of-Year Gala',
+        desc: "Celebrate the year's achievements in style. The gala wraps up the winter semester with awards, speeches, and a night to remember.",
+      },
+      {
+        image: 'https://picsum.photos/seed/soc-4/400/260',
+        title: 'Game Night',
+        desc: 'Board games, video games, and everything in between. A low-key evening to unwind, compete, and connect with the SCS community.',
+      },
+      {
+        image: 'https://picsum.photos/seed/soc-5/400/260',
+        title: 'Movie Night',
+        desc: 'Chill out with the community. We screen fan favourites and cult classics — popcorn included, attendance always free.',
+      },
+      {
+        image: 'https://picsum.photos/seed/soc-6/400/260',
+        title: 'Networking Mixer',
+        desc: 'A casual evening connecting students with alumni and industry professionals. No formal agenda — just great conversations and new opportunities.',
+      },
+    ],
+  },
+  'WINE & CHEESE': {
+    description:
+      'Our flagship annual event. Wine & Cheese brings together students, faculty, and industry professionals for an evening of networking, good food, and great conversation — held every fall semester.',
+    events: [
+      {
+        image: 'https://picsum.photos/seed/wnc-hero/1200/500',
+        title: 'Wine & Cheese',
+        desc: 'A night of networking, fine bites, and the SCS community at its best. Dress sharp, bring your curiosity, and leave with new connections.',
+      },
+    ],
+  },
 }
 
 const ITEMS = [
-  { label: 'COMPETITIONS', image: 'https://picsum.photos/seed/scs-dd/300/300' },
-  { label: 'ACADEMIC', image: 'https://picsum.photos/seed/scs-bb/300/300' },
-  { label: 'SOCIAL', image: 'https://picsum.photos/seed/scs-cc/300/300' },
+  { label: 'COMPETITIONS', image: 'https://picsum.photos/seed/scs-dd/300/300', hash: 'competitions' },
+  { label: 'ACADEMIC', image: 'https://picsum.photos/seed/scs-bb/300/300', hash: 'academic' },
+  { label: 'SOCIAL', image: 'https://picsum.photos/seed/scs-cc/300/300', hash: 'social' },
   {
     label: 'WINE & CHEESE',
     image: 'https://picsum.photos/seed/scs-ee/300/300',
+    hash: 'wine',
   },
   {
     label: 'WEEKLY',
@@ -49,6 +133,10 @@ const ITEMS = [
     href: '#weekly',
   },
 ]
+
+const HASH_TO_ITEM = Object.fromEntries(
+  ITEMS.filter((i) => i.hash).map((i) => [i.hash, i])
+)
 
 const wordVariants = {
   visible: {
@@ -77,6 +165,18 @@ export default function HomeEvents() {
   const current = hovered ?? selected
   const isActive = hovered !== null
 
+  // Sync selected tab with URL hash (e.g. #academic, #social, #competitions)
+  useEffect(() => {
+    const syncHash = () => {
+      const hash = window.location.hash.replace('#', '')
+      const match = HASH_TO_ITEM[hash]
+      if (match) setSelected(match)
+    }
+    syncHash()
+    window.addEventListener('hashchange', syncHash)
+    return () => window.removeEventListener('hashchange', syncHash)
+  }, [])
+
   const getTheme = () =>
     document.documentElement.getAttribute('data-theme') || 'dark'
   const [theme, setTheme] = useState(getTheme)
@@ -96,6 +196,11 @@ export default function HomeEvents() {
 
   return (
     <section className="he-section">
+      {/* ── Hash anchors for navbar deep-links ── */}
+      {ITEMS.filter((i) => i.hash).map((i) => (
+        <span key={i.hash} id={i.hash} className="he-anchor" />
+      ))}
+
       {/* ── Scroll-in label ── */}
       <motion.p
         className="he-label"
