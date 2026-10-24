@@ -3,10 +3,8 @@ import DotGrid from './DotGrid'
 
 const LINE1 = 'Welcome to SCS Concordia'
 const CYCLING_LINES = [
-  'Lorem ipsum dolor sit amet, consectetur adipiscing elit.',
-  'Sed do eiusmod tempor incididunt ut labore et dolore magna.',
-  'Ut enim ad minim veniam, quis nostrud exercitation.',
-  'Duis aute irure dolor in reprehenderit in voluptate velit.',
+  'Software Engineering and Computer Science Society at Concordia University — a student-run organization built by and for CS and SE students.',
+  'Our mission is to bridge the gap between students and the tech industry'
 ]
 const TYPE_DELAY = 42   // ms per character typed
 const DELETE_DELAY = 22 // ms per character deleted
