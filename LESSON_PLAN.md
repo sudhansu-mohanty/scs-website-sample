@@ -2,6 +2,22 @@
 
 ---
 
+## 2026-10-31 (session 2)
+
+### GitHub Actions — multiple workflows and why stale ones cause failures
+A repository can have multiple workflow files inside `.github/workflows/`. GitHub runs **every** workflow that matches the trigger on each push. When the project was originally scaffolded it came with a `nextjs.yml` workflow designed for a Next.js app — but the site was migrated to Vite, making that file completely wrong. It kept running on every push and failing even though the real `deploy.yml` succeeded. The fix was simply deleting the stale file. This is a good reminder to audit your `.github/workflows/` folder when you migrate tech stacks — old workflow files don't get cleaned up automatically.
+
+**Try it yourself:** Open `.github/workflows/deploy.yml` and find the `on: push` trigger. Change `branches: [main]` to `branches: [staging]` temporarily — pushes to `main` will no longer trigger the deploy. Change it back when done.
+
+---
+
+### Array order in React data arrays — UI order follows data order
+In React, when you render a list by mapping over an array, the order items appear on screen is exactly the order they appear in the array. Reordering nav items is as simple as cutting and pasting entries in `NAV_ITEMS`. There's no separate "order" property to manage — the array index *is* the order. This is one of the benefits of keeping UI data in a plain JavaScript array rather than, say, an object with keys.
+
+**Try it yourself:** In `Navbar.jsx`, move the `{ label: 'Home', href: '#' }` entry to the end of the `NAV_ITEMS` array. Reload the page — "Home" will appear as the last nav item. Move it back to the top.
+
+---
+
 ## 2026-10-31
 
 ### CSS 3D card flip — `transform-style`, `backface-visibility`, and `rotateY`

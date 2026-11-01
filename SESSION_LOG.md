@@ -2,6 +2,14 @@
 
 ---
 
+## 2026-10-31 (session 2)
+
+- Added "Sponsor Us" link to navbar pointing to `#sponsor` anchor; added `id="sponsor"` to the SponsorUs section
+- Reordered navbar: moved Contact to the right of Sponsor Us (Home → Who we are → What we do → Sponsor Us → Contact → Links)
+- Fixed build/deploy issue: deleted stale `.github/workflows/nextjs.yml` that was failing on every push — only the Vite `deploy.yml` workflow remains
+
+---
+
 ## 2026-10-31
 
 - Built the full **Meet the Team** section (`MeetTheTeam.jsx`) from scratch:
