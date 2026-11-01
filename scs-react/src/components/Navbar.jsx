@@ -31,6 +31,7 @@ const NAV_ITEMS = [
       { label: 'Email', href: '#' },
     ],
   },
+  { label: 'Sponsor Us', href: '#sponsor' },
   { label: 'Links', href: 'https://linktr.ee/scsconcordia', external: true },
 ]
 

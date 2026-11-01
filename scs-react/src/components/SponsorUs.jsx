@@ -36,7 +36,7 @@ const fadeUp = {
 
 export default function SponsorUs() {
   return (
-    <section className="sp-section">
+    <section className="sp-section" id="sponsor">
       {/* ── Top content ── */}
       <div className="sp-inner">
         {/* Heading */}
