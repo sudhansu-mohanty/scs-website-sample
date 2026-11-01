@@ -1143,8 +1143,13 @@ nav.scrolled .nav-controls {
 }
 
 /* ── Meet the Team Section ── */
+/*
+  Inverted from HomeEvents: HomeEvents uses --he-bg (light in dark mode).
+  MeetTheTeam returns to --color-bg (dark in dark mode), closing the alternating rhythm.
+*/
 .mtt-section {
-  background: var(--he-bg);
+  background: var(--color-bg);
+  color: var(--color-text);
   transition:
     background 0.3s ease,
     color 0.3s ease;
@@ -1152,9 +1157,1033 @@ nav.scrolled .nav-controls {
   display: flex;
   flex-direction: column;
   align-items: center;
+  gap: 40px;
+  padding: 80px 40px 100px;
+  overflow: hidden;
+  text-align: center;
+}
+
+.mtt-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(48px, 6vw, var(--text-display));
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+}
+
+/* ── Group photo banner ── */
+.mtt-group-photo {
+  position: relative;
+  width: 100%;
+  max-width: 1200px;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 56px;
+}
+
+.mtt-group-photo img {
+  width: 100%;
+  height: clamp(200px, 28vw, 380px);
+  object-fit: cover;
+  display: block;
+}
+
+.mtt-group-photo-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(9, 9, 9, 0.1) 0%,
+    rgba(9, 9, 9, 0.55) 100%
+  );
+}
+
+[data-theme='light'] .mtt-group-photo-overlay {
+  background: linear-gradient(
+    to bottom,
+    rgba(245, 245, 245, 0.05) 0%,
+    rgba(245, 245, 245, 0.5) 100%
+  );
+}
+
+.mtt-group-photo-tag {
+  position: absolute;
+  bottom: 18px;
+  right: 22px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ── Big animated team name ── */
+.mtt-display-wrap {
+  width: 100%;
+  max-width: 1200px;
+  overflow: visible;
+  margin-bottom: 28px;
+}
+
+.mtt-display {
+  display: flex;
+  flex-wrap: wrap;
   justify-content: center;
+  font-size: clamp(54px, 10vw, 140px);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 0.85;
+  user-select: none;
+  color: var(--color-text);
+}
+
+/* ── Filter button + panel ── */
+.mtt-filter-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.mtt-filter-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 22px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+
+.mtt-filter-btn:hover,
+.mtt-filter-btn.open {
+  border-color: var(--color-accent);
+  color: var(--color-text);
+}
+
+.mtt-filter-btn.active {
+  border-color: var(--color-accent);
+  background: rgba(182, 165, 235, 0.12);
+  color: var(--color-accent);
+}
+
+[data-theme='light'] .mtt-filter-btn {
+  border-color: rgba(0, 0, 0, 0.12);
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme='light'] .mtt-filter-btn.active {
+  background: rgba(67, 48, 121, 0.1);
+}
+
+.mtt-filter-clear {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  font-size: 9px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.mtt-filter-clear:hover {
+  background: rgba(255, 255, 255, 0.24);
+}
+
+.mtt-filter-chevron {
+  display: inline-block;
+  font-size: 12px;
+  line-height: 1;
+  opacity: 0.6;
+}
+
+/* Filter panel */
+.mtt-filter-panel {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  overflow: hidden;
+  padding-top: 16px;
+}
+
+/* ── Filter tabs ── */
+.mtt-tabs {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+}
+
+.mtt-tab {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 999px;
+  padding: 7px 18px;
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+
+.mtt-tab:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.mtt-tab.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+[data-theme='light'] .mtt-tab {
+  border-color: rgba(0, 0, 0, 0.12);
+}
+
+[data-theme='light'] .mtt-tab.active {
+  color: #fff;
+}
+
+.mtt-tab-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.18);
+  font-size: 10px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.mtt-tab.active .mtt-tab-badge {
+  background: rgba(255, 255, 255, 0.28);
+}
+
+/* ── Sub-team chips (Marketing) ── */
+.mtt-subtabs {
+  display: flex;
+  gap: 6px;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.mtt-subtab {
+  background: none;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 5px 14px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    color 0.2s,
+    background 0.2s;
+}
+
+.mtt-subtab:hover {
+  border-color: var(--color-accent-2);
+  color: var(--color-accent-2);
+}
+
+.mtt-subtab.active {
+  background: var(--color-accent-2);
+  border-color: var(--color-accent-2);
+  color: #000;
+}
+
+[data-theme='light'] .mtt-subtab {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Tier boxes ── */
+.mtt-tiers {
+  width: 100%;
+  max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.mtt-tier-box {
+  width: 100%;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.025);
+}
+
+[data-theme='light'] .mtt-tier-box {
+  border-color: rgba(0, 0, 0, 0.07);
+  background: rgba(0, 0, 0, 0.02);
+}
+
+.mtt-tier-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  width: 100%;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+[data-theme='light'] .mtt-tier-label {
+  border-bottom-color: rgba(0, 0, 0, 0.07);
+}
+
+.mtt-tier-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(14px, 2vw, 20px);
+  justify-content: center;
+  width: 100%;
+}
+
+/* ── Flip card scaffold ── */
+.mtt-card-scene {
+  perspective: 1000px;
+  width: 185px;
+  height: 300px;
+  flex-shrink: 0;
+}
+
+.mtt-card-inner {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+  cursor: pointer;
+  outline: none;
+}
+
+.mtt-card-inner:focus-visible {
+  outline: 2px solid var(--color-accent);
+  border-radius: 16px;
+}
+
+.mtt-card-inner.is-flipped {
+  transform: rotateY(180deg);
+}
+
+/* ── Shared face styles ── */
+.mtt-card-front,
+.mtt-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px 18px;
+  gap: 10px;
+  transition: border-color 0.25s, background 0.25s;
+}
+
+/* ── Front face ── */
+.mtt-card-front {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  justify-content: center;
+}
+
+.mtt-card-inner:not(.is-flipped):hover .mtt-card-front {
+  border-color: var(--color-accent);
+  background: rgba(182, 165, 235, 0.07);
+}
+
+[data-theme='light'] .mtt-card-front {
+  background: rgba(0, 0, 0, 0.03);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .mtt-card-inner:not(.is-flipped):hover .mtt-card-front {
+  background: rgba(67, 48, 121, 0.06);
+  border-color: var(--color-accent);
+}
+
+/* ── Back face ── */
+.mtt-card-back {
+  transform: rotateY(180deg);
+  background: rgba(182, 165, 235, 0.07);
+  border: 1px solid rgba(182, 165, 235, 0.2);
+  justify-content: flex-start;
+  overflow: hidden;
+  position: relative;
+}
+
+[data-theme='light'] .mtt-card-back {
+  background: rgba(67, 48, 121, 0.06);
+  border-color: rgba(67, 48, 121, 0.18);
+}
+
+/* Close button on back */
+.mtt-card-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  border-radius: 50%;
+  width: 26px;
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+  flex-shrink: 0;
+  align-self: flex-end;
+}
+
+.mtt-card-close:hover {
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--color-text);
+}
+
+[data-theme='light'] .mtt-card-close {
+  background: rgba(0, 0, 0, 0.06);
+}
+
+/* ── Photo (front) ── */
+.mtt-card-photo-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.mtt-card-photo {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 2px solid rgba(255, 255, 255, 0.08);
+  transition: border-color 0.25s;
+}
+
+.mtt-card-inner:not(.is-flipped):hover .mtt-card-photo {
+  border-color: var(--color-accent);
+}
+
+[data-theme='light'] .mtt-card-photo {
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Sub-team badge */
+.mtt-card-sub-badge {
+  position: absolute;
+  bottom: 2px;
+  right: -6px;
+  background: var(--color-accent-2);
+  color: #000;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+/* ── Info block ── */
+.mtt-card-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+  text-align: center;
+}
+
+.mtt-card-name {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  font-weight: 600;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.mtt-card-role {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  color: var(--color-text-muted);
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── Social buttons (front — icon only) ── */
+.mtt-card-socials {
+  display: flex;
+  gap: 7px;
+  margin-top: 2px;
+}
+
+.mtt-social-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.mtt-social-btn:hover {
+  background: rgba(182, 165, 235, 0.18);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+[data-theme='light'] .mtt-social-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .mtt-social-btn:hover {
+  background: rgba(67, 48, 121, 0.1);
+}
+
+/* Flip hint */
+.mtt-flip-hint {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+
+.mtt-card-inner:not(.is-flipped):hover .mtt-flip-hint {
+  opacity: 0.5;
+}
+
+/* ── Back face content ── */
+.mtt-back-photo {
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+  border: 2px solid rgba(182, 165, 235, 0.3);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.mtt-back-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  text-align: center;
+}
+
+.mtt-back-bio {
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  text-align: center;
+  flex: 1;
+}
+
+/* ── Social links (back — icon + label) ── */
+.mtt-back-socials {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+  padding-top: 8px;
+  width: 100%;
+  justify-content: center;
+}
+
+.mtt-back-social-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--color-text-muted);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+}
+
+.mtt-back-social-btn:hover {
+  background: rgba(182, 165, 235, 0.18);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+[data-theme='light'] .mtt-back-social-btn {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .mtt-back-social-btn:hover {
+  background: rgba(67, 48, 121, 0.1);
+}
+
+/* ── Sponsor Us Section ── */
+/*
+  Follows MeetTheTeam (dark), so this section is light — uses --he-bg tokens.
+*/
+.sp-section {
+  background: var(--he-bg);
+  color: var(--he-text);
+  transition: background 0.3s ease, color 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(64px, 10vw, 100px) clamp(20px, 5vw, 80px);
+  gap: clamp(48px, 7vw, 80px);
+  overflow: hidden;
+}
+
+.sp-inner {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 28px;
+}
+
+.sp-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--purple-deep);
+}
+
+[data-theme='light'] .sp-label {
+  color: var(--purple-mid);
+}
+
+.sp-heading {
+  font-family: var(--font-serif);
+  font-weight: 400;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--he-text);
+}
+
+.sp-sub {
+  font-family: var(--font-mono);
+  font-size: clamp(var(--text-body-sm), 1.2vw, var(--text-body));
+  line-height: 1.75;
+  color: var(--he-text-muted);
+  max-width: 65ch;
+}
+
+/* ── Metrics ── */
+.sp-metrics {
+  display: flex;
+  gap: clamp(12px, 3vw, 32px);
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.sp-metric {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: clamp(16px, 2.5vw, 28px) clamp(20px, 3vw, 40px);
+  border-radius: 16px;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  background: rgba(10, 10, 10, 0.03);
+  flex: 1;
+  min-width: 120px;
+  max-width: 180px;
+}
+
+[data-theme='light'] .sp-metric {
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.sp-metric-value {
+  font-family: var(--font-serif);
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--he-text);
+}
+
+.sp-metric-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.08em;
+  color: var(--he-text-muted);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* ── CTA button ── */
+.sp-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  border-radius: 999px;
+  background: var(--purple-deep);
+  color: #fff;
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  letter-spacing: 0.04em;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.2s, gap 0.2s;
+  margin-top: 8px;
+}
+
+.sp-cta:hover {
+  background: #5a3fa0;
+}
+
+/* ── Previous sponsors marquee ── */
+.sp-marquee-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.sp-marquee-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--he-text-muted);
+}
+
+.sp-marquee {
+  width: 100%;
+  overflow: hidden;
+  /* Fade edges */
+  mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.sp-track {
+  display: flex;
   gap: 16px;
-  padding: 60px 40px 80px;
+  width: max-content;
+  animation: sp-scroll 30s linear infinite;
+}
+
+.sp-marquee:hover .sp-track {
+  animation-play-state: paused;
+}
+
+@keyframes sp-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.sp-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 44px;
+  padding: 0 28px;
+  border-radius: 10px;
+  border: 1px solid rgba(10, 10, 10, 0.1);
+  background: rgba(10, 10, 10, 0.03);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.sp-logo:hover {
+  border-color: var(--purple-deep);
+  background: rgba(67, 48, 121, 0.06);
+}
+
+[data-theme='light'] .sp-logo {
+  border-color: rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme='light'] .sp-logo:hover {
+  border-color: var(--purple-mid);
+}
+
+.sp-logo span {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--he-text);
+  opacity: 0.55;
+  transition: opacity 0.2s;
+}
+
+.sp-logo:hover span {
+  opacity: 1;
+}
+
+.sp-logo img {
+  height: 22px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.55;
+  filter: grayscale(1);
+  transition: opacity 0.2s, filter 0.2s;
+}
+
+.sp-logo:hover img {
+  opacity: 1;
+  filter: grayscale(0);
+}
+
+/* ── Footer ── */
+.footer {
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
+  /* bottom padding creates space for the half-visible watermark logo */
+  padding: clamp(48px, 7vw, 80px) clamp(24px, 6vw, 80px);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+[data-theme='light'] .footer {
+  border-top-color: rgba(0, 0, 0, 0.07);
+}
+
+.footer-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(40px, 8vw, 120px);
+  align-items: start;
+}
+
+/* ── Brand column ── */
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.footer-logo {
+  height: 32px;
+  width: auto;
+  display: block;
+  filter: var(--color-img-filter);
+  transition: filter 0.3s ease;
+}
+
+.footer-tagline {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  line-height: 1.6;
+  color: var(--color-text-muted);
+  max-width: 26ch;
+}
+
+.footer-copy {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  opacity: 0.5;
+  margin-top: 8px;
+}
+
+.footer-dev {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+}
+
+.footer-dev-link {
+  color: var(--color-accent);
+  text-decoration: none;
+  opacity: 1;
+  transition: opacity 0.2s;
+}
+
+.footer-dev-link:hover {
+  opacity: 0.75;
+}
+
+/* ── Link columns ── */
+.footer-links {
+  display: flex;
+  gap: clamp(32px, 5vw, 72px);
+}
+
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-col-heading {
+  font-family: var(--font-mono);
+  font-size: var(--text-caption);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 4px;
+}
+
+.footer-link {
+  font-family: var(--font-mono);
+  font-size: var(--text-body-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color 0.2s;
+  white-space: nowrap;
+}
+
+.footer-link:hover {
+  color: var(--color-text);
+}
+
+/* ── Half-cut watermark logo ── */
+.footer-watermark {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  /* translateY(50%) pushes exactly half the logo below the footer edge */
+  transform: translateX(-50%) translateY(50%);
+  width: clamp(480px, 68vw, 1060px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.footer-watermark img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: var(--color-img-filter);
+  opacity: 0.055;
+  transition: filter 0.3s ease;
+}
+
+/* ── Footer responsive ── */
+@media (max-width: 860px) {
+  .footer-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .footer-links {
+    gap: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer-links {
+    flex-wrap: wrap;
+    gap: 28px 40px;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 680px) {
+  .mtt-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  }
+
+  .mtt-card-scene {
+    height: 290px;
+  }
+
+  .mtt-display {
+    font-size: clamp(42px, 12vw, 72px);
+  }
+
+  .mtt-tabs {
+    gap: 6px;
+  }
+
+  .mtt-tab {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
 }
 
 

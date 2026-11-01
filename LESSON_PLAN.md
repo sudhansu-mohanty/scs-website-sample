@@ -2,6 +2,43 @@
 
 ---
 
+## 2026-10-31
+
+### CSS 3D card flip — `transform-style`, `backface-visibility`, and `rotateY`
+A card flip is built from three CSS ideas working together. The outer container gets `perspective: 1000px`, which adds depth to 3D transforms — without it everything looks flat. The inner element gets `transform-style: preserve-3d`, telling the browser that its children exist in the same 3D space. The front face stays at the default rotation; the back face is pre-rotated `rotateY(180deg)` so it starts facing away. Both faces get `backface-visibility: hidden`, which makes each face invisible when it's pointing away from the viewer. When you add `rotateY(180deg)` to the inner element on click, the front rotates away (hidden) and the back rotates into view — a seamless flip. We used this for every member card in the Meet the Team section.
+
+**Try it yourself:** In `index.css`, remove `backface-visibility: hidden` from `.mtt-card-front` and `.mtt-card-back`. Click a card to flip it — you'll see both faces at once, ghosted through each other. Put it back to see why that property is essential.
+
+---
+
+### `AnimatePresence mode="popLayout"` and `layout` — filtering lists with smooth animation
+When you filter a list in React, items are added and removed from the DOM instantly by default. Framer Motion's `AnimatePresence` adds exit animations before removal, and the `layout` prop on each child tells Framer Motion to smoothly animate the reflow of remaining items into their new positions. `mode="popLayout"` is a special mode that removes exiting elements from the flow immediately (like `position: absolute`) so remaining cards shuffle into place while the exiting cards fade — this prevents a jarring layout jump. We used this on the member grid so cards smoothly enter and exit when you switch team filters.
+
+**Try it yourself:** In `MeetTheTeam.jsx`, change `mode="popLayout"` to `mode="wait"` on the `AnimatePresence`. Filter between teams — the entire grid will wait for all exit animations to finish before entering, which feels much slower. Switch back to `"popLayout"` to see the difference.
+
+---
+
+### CSS `mask-image` — fading the edges of an element
+`mask-image` makes parts of an element transparent by applying a gradient as an alpha mask — where the gradient is black the element is fully visible, where it's transparent the element fades out. We used `mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%)` on the sponsor marquee to create a soft fade on the left and right edges, making the infinite scroll feel seamless instead of abruptly cut off. Unlike `clip-path`, mask-image gives you a gradient transition rather than a hard edge.
+
+**Try it yourself:** In `index.css`, change the `10%` and `90%` values on `.sp-marquee`'s `mask-image` to `30%` and `70%`. The fade zone becomes much wider and more of the logos disappear toward the edges. Try `0%` and `100%` to remove the fade entirely.
+
+---
+
+### CSS `animation` with `translateX(-50%)` for infinite marquees
+An infinite scrolling marquee works by duplicating the list of items and animating `translateX` from `0` to `-50%`. Because the content is exactly double the visible width (two identical copies), moving left by half the total width brings you back to exactly where you started — creating a seamless loop. The `animation: name duration linear infinite` shorthand runs the keyframe forever at a constant speed. Adding `animation-play-state: paused` on hover freezes it mid-scroll, letting users read the logos.
+
+**Try it yourself:** In `index.css`, change `30s` in `.sp-track`'s animation to `5s`. The marquee will scroll very fast. Try `60s` for a slow, barely-moving crawl. Change it back to `30s`.
+
+---
+
+### `import.meta.env.BASE_URL` — asset paths that work in any deployment environment
+In a Vite project, hardcoded paths like `/logo_full.svg` only work when the site is served from the root of a domain. If the site lives in a subdirectory (like GitHub Pages at `/scs-website-sample/`), those paths break. `import.meta.env.BASE_URL` is a Vite-injected variable that always holds the correct base path — `"/"` in development, `"/scs-website-sample/"` in the GitHub Pages build. Prefixing all public asset paths with it ensures they resolve correctly in every environment without changing any code between deployments.
+
+**Try it yourself:** In `Footer.jsx`, temporarily replace `` `${import.meta.env.BASE_URL}logo_full.svg` `` with just `"/logo_full.svg"`. The logo will still appear in local dev (`localhost`) but would break on the deployed GitHub Pages site. Revert it to see why the pattern matters.
+
+---
+
 ## 2026-09-14
 
 ### CSS Grid `repeat()` — fixed columns vs responsive `auto-fit`

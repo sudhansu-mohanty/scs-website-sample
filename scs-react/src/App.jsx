@@ -8,6 +8,8 @@ import AboutUs from './components/AboutUs'
 import WeeklyEvents from './components/WeeklyEvents'
 import HomeEvents from './components/HomeEvents'
 import MeetTheTeam from './components/MeetTheTeam'
+import SponsorUs from './components/SponsorUs'
+import Footer from './components/Footer'
 
 /*
   App is the root component — it owns the state that multiple
@@ -74,6 +76,10 @@ export default function App() {
       <HomeEvents />
 
       <MeetTheTeam />
+
+      <SponsorUs />
+
+      <Footer />
 
       {/* <CursorCircle /> */}
     </>

@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-10-31
+
+- Built the full **Meet the Team** section (`MeetTheTeam.jsx`) from scratch:
+  - All 35 members across 9 teams in a single flat array, categorised by `tier` (president / vp / director)
+  - Three visually distinct boxed sections — Presidents, VPs, Directors & Leads — each with a separator line header
+  - Flip card animation per member: front shows photo, name, role, and 3 icon buttons (email, LinkedIn, link); back shows bio and icon-only social links
+  - Single FILTER toggle button that slides down a filter panel (team tabs + Marketing sub-team chips) on click; button shows active filter name + a clear ✕
+  - Big animated display text (character-by-character slide) updates to reflect the active filter
+  - Group photo banner placeholder at top with gradient overlay
+  - All tabs and grid centered; `AnimatePresence mode="popLayout"` + `layout` for smooth per-card filter transitions
+  - Replaced GitHub icon with a generic chain link icon throughout
+- Built **SponsorUs** section (`SponsorUs.jsx`):
+  - 4 metric cards (600+ Members, 20+ Events/Year, 5 Competition Teams, 10+ Years Running)
+  - "View Sponsorship Package" CTA button (placeholder href)
+  - Infinite CSS marquee of 12 placeholder sponsor logos (pauses on hover, fades edges with mask-image)
+  - Light section (`--he-bg` tokens) following the dark MeetTheTeam for proper alternating rhythm
+- Built **Footer** (`Footer.jsx`):
+  - Brand column: SCS logo, tagline, copyright (auto year), "Developed by Sudhansu" credit linking to `www.sudhansumohanty.site`
+  - Three link columns: Navigate, Connect, Get Involved
+  - Fixed logo path to use `import.meta.env.BASE_URL` (same pattern as Hero/Navbar)
+
+---
+
 ## 2026-09-14 — (session)
 
 - No work done this session.
