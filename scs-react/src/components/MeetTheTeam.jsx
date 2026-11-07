@@ -6,6 +6,7 @@ const TIERS = [
   { id: 'president', label: 'Presidents' },
   { id: 'vp',        label: 'VPs' },
   { id: 'director',  label: 'Directors & Leads' },
+  { id: 'fyre',      label: 'FYREs' },
 ]
 
 // ── Filter teams ───────────────────────────────────────────
@@ -20,6 +21,7 @@ const TEAMS = [
   { id: 'marketing',    label: 'MARKETING', subteams: ['ALL', 'DESIGN', 'CONTENT'] },
   { id: 'finance',      label: 'FINANCE' },
   { id: 'projects',     label: 'PROJECTS' },
+  { id: 'fyre',         label: 'FYRE' },
 ]
 
 // ── Members ─────────────────────────────────────────────────
@@ -70,6 +72,9 @@ const ALL_MEMBERS = [
   { name: 'Jack Cooper',     role: 'Lead Developer',        tier: 'director',  team: 'projects',     bio: 'Architecting the technical foundations for SCS student-built projects.',                                                            email: 'jack.cooper@example.com',     linkedin: '#', link: '#', image: 'https://randomuser.me/api/portraits/men/92.jpg' },
   { name: 'Sophie Bailey',   role: 'Product Manager',       tier: 'director',  team: 'projects',     bio: 'Keeping projects on track from ideation to launch with clear goals and timelines.',                                                 email: 'sophie.bailey@example.com',   linkedin: '#', link: '#', image: 'https://randomuser.me/api/portraits/women/92.jpg' },
   { name: 'Lena Fischer',    role: 'Full-Stack Developer',  tier: 'director',  team: 'projects',     bio: 'Building across the stack — from databases to polished user interfaces.',                                                           email: 'lena.fischer@example.com',    linkedin: '#', link: '#', image: 'https://randomuser.me/api/portraits/women/95.jpg' },
+
+  { name: 'Jamie Osei',      role: 'First Year Representative', tier: 'fyre', team: 'fyre', bio: 'Representing the incoming class and making sure first-year students feel at home in the SCS community from day one.', email: 'jamie.osei@example.com',       linkedin: '#', link: '#', image: 'https://randomuser.me/api/portraits/men/18.jpg' },
+  { name: 'Nina Rousseau',   role: 'First Year Representative', tier: 'fyre', team: 'fyre', bio: 'Helping new students navigate university life, connecting them with resources and opportunities within the CS community.',  email: 'nina.rousseau@example.com',    linkedin: '#', link: '#', image: 'https://randomuser.me/api/portraits/women/23.jpg' },
 ]
 
 // ── Icons ──────────────────────────────────────────────────

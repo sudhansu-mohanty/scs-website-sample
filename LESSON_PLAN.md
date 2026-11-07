@@ -2,6 +2,36 @@
 
 ---
 
+## 2026-11-07
+
+### CSS `transform` as a containing block — why `position: fixed` doesn't always mean "fixed to viewport"
+Normally, `position: fixed` pins an element to the browser viewport. But there's a catch: if any ancestor element has a `transform`, `perspective`, or `filter` property applied, that ancestor becomes the new containing block for all its fixed-position descendants. The nav bar uses `transform: translateX(-50%)` to center itself, which silently trapped the mobile menu inside the nav's own box (52px tall!) instead of covering the full screen. The fix was React's `createPortal`, which renders an element as a direct child of `<body>`, escaping any transformed ancestors entirely.
+
+**Try it yourself:** Add `transform: translateX(0)` (a no-op transform) to a `<div>` and put a `position: fixed; inset: 0;` child inside it. Notice the child no longer covers the full screen — it's clipped to the parent. Remove the transform and it covers the full screen again.
+
+---
+
+### The View Transitions API — browser-native page transition animations
+`document.startViewTransition(callback)` is a modern browser API that takes a "snapshot" of the page, runs your callback (which changes the DOM), takes another snapshot, then cross-fades between the two. This means you get a smooth fade transition for free when switching themes — no extra CSS classes, no manual opacity tweening, no React state juggling. The CSS `::view-transition-old(root)` and `::view-transition-new(root)` pseudo-elements let you control the duration and easing. If the browser doesn't support it, the `else` fallback just runs the change instantly, so older browsers degrade gracefully.
+
+**Try it yourself:** Wrap any DOM change (like toggling a class on `<body>`) in `document.startViewTransition(() => { ... })` and watch the page cross-fade. Then try customizing `::view-transition-new(root) { animation-duration: 1s; }` to slow it way down.
+
+---
+
+### CSS `height` vs `min-height` — why "at least this tall" still causes layout shift
+`min-height` says "be at least this tall, but grow if the content is bigger." `height` says "be exactly this tall, full stop." In the hero section, the cycling typewriter text was using `min-height: 1.35em` — one line tall at minimum. But when the text wrapped to two or three lines, the element grew, making the whole hero-content block taller. Since the hero vertically centers its content, the taller block re-centered itself, sliding the logo up. The fix was replacing `min-height` with a fixed `height` that covers the worst-case number of lines, so the container's size never changes regardless of how many lines the text wraps to.
+
+**Try it yourself:** Create a `<div>` with `min-height: 50px` centered in a flex container. Add enough text to make it wrap to 100px. Notice the flex container shifts to keep it centered. Now switch to `height: 100px` — the div stays the same size and the layout stays stable.
+
+---
+
+### CSS Flexbox `gap` applies to invisible elements too
+The `gap` property in a flex or grid container adds space *between* flex items — including items that have `height: 0` or `visibility: hidden`. In the Home Events section, navigation anchor `<span>` elements (used as scroll targets for nav links) were `display: block` flex children with `height: 0`. With `gap: 32px` on the container and 5 anchor spans, that added up to 4 × 32px = 128px of invisible space before the first visible element. The fix was changing the anchors to `position: absolute`, which removes them from the flex flow entirely — they still exist in the DOM as scroll targets, but no longer participate in the flex layout.
+
+**Try it yourself:** Create a flex column with `gap: 20px` and add three `<div style="height:0">` elements followed by a visible `<div>`. Notice the 60px gap above the visible element. Now add `position: absolute` to the hidden divs — the gap disappears.
+
+---
+
 ## 2026-10-31 (session 2)
 
 ### GitHub Actions — multiple workflows and why stale ones cause failures

@@ -2,6 +2,18 @@
 
 ---
 
+## 2026-11-07 — session
+
+- Added FYREs (First Year Representatives) as a new tier and team filter in the Meet the Team section, with two placeholder members
+- Added mobile hamburger menu to Navbar with animated ✕ transition, full-screen overlay, and accordion-style sub-items
+- Fixed hamburger menu bug: mobile menu was clipped to nav bounds because `nav` has `transform: translateX(-50%)` — solved with `createPortal` to render menu directly in `<body>`
+- Added smooth theme toggle fade using the View Transitions API (`document.startViewTransition`) with 0.35s cross-fade; falls back gracefully on unsupported browsers
+- Fixed hero logo/text jumping: cycling typewriter line used `min-height` so its height grew as text wrapped, re-centering the whole hero and moving the logo — fixed with a CSS `height` (not `min-height`) so the container is always the same size
+- Iterated on mobile arm layout: tried diagonal corner placement (top-left ↘, bottom-right with various rotations), then removed arms entirely on mobile with `display: none`
+- Fixed large blank gap at top of Home Events section: the hidden hash anchor `<span>`s were `display: block` flex items — the `gap: 32px` on the flex container stacked up ~160px of invisible space; fixed by switching anchors to `position: absolute`
+
+---
+
 ## 2026-10-31 (session 2)
 
 - Added "Sponsor Us" link to navbar pointing to `#sponsor` anchor; added `id="sponsor"` to the SponsorUs section

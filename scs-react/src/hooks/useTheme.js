@@ -27,9 +27,16 @@ export function useTheme() {
 
   const toggleTheme = () => {
     const next = theme === 'dark' ? 'light' : 'dark'
-    setTheme(next)
-    document.documentElement.setAttribute('data-theme', next)
-    localStorage.setItem('scs-theme', next)
+    const apply = () => {
+      setTheme(next)
+      document.documentElement.setAttribute('data-theme', next)
+      localStorage.setItem('scs-theme', next)
+    }
+    if (document.startViewTransition) {
+      document.startViewTransition(apply)
+    } else {
+      apply()
+    }
   }
 
   return { theme, toggleTheme }

@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { createPortal } from 'react-dom'
 import { playHover, playClick, isMuted, setMuted } from '../utils/sfx'
 
 const NAV_ITEMS = [
@@ -60,6 +61,8 @@ export default function Navbar({ theme, onToggle }) {
   const [openMenu, setOpenMenu] = useState(null)
   const [muted, setMutedState] = useState(isMuted())
   const [scrolled, setScrolled] = useState(false)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobileExpanded, setMobileExpanded] = useState(null)
   const navRef = useRef(null)
 
   useEffect(() => {
@@ -68,12 +71,25 @@ export default function Navbar({ theme, onToggle }) {
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
+
   const toggleMute = () => {
     const next = !muted
     setMuted(next)
     setMutedState(next)
-    if (!next) playClick() // confirm unmute with a sound
+    if (!next) playClick()
   }
+
+  const closeMobile = () => {
+    setMobileOpen(false)
+    setMobileExpanded(null)
+  }
+
+  const toggleMobileExpanded = (label) =>
+    setMobileExpanded((prev) => (prev === label ? null : label))
 
   return (
     <nav
@@ -141,6 +157,93 @@ export default function Navbar({ theme, onToggle }) {
           )
         )}
       </ul>
+
+      {/* ── Hamburger (mobile only) ── */}
+      <button
+        className={`nav-hamburger${mobileOpen ? ' open' : ''}`}
+        onClick={() => { playClick(); setMobileOpen((v) => !v) }}
+        aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+        aria-expanded={mobileOpen}
+      >
+        <span /><span /><span />
+      </button>
+
+      {/* ── Mobile full-screen menu (portalled to body to escape nav's transform) ── */}
+      {createPortal(
+      <div className={`nav-mobile-menu${mobileOpen ? ' open' : ''}`} aria-hidden={!mobileOpen}>
+        <ul className="nav-mobile-list">
+          {NAV_ITEMS.map((item) =>
+            item.children ? (
+              <li key={item.label} className="nav-mobile-item">
+                <button
+                  className={`nav-mobile-trigger${mobileExpanded === item.label ? ' open' : ''}`}
+                  onClick={() => toggleMobileExpanded(item.label)}
+                >
+                  {item.label}
+                  <Chevron open={mobileExpanded === item.label} />
+                </button>
+                <ul className={`nav-mobile-sub${mobileExpanded === item.label ? ' open' : ''}`}>
+                  {item.children.map((child) => (
+                    <li key={child.label}>
+                      <a href={child.href} onClick={() => { playClick(); closeMobile() }}>{child.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </li>
+            ) : (
+              <li key={item.label} className="nav-mobile-item">
+                <a
+                  href={item.href}
+                  onClick={() => { playClick(); closeMobile() }}
+                  {...(item.external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                >
+                  {item.label}
+                </a>
+              </li>
+            )
+          )}
+        </ul>
+
+        <div className="nav-mobile-controls">
+          <button
+            className="theme-toggle"
+            onClick={() => { playClick(); onToggle() }}
+            onMouseEnter={playHover}
+            aria-label="Toggle colour mode"
+          >
+            <svg className="skiper-svg" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor" strokeLinecap="round" viewBox="0 0 32 32" overflow="visible">
+              <circle cx="16" cy="16" r={isDark ? 10 : 8} />
+              <circle className="crescent" cx="20" cy="12" r="9" fill="var(--color-nav-bg)" />
+              <g className="rays" stroke="currentColor" strokeWidth="1.5" fill="none">
+                <path d="M16 5.5v-4" /><path d="M16 30.5v-4" />
+                <path d="M1.5 16h4" /><path d="M26.5 16h4" />
+                <path d="m23.4 8.6 2.8-2.8" /><path d="m5.7 26.3 2.9-2.9" />
+                <path d="m5.8 5.8 2.8 2.8" /><path d="m23.4 23.4 2.9 2.9" />
+              </g>
+            </svg>
+          </button>
+          <button
+            className="theme-toggle"
+            onClick={toggleMute}
+            onMouseEnter={playHover}
+            aria-label={muted ? 'Unmute sound effects' : 'Mute sound effects'}
+          >
+            {muted ? (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" fill="currentColor" stroke="none" />
+                <line x1="16" y1="9" x2="22" y2="15" /><line x1="22" y1="9" x2="16" y2="15" />
+              </svg>
+            ) : (
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+                <polygon points="11,5 6,9 2,9 2,15 6,15 11,19" fill="currentColor" stroke="none" />
+                <path d="M15.5 8.5 a6 6 0 0 1 0 7" /><path d="M18.5 5.5 a10 10 0 0 1 0 13" />
+              </svg>
+            )}
+          </button>
+        </div>
+      </div>,
+      document.body
+      )}
 
       <div className="nav-controls">
         <button
