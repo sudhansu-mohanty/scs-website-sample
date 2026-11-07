@@ -2,6 +2,26 @@
 
 ---
 
+## 2026-11-07 — session 3
+
+- Verified LESSON_PLAN.md is current and contains entries for all past sessions
+- No code changes this session
+
+---
+
+## 2026-11-07 — session 2
+
+- Meet the Team mobile: show only Presidents/VPs by default; Directors & FYREs hidden behind a "Show More" button using `useIsMobile` hook so desktop is unaffected
+- Meet the Team cards: switched grid from fixed-width flex to `auto-fit` CSS grid with `minmax(200px, 240px)` and `justify-content: center` so cards fill the row and partial rows are centered
+- Mobile cards: forced to single column (`grid-template-columns: 1fr`) and full width
+- Home Events mobile: limited to 3 visible event cards by default with a "Show More" button; resets on category switch; single-column full-width grid on mobile
+- Hamburger menu redesigned: right-side drawer (75vw, slides in with `translateX`), semi-transparent backdrop that closes menu on click, items centered
+- Removed Weekly Events thumbnail from the home events strip
+- Mobile navbar now matches desktop floating pill style (border-radius: 999px, translucent, floating at top: 10px) instead of full-width sticky bar
+- Added two sponsorship package buttons (English filled + French outlined variant) side by side in the Sponsor Us section
+
+---
+
 ## 2026-11-07 — session
 
 - Added FYREs (First Year Representatives) as a new tier and team filter in the Meet the Team section, with two placeholder members
