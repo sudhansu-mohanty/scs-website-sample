@@ -1,6 +1,17 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 680px)').matches)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 680px)')
+    const handler = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isMobile
+}
+
 const DETAILS = {
   COMPETITIONS: {
     description:
@@ -127,11 +138,6 @@ const ITEMS = [
     image: 'https://picsum.photos/seed/scs-ee/300/300',
     hash: 'wine',
   },
-  {
-    label: 'WEEKLY',
-    image: 'https://picsum.photos/seed/scs-aa/300/300',
-    href: '#weekly',
-  },
 ]
 
 const HASH_TO_ITEM = Object.fromEntries(
@@ -162,6 +168,8 @@ const charVariants = {
 export default function HomeEvents() {
   const [hovered, setHovered] = useState(null)
   const [selected, setSelected] = useState(ITEMS[0])
+  const [showMoreEvents, setShowMoreEvents] = useState(false)
+  const isMobile = useIsMobile()
   const current = hovered ?? selected
   const isActive = hovered !== null
 
@@ -223,6 +231,7 @@ export default function HomeEvents() {
             onClick={() => {
               if (item.href) { window.location.href = item.href; return; }
               setSelected(item)
+              setShowMoreEvents(false)
             }}
           >
             <img src={item.image} alt={item.label} draggable={false} />
@@ -268,17 +277,34 @@ export default function HomeEvents() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
           >
             <p className="he-detail-desc">{DETAILS[selected.label].description}</p>
-            <div className="he-detail-grid">
-              {DETAILS[selected.label].events.map((ev) => (
-                <div key={ev.title} className="he-detail-card">
-                  <img src={ev.image} alt={ev.title} className="he-detail-card-img" />
-                  <div className="he-detail-card-body">
-                    <h4 className="he-detail-card-title">{ev.title}</h4>
-                    <p className="he-detail-card-desc">{ev.desc}</p>
+            {(() => {
+              const allEvents = DETAILS[selected.label].events
+              const visibleEvents = isMobile && !showMoreEvents ? allEvents.slice(0, 3) : allEvents
+              const hasMore = isMobile && allEvents.length > 3
+              return (
+                <>
+                  <div className="he-detail-grid">
+                    {visibleEvents.map((ev) => (
+                      <div key={ev.title} className="he-detail-card">
+                        <img src={ev.image} alt={ev.title} className="he-detail-card-img" />
+                        <div className="he-detail-card-body">
+                          <h4 className="he-detail-card-title">{ev.title}</h4>
+                          <p className="he-detail-card-desc">{ev.desc}</p>
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                </div>
-              ))}
-            </div>
+                  {hasMore && (
+                    <button
+                      className={`he-show-more${showMoreEvents ? ' expanded' : ''}`}
+                      onClick={() => setShowMoreEvents((v) => !v)}
+                    >
+                      {showMoreEvents ? 'Show Less ↑' : `Show More ↓`}
+                    </button>
+                  )}
+                </>
+              )
+            })()}
           </motion.div>
         )}
       </AnimatePresence>

@@ -1,5 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect, Fragment } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+function useIsMobile() {
+  const [isMobile, setIsMobile] = useState(() => window.matchMedia('(max-width: 680px)').matches)
+  useEffect(() => {
+    const mq = window.matchMedia('(max-width: 680px)')
+    const handler = (e) => setIsMobile(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+  return isMobile
+}
 
 // ── Tiers ──────────────────────────────────────────────────
 const TIERS = [
@@ -181,6 +192,8 @@ export default function MeetTheTeam() {
   const [activeSubteam, setActiveSubteam] = useState('ALL')
   const [filterOpen,    setFilterOpen]    = useState(false)
   const [flipped,       setFlipped]       = useState({})
+  const [showAllMobile, setShowAllMobile] = useState(false)
+  const isMobile = useIsMobile()
 
   const handleTeamChange = (team) => {
     setActiveTeam(team)
@@ -344,22 +357,40 @@ export default function MeetTheTeam() {
         {TIERS.map((tier) => {
           const members = visibleMembers.filter((m) => m.tier === tier.id)
           if (!members.length) return null
+
+          const MOBILE_HIDDEN_TIERS = ['director', 'fyre']
+          const isMobileCollapsed = isMobile && !isFiltered && !showAllMobile && MOBILE_HIDDEN_TIERS.includes(tier.id)
+
           return (
-            <div key={tier.id} className="mtt-tier-box">
-              <p className="mtt-tier-label">{tier.label}</p>
-              <motion.div className="mtt-tier-grid" layout>
-                <AnimatePresence mode="popLayout">
-                  {members.map((member) => (
-                    <MemberCard
-                      key={member.name}
-                      member={member}
-                      isFlipped={!!flipped[member.name]}
-                      onFlip={() => toggleFlip(member.name)}
-                    />
-                  ))}
-                </AnimatePresence>
-              </motion.div>
-            </div>
+            <Fragment key={tier.id}>
+              {/* Show More / Show Less button — appears before directors, mobile only */}
+              {isMobile && tier.id === 'director' && !isFiltered && (
+                <button
+                  className={`mtt-show-more${showAllMobile ? ' expanded' : ''}`}
+                  onClick={() => setShowAllMobile((v) => !v)}
+                >
+                  {showAllMobile ? 'Show Less ↑' : 'Show More ↓'}
+                </button>
+              )}
+
+              {!isMobileCollapsed && (
+                <div className="mtt-tier-box">
+                  <p className="mtt-tier-label">{tier.label}</p>
+                  <motion.div className="mtt-tier-grid" layout>
+                    <AnimatePresence mode="popLayout">
+                      {members.map((member) => (
+                        <MemberCard
+                          key={member.name}
+                          member={member}
+                          isFlipped={!!flipped[member.name]}
+                          onFlip={() => toggleFlip(member.name)}
+                        />
+                      ))}
+                    </AnimatePresence>
+                  </motion.div>
+                </div>
+              )}
+            </Fragment>
           )
         })}
       </div>

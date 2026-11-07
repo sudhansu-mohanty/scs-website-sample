@@ -170,7 +170,10 @@ export default function Navbar({ theme, onToggle }) {
 
       {/* ── Mobile full-screen menu (portalled to body to escape nav's transform) ── */}
       {createPortal(
+      <>
+      <div className={`nav-mobile-backdrop${mobileOpen ? ' open' : ''}`} onClick={closeMobile} aria-hidden="true" />
       <div className={`nav-mobile-menu${mobileOpen ? ' open' : ''}`} aria-hidden={!mobileOpen}>
+        <button className="nav-mobile-close" onClick={closeMobile} aria-label="Close menu">✕</button>
         <ul className="nav-mobile-list">
           {NAV_ITEMS.map((item) =>
             item.children ? (
@@ -241,7 +244,8 @@ export default function Navbar({ theme, onToggle }) {
             )}
           </button>
         </div>
-      </div>,
+      </div>
+      </>,
       document.body
       )}
 

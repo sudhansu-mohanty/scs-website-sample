@@ -2,6 +2,29 @@
 
 ---
 
+## 2026-11-07 (session 2)
+
+### `auto-fill` vs `auto-fit` in CSS Grid — the ghost column problem
+Both keywords tell a grid to create as many columns as fit in the available space. The difference shows up when there are fewer items than columns: `auto-fill` keeps the empty "ghost" columns alive, taking up space. `auto-fit` collapses them to zero width. When you pair `auto-fill` with `justify-content: center`, the visible cards end up left-aligned inside a centered block of invisible columns — not what you want. Switching to `auto-fit` removes the ghosts, so `justify-content: center` only has real cards to work with and they sit neatly in the middle.
+
+**Try it yourself:** Create a grid with `grid-template-columns: repeat(auto-fill, minmax(100px, 1fr))` and two items in a wide container. Notice they stretch to fill the row. Change `auto-fill` to `auto-fit` and add `justify-content: center` — the two items snap to the center at their natural size.
+
+---
+
+### `window.matchMedia` — reading CSS breakpoints in JavaScript
+CSS media queries style elements, but sometimes you need JavaScript to know the current breakpoint too — for example, to conditionally render components or change behaviour. `window.matchMedia('(max-width: 680px)')` returns a `MediaQueryList` object whose `.matches` property is `true` or `false`. You can also listen for changes with `.addEventListener('change', handler)` so the value updates live when the user resizes. Wrapping this in a React hook (`useIsMobile`) makes it reusable across components without duplicating the resize logic.
+
+**Try it yourself:** Open the browser console and type `window.matchMedia('(max-width: 680px)').matches`. Then resize the window and run it again. Add a listener: `window.matchMedia('(max-width: 680px)').addEventListener('change', e => console.log(e.matches))` and watch it fire as you resize.
+
+---
+
+### Slide-in drawer pattern — transform + backdrop
+A common mobile UI pattern is a panel that slides in from the edge. The key pieces: the drawer uses `position: fixed; right: 0; top: 0; transform: translateX(100%)` to sit completely off-screen to the right, then transitions to `translateX(0)` when open. A separate backdrop element (`position: fixed; inset: 0`) sits behind the drawer at a lower `z-index`, with a semi-transparent background — clicking it triggers the same close function. Using `pointer-events: none` on both when closed means they're invisible to clicks and don't interfere with the page underneath.
+
+**Try it yourself:** Build a simple drawer: a `<div>` fixed to the right, 200px wide, full height, that slides in with a CSS transition on `transform`. Add a `<div>` backdrop behind it. Wire a button to toggle a class that changes `translateX(100%)` to `translateX(0)` and the backdrop from `opacity: 0` to `opacity: 1`.
+
+---
+
 ## 2026-11-07
 
 ### CSS `transform` as a containing block — why `position: fixed` doesn't always mean "fixed to viewport"

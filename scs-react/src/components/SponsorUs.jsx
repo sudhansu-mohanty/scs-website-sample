@@ -84,32 +84,29 @@ export default function SponsorUs() {
           ))}
         </motion.div>
 
-        {/* CTA */}
-        {/* Replace href with the actual sponsorship package URL or file path */}
-        <motion.a
-          href="#"
-          className="sp-cta"
+        {/* CTAs — English + French */}
+        <motion.div
+          className="sp-cta-row"
           variants={fadeUp}
           custom={4}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          whileHover={{ gap: '16px' }}
         >
-          View Sponsorship Package
-          <svg
-            width="16"
-            height="16"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
-        </motion.a>
+          {/* Replace href values with the actual EN/FR package URLs */}
+          <motion.a href="#" className="sp-cta" whileHover={{ gap: '16px' }}>
+            View Sponsorship Package
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </motion.a>
+          <motion.a href="#" className="sp-cta sp-cta--fr" whileHover={{ gap: '16px' }}>
+            Voir le forfait de commandite
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </motion.a>
+        </motion.div>
       </div>
 
       {/* ── Previous sponsors marquee ── */}

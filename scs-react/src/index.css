@@ -1070,7 +1070,7 @@ nav.scrolled .nav-controls {
 /* ── Detail panel ── */
 .he-detail {
   width: 100%;
-  padding: 0 clamp(20px, 4vw, 48px) clamp(60px, 10vh, 120px);
+  padding: 0 clamp(12px, 2vw, 24px) clamp(60px, 10vh, 120px);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1090,6 +1090,11 @@ nav.scrolled .nav-controls {
   grid-template-columns: repeat(2, 1fr);
   gap: clamp(12px, 1.8vw, 20px);
   width: 100%;
+}
+
+/* ── Events show-more button (mobile only) ── */
+.he-show-more {
+  display: none;
 }
 
 .he-detail-card:only-child {
@@ -1440,6 +1445,11 @@ nav.scrolled .nav-controls {
   border-color: rgba(0, 0, 0, 0.1);
 }
 
+/* ── Show More button (mobile only — hidden on desktop) ── */
+.mtt-show-more {
+  display: none;
+}
+
 /* ── Tier boxes ── */
 .mtt-tiers {
   width: 100%;
@@ -1482,8 +1492,8 @@ nav.scrolled .nav-controls {
 }
 
 .mtt-tier-grid {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 240px));
   gap: clamp(14px, 2vw, 20px);
   justify-content: center;
   width: 100%;
@@ -1492,9 +1502,8 @@ nav.scrolled .nav-controls {
 /* ── Flip card scaffold ── */
 .mtt-card-scene {
   perspective: 1000px;
-  width: 185px;
-  height: 300px;
-  flex-shrink: 0;
+  width: 100%;
+  height: 330px;
 }
 
 .mtt-card-inner {
@@ -1887,6 +1896,14 @@ nav.scrolled .nav-controls {
   text-align: center;
 }
 
+/* ── CTA row ── */
+.sp-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 8px;
+}
+
 /* ── CTA button ── */
 .sp-cta {
   display: inline-flex;
@@ -1902,12 +1919,23 @@ nav.scrolled .nav-controls {
   text-decoration: none;
   border: none;
   cursor: pointer;
-  transition: background 0.2s, gap 0.2s;
-  margin-top: 8px;
+  transition: background 0.2s, color 0.2s, border-color 0.2s, gap 0.2s;
 }
 
 .sp-cta:hover {
   background: #5a3fa0;
+}
+
+/* French variant — outlined */
+.sp-cta--fr {
+  background: transparent;
+  border: 2px solid var(--color-accent);
+  color: var(--color-accent);
+}
+
+.sp-cta--fr:hover {
+  background: var(--color-accent);
+  color: #fff;
 }
 
 /* ── Previous sponsors marquee ── */
@@ -2177,12 +2205,74 @@ nav.scrolled .nav-controls {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   }
 
+  .mtt-tier-grid {
+    grid-template-columns: 1fr;
+  }
+
   .mtt-card-scene {
     height: 290px;
   }
 
   .mtt-display {
     font-size: clamp(42px, 12vw, 72px);
+  }
+
+  .mtt-show-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    padding: 14px 0;
+    background: none;
+    border: 1px solid var(--color-nav-border);
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: var(--text-body-sm);
+    letter-spacing: 0.08em;
+    color: var(--color-text);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s;
+  }
+
+  .mtt-show-more:hover,
+  .mtt-show-more.expanded {
+    opacity: 1;
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  /* ── Events grid: single column on mobile ── */
+  .he-detail-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .he-show-more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    width: 100%;
+    margin-top: 4px;
+    padding: 14px 0;
+    background: none;
+    border: 1px solid var(--he-border, rgba(255,255,255,0.1));
+    border-radius: 999px;
+    font-family: var(--font-mono);
+    font-size: var(--text-body-sm);
+    letter-spacing: 0.08em;
+    color: var(--he-text);
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s, border-color 0.2s, color 0.2s;
+  }
+
+  .he-show-more:hover,
+  .he-show-more.expanded {
+    opacity: 1;
+    border-color: var(--color-accent);
+    color: var(--color-accent);
   }
 
   .mtt-tabs {
@@ -2238,28 +2328,64 @@ nav.scrolled .nav-controls {
   transform: translateY(-7px) rotate(-45deg);
 }
 
-/* ── Mobile full-screen menu ── */
-.nav-mobile-menu {
+/* ── Mobile backdrop ── */
+.nav-mobile-backdrop {
   display: none;
   position: fixed;
   inset: 0;
+  z-index: 199;
+  background: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.nav-mobile-backdrop.open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ── Mobile right-side drawer ── */
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 75vw;
+  height: 100vh;
   background: var(--color-bg);
   z-index: 200;
   flex-direction: column;
-  padding: 80px 32px 40px;
+  padding: 72px 28px 40px;
   overflow-y: auto;
-  opacity: 0;
+  box-shadow: -8px 0 32px rgba(0, 0, 0, 0.25);
   pointer-events: none;
-  transform: translateY(-12px);
-  transition:
-    opacity 0.3s cubic-bezier(0.76, 0, 0.24, 1),
-    transform 0.3s cubic-bezier(0.76, 0, 0.24, 1);
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .nav-mobile-menu.open {
-  opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translateX(0);
+}
+
+.nav-mobile-close {
+  position: absolute;
+  top: 18px;
+  right: 20px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 20px;
+  color: var(--color-text);
+  opacity: 0.6;
+  padding: 4px 8px;
+  line-height: 1;
+  transition: opacity 0.2s;
+}
+
+.nav-mobile-close:hover {
+  opacity: 1;
 }
 
 .nav-mobile-list {
@@ -2277,7 +2403,8 @@ nav.scrolled .nav-controls {
 .nav-mobile-trigger {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
+  text-align: center;
   width: 100%;
   padding: 18px 0;
   font-family: var(--font-mono);
@@ -2314,14 +2441,15 @@ nav.scrolled .nav-controls {
 
 .nav-mobile-sub li a {
   display: block;
-  padding: 12px 0 12px 16px;
+  padding: 12px 0;
+  text-align: center;
   font-family: var(--font-mono);
   font-size: 0.9rem;
   color: var(--color-text);
   text-decoration: none;
   opacity: 0.7;
   transition: color 0.2s, opacity 0.2s;
-  border-left: 2px solid var(--color-nav-border);
+  border-left: none;
 }
 
 .nav-mobile-sub li a:hover {
@@ -2346,24 +2474,23 @@ nav.scrolled .nav-controls {
 /* ── Responsive ── */
 @media (max-width: 680px) {
   nav {
-    padding: 0 16px;
-    height: 52px;
-    width: 100%;
+    top: 10px;
+    width: calc(100% - 32px);
     max-width: 100%;
-    top: 0;
-    border-radius: 0;
-    background: var(--color-bg);
-    border-bottom: 1px solid var(--color-nav-border);
+    background: var(--color-nav-bg);
+    border-color: var(--color-nav-border);
+    box-shadow: var(--color-nav-shadow);
+    border-radius: 999px;
+    padding: 0 16px;
+    height: 48px;
     grid-template-columns: 1fr auto;
   }
 
   nav.scrolled {
-    top: 0;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 0;
+    top: 10px;
+    width: calc(100% - 32px);
     padding: 0 16px;
-    height: 52px;
+    height: 48px;
   }
 
   .nav-logo img {
@@ -2384,6 +2511,10 @@ nav.scrolled .nav-controls {
 
   .nav-hamburger {
     display: flex;
+  }
+
+  .nav-mobile-backdrop {
+    display: block;
   }
 
   .nav-mobile-menu {
