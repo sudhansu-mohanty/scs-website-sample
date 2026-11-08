@@ -56,7 +56,7 @@ git push origin main
 
 ## Project Notes
 
-- Active site: `scs-react/` (Vite + React + Tailwind). Deployed to GitHub Pages via `.github/workflows/deploy.yml` on push to `main`.
+- Active site: `app/` (Vite + React + Tailwind). Deployed to GitHub Pages via `.github/workflows/deploy.yml` on push to `main`.
 - `legacy/` holds the original pre-React single-file site (`index.html`, inline CSS/JS, logos, SVGs, inspo) — kept for reference, no longer developed.
 - Docs live in `docs/`: `brand-palette.md`, `DESIGN.md`, `monad-typography.md`, `SCS_Concordia.md`, `CHANGELOG.md`, `LESSON_PLAN.md`, `SESSION_LOG.md`.
 - All changes should be logged in `docs/CHANGELOG.md`.
