@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+
+# editor / tooling caches that don't belong in this JS project
+.clj-kondo/
+.lsp/

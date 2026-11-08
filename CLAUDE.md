@@ -4,13 +4,13 @@
 
 Whenever the user says **"session terminated"**, do the following in order:
 
-### 1. Append to `SESSION_LOG.md`
+### 1. Append to `docs/SESSION_LOG.md`
 Add a new entry with:
 - The date (YYYY-MM-DD)
 - The time (HH:MM)
 - A concise bullet-point summary of everything worked on during that session
 
-If `SESSION_LOG.md` does not exist, create it first with a header, then append the entry.
+If `docs/SESSION_LOG.md` does not exist, create it first with a header, then append the entry.
 
 Format:
 ```
@@ -23,8 +23,8 @@ Format:
 ---
 ```
 
-### 2. Append to `LESSON_PLAN.md`
-After the session log, write a new lesson entry to `LESSON_PLAN.md` (create it with a header if it doesn't exist).
+### 2. Append to `docs/LESSON_PLAN.md`
+After the session log, write a new lesson entry to `docs/LESSON_PLAN.md` (create it with a header if it doesn't exist).
 
 The lesson entry should:
 - Be dated (YYYY-MM-DD)
@@ -56,6 +56,7 @@ git push origin main
 
 ## Project Notes
 
-- Single-file site: `index.html` (all CSS + JS inline)
-- Brand palette documented in `brand-palette.md`
-- All changes should be logged in `CHANGELOG.md`
+- Active site: `scs-react/` (Vite + React + Tailwind). Deployed to GitHub Pages via `.github/workflows/deploy.yml` on push to `main`.
+- `legacy/` holds the original pre-React single-file site (`index.html`, inline CSS/JS, logos, SVGs, inspo) — kept for reference, no longer developed.
+- Docs live in `docs/`: `brand-palette.md`, `DESIGN.md`, `monad-typography.md`, `SCS_Concordia.md`, `CHANGELOG.md`, `LESSON_PLAN.md`, `SESSION_LOG.md`.
+- All changes should be logged in `docs/CHANGELOG.md`.
